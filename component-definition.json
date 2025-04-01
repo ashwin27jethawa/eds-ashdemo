@@ -163,7 +163,7 @@
           "plugins": {
             "xwalk": {
               "page": {
-                "resourceType": "core/franklin/components/section/v1/section",
+                "resourceType": "core/franklin/components/section/v1/section-metadata",
                 "template": {
                   "model": "section-metadata"
                 }
