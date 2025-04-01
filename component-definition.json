@@ -165,8 +165,7 @@
               "page": {
                 "resourceType": "core/franklin/components/section/v1/section",
                 "template": {
-                  "name": "Section Metadata",
-                  "filter": "section-metadata"
+                  "model": "section-metadata"
                 }
               }
             }
