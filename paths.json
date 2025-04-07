@@ -3,7 +3,8 @@
     "/content/demo-eu-178/:/",
     "/content/demo-eu-178/configuration:/.helix/config.json",
     "/content/demo-eu-178/metadata:/metadata.json",
-    "/content/demo-eu-178/mysheet:/mysheet.json"
+    "/content/demo-eu-178/mysheet:/mysheet.json",
+    "/content/demo-eu-178/faqsheet:/faqsheet.json"
     
   ],
   "includes": [
