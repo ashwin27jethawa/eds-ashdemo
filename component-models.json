@@ -209,5 +209,15 @@
         "label": "Rows"
       }
     ]
+  },
+  {
+    "id": "faq-custom-two",
+    "fields": [
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link"
+      }
+    ]
   }
 ]
