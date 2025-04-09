@@ -219,5 +219,15 @@
         "label": "Link"
       }
     ]
+  },
+  {
+    "id": "form-custom",
+    "fields": [
+      {
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link"
+      }
+    ]
   }
 ]
