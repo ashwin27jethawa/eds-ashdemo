@@ -221,9 +221,9 @@
       },
       {
         "component": "richtext",
-        "name": "text",
+        "name": "Tab Sub Body",
         "value": "",
-        "label": "Text",
+        "label": "Tab Sub Body",
         "valueType": "string"
       }
     ]
