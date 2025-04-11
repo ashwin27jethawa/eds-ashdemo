@@ -18,7 +18,8 @@
       "fragment",
       "faq-custom",
       "faq-custom-two",
-      "form-custom"
+      "form-custom",
+      "tabs"
     ]
   },
   {
@@ -44,8 +45,14 @@
   },
   {
     "id": "section-metadata",
-    "components":[
+    "components": [
       "card-metablock"
+    ]
+  },
+  {
+    "id": "tabs",
+    "components": [
+      "tabs-item"
     ]
   }
 ]

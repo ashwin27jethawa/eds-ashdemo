@@ -229,5 +229,22 @@
         "label": "Link"
       }
     ]
+  },
+  {
+    "id": "tabs-item",
+    "fields": [
+      {
+        "component": "text",
+        "name": "Tab Title",
+        "label": "Tab Body"
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Tab Sub Body",
+        "valueType": "string"
+      }
+    ]
   }
 ]
