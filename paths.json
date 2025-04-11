@@ -6,8 +6,8 @@
     "/content/demo-eu-178/mysheet:/mysheet.json",
     "/content/demo-eu-178/faqsheet:/faqsheet.json",
     "/content/demo-eu-178/faqtwo:/faqtwo.json",
-    "/content/demo-eu-178/forms/myform-sheet:/forms/myform-sheet.json"
-    
+    "/content/demo-eu-178/forms/myform-sheet:/forms/myform-sheet.json",
+    "/content/demo-eu-178/forms/mo-data:/forms/mo-data.json"
   ],
   "includes": [
     "/content/demo-eu-178/"
