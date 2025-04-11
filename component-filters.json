@@ -44,12 +44,6 @@
     ]
   },
   {
-    "id": "section-metadata",
-    "components": [
-      "card-metablock"
-    ]
-  },
-  {
     "id": "tabs",
     "components": [
       "tabs-item"
