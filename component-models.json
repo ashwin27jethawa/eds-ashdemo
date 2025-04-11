@@ -235,7 +235,7 @@
     "fields": [
       {
         "component": "text",
-        "name": "Tab Title",
+        "name": "text",
         "label": "Tab Body"
       },
       {
