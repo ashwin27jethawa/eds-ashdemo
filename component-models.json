@@ -223,7 +223,7 @@
         "component": "richtext",
         "name": "text",
         "value": "",
-        "label": "Tab Sub Body",
+        "label": "Text",
         "valueType": "string"
       }
     ]
