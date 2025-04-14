@@ -19,7 +19,8 @@
       "faq-custom",
       "faq-custom-two",
       "form-custom",
-      "tabs"
+      "tabs",
+      "carousel"
     ]
   },
   {
@@ -47,6 +48,12 @@
     "id": "tabs",
     "components": [
       "tabs-item"
+    ]
+  },
+  {
+    "id": "carousel",
+    "components": [
+      "carousel-item"
     ]
   }
 ]
