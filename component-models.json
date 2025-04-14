@@ -215,16 +215,9 @@
     "id": "tabs-item",
     "fields": [
       {
-        "component": "text",
-        "name": "text",
-        "label": "Tab Body"
-      },
-      {
-        "component": "richtext",
-        "name": "Tab Sub Body",
-        "value": "",
-        "label": "Tab Sub Body",
-        "valueType": "string"
+        "component": "aem-content",
+        "name": "link",
+        "label": "Link"
       }
     ]
   }
