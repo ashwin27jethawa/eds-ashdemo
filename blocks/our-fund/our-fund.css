@@ -1,0 +1,30 @@
+.block.our-fund {
+    width: 100%;
+    max-width: 1327px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.block.our-fund .inner1 {
+    padding: 0;
+    background-color: #fff;
+    display: inline-flex;
+    flex-direction: column;
+    margin-top: 30px;
+}
+
+.block.our-fund .inner1 .inner1-container1 {
+    width: auto;
+    border-bottom: 1px solid darkgrey;
+}
+
+.block.our-fund .inner1 .inner1-container1 h3 {
+    color: #25375b;
+    font-size: 20px;
+    font-family: Roboto;
+    font-weight: 700;
+}
