@@ -60,8 +60,7 @@
   {
     "id": "our-fund",
     "components": [
-      "our-fund-left-item",
-      "our-fund-right-item"
+      "our-fund-left-item"
     ]
   }
 ]
