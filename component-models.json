@@ -241,28 +241,6 @@
     "id": "our-fund-left-item",
     "fields": [
       {
-        "component": "multiselect",
-        "name": "classes",
-        "value": "",
-        "label": "Style",
-        "valueType": "string",
-        "options": [
-          {
-            "name": "Class Container",
-            "children": [
-              {
-                "name": "LeftContents",
-                "value": "leftcontents"
-              },
-              {
-                "name": "RightContents",
-                "value": "rightcontents"
-              }
-            ]
-          }
-        ]
-      },
-      {
         "component": "text",
         "name": "title",
         "label": "Title"
