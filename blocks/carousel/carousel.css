@@ -1,0 +1,5 @@
+@import url('../custom-carousel/custom-carousel.css');
+
+main > .section.carousel-container{
+    margin: auto;
+}

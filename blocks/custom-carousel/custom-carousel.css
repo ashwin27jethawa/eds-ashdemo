@@ -1,0 +1,71 @@
+.carousel-container {
+    position: relative;
+    width: 600px;
+    overflow: hidden;
+    margin: auto;
+    border: 2px solid #000;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+    min-width: 600px;
+    height: 300px;
+    background: #007aff;
+    color: white;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button.prev,
+button.next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+button.prev {
+    left: 10px;
+}
+
+button.next {
+    right: 40px;
+}
+
+main>.section>.carousel-wrapper {
+    padding: 0px;
+}
+
+/* Styling for the pagination dots */
+.carousel-pagination {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.carousel-pagination .dot {
+    width: 12px;
+    height: 12px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.carousel-pagination .dot.active {
+    background-color: white;
+}
