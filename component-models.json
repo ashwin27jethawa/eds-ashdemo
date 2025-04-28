@@ -236,5 +236,39 @@
         "label": "Alt Text"
       }
     ]
+  },
+  {
+    "id":"our-fund-left-item",
+    "fields":[
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Left Title Section"
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Left Sub Section",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id":"our-fund-right-item",
+    "fields":[
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Right Section Title"
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Right Sub Section",
+        "valueType": "string"
+      }
+    ]
   }
 ]

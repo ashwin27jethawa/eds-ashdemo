@@ -20,7 +20,8 @@
       "faq-custom-two",
       "form-custom",
       "tabs",
-      "carousel"
+      "carousel",
+      "our-fund"
     ]
   },
   {
@@ -54,6 +55,13 @@
     "id": "carousel",
     "components": [
       "carousel-item"
+    ]
+  },
+  {
+    "id": "our-fund",
+    "components": [
+      "our-fund-left-item",
+      "our-fund-right-item"
     ]
   }
 ]
