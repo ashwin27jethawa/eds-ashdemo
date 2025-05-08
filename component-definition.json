@@ -316,7 +316,7 @@
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
                   "name": "Vedio Block",
-                  "filter": "vedio-block"
+                  "model": "vedio-block"
                 }
               }
             }
