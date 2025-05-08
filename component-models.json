@@ -334,7 +334,7 @@
     ]
   },
   {
-    "id": "vedio-block",
+    "id": "embed",
     "fields": [
       {
         "component": "reference",
