@@ -1,4 +1,4 @@
-import { div, label, input, span, ul, li, button, a, img, select, option } from "../../scripts/dom-helpers.js"
+import { div, label, input, span, ul, li, button, a, img, select, option, h3, p } from "../../scripts/dom-helpers.js"
 // import data from "./our-fund.json"
 export default async function decorate(block) {
     const dataMapObj = {}
@@ -15651,13 +15651,22 @@ export default async function decorate(block) {
                 input({
                     type: "radio",
                     value: "Direct",
-                    cheked: "true"
+                    cheked: "true",
+                    onclick: function (ele) {
+                        document.querySelector("input[value='Regular']").checked = false
+                        eventTriggerRending(dataObjAllFundBoost.data.data.data)
+                    },
+                    checked: true
                 }), "Direct"
             ),
             label(
                 input({
                     type: "radio",
-                    value: "Regular"
+                    value: "Regular",
+                    onclick: function (ele) {
+                        document.querySelector("input[value='Direct']").checked = false
+                        eventTriggerRending(dataObjAllFundBoost.data.data.data)
+                    }
                 }), "Regular"
             )
         ),
@@ -15675,6 +15684,10 @@ export default async function decorate(block) {
                     element.subCategory.forEach((elme, ind) => {
                         dataMapObj[index] += elme.schemes.length
                     })
+                    let strSchme = [];
+                    element.subCategory.forEach((elem) => {
+                        strSchme.push(elem.schemes.join("-"));
+                    })
                     if (element.categoryName === "Indian Equity") {
                         dataMapObj[index + "ArrayDoc"] = div({ class: "Indian-Equity-container" },
                             ...element.subCategory.map((elme, ind) => {
@@ -15682,7 +15695,12 @@ export default async function decorate(block) {
                                     span({ class: "square-shape" },
                                         input({
                                             class: "categorey-direct",
-                                            type: "checkbox"
+                                            type: "checkbox",
+                                            dataattr: elme.schemes.join("-"),
+                                            onclick: function (ele) {
+                                                console.log(ele.target.getAttribute("dataattr"));
+                                                eventTriggerRending(dataObjAllFundBoost.data.data.data)
+                                            }
                                         })
                                     ),
                                     span(elme.categoryName)
@@ -15694,7 +15712,17 @@ export default async function decorate(block) {
                         span({ class: "square-shape" },
                             input({
                                 class: "categorey-direct",
-                                type: "checkbox"
+                                type: "checkbox",
+                                dataattr: strSchme.join("-"),
+                                onclick: function (ele) {
+                                    console.log(ele.target.getAttribute("dataattr"));
+                                    if (ele.currentTarget.parentElement.nextElementSibling.textContent.trim().includes("Indian Equity")) {
+                                        block.querySelectorAll(".Indian-Equity-container .categorey-direct").forEach((element) => {
+                                            element.checked = ele.currentTarget.checked ? true : false;
+                                        })
+                                    }
+                                    eventTriggerRending(dataObjAllFundBoost.data.data.data)
+                                }
                             })
                         ),
                         span(element.categoryName + "(" + dataMapObj[index] + ")"),
@@ -15714,7 +15742,12 @@ export default async function decorate(block) {
                         span({ class: "square-shape" },
                             input({
                                 class: "categorey-direct",
-                                type: "checkbox"
+                                type: "checkbox",
+                                dataattr: element.schemes.join("-"),
+                                onclick: function (ele) {
+                                    console.log(ele.target.getAttribute("dataattr"));
+                                    eventTriggerRending(dataObjAllFundBoost.data.data.data)
+                                }
                             })
                         ),
                         span(element.typeName + "(" + element.schemes.length + ")"),
@@ -15724,18 +15757,54 @@ export default async function decorate(block) {
         )
     )
 
+    let InvestMethod = "Direct";//document.querySelector("input[type='radio']:checked").value;
+    dataMapObj.filterSeachArr = [];
+    dataObjAllFundBoost.data.data.data.forEach((elem) => {
+        elem.planList.forEach((element) => {
+            if (!dataMapObj.filterSeachArr.includes(elem.schDetail.schName)) { //element.planName == InvestMethod &&
+                dataMapObj.filterSeachArr.push(elem.schDetail.schName)
+            }
+        })
+
+    })
     const rightTopContianer = div({ class: "rightTopContainer" },
         div({ class: "searchBarContainer" },
             label("Search"),
             div({ class: "inputContainer" },
-                input({ class: "searchField", placeholder: "Search Fund" })
+                input({
+                    class: "searchField",
+                    placeholder: "Search Fund",
+                    onfocus: () => {
+                        block.querySelector(".searchModal").style.display = "block";
+                    }
+                }),
+                div({ class: "searchModal", style: "display:none" },
+                    ul(
+                        ...dataMapObj.filterSeachArr.map((element) => {
+                            return li({
+                                onclick: (element) => {
+                                    console.log(element.target.textContent.trim());
+                                    let temp = div(
+                                        div(
+                                            p("X"),
+                                            p(element.target.textContent.trim())
+                                        )
+                                    )
+                                    block.querySelector(".searchField").value = element.target.textContent.trim() +" X";
+                                    block.querySelector(".searchModal").style.display = "none"
+
+                                }
+                            }, element)
+                        })
+                    )
+                )
             )
         ),
         div({ class: "dropDownField" },
             label("Sort Funds By"),
             div({ class: "dropDownField-container" },
                 div({ class: "container-box" },
-                    input({ class: "seachBox", placeholder: "Popular" })
+                    input({ class: "seachBox", placeholder: "Popular" }),
                 ),
                 div({ class: "dropdown-modal" },
                     ul(
@@ -15757,69 +15826,110 @@ export default async function decorate(block) {
         )
     )
 
-
+    function navDate(mop) {
+        let str = ""
+        let mopMonth = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+        mop = mop.split("/");
+        str = "As on " + mop[1] + " " + mopMonth[mop[0] - 1] + " " + mop[2]
+        return str;
+    }
+    function cgarDate(mop) {
+        let str = ""
+        let mopMonth = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+        mop = mop.split("-");
+        str = "As on " + mop[2] + " " + mopMonth[mop[1] - 1] + " " + mop[0]
+        return str;
+    }
     const rightBottomContainer = div({ class: "main-container-bottom" },
-        div({ class: "submain-container-bottom" },
-            div({ class: "submain-Header" },
-                div({ class: "name-content-container" },
-                    div({ class: "logoName" },"Logo"),
-                    div({ class: "planName" }, "Motilal Oswal Large Cap Fund")
-                ),
-                div({ class: "dropdown-container" },
-                    select(
-                        option("Growth"),
-                        option("IDCW Reinvestment"),
-                        option("IDCW Payout")
-                    )
-                ),
-                div({ class: "category-container" },
-                    span("Indian Equity | Large Cap")
-                )
-            ),
-            div({ class: "submain-Footer" },
-                div({ class: "valueFactor-container" },
-                    div({ class: "amu-container" },
-                        label("AMU"),
-                        span({ class: "amuvalue" }, "₹" + "1234")
-                    ),
-                    div({ class: "risk-container" },
-                        label("Risk"),
-                        div({ class: "riskvalue" },
-                            div({ class: "risklabelvalue" }, "Very High"),
-                            div({ class: "riskinfoiconvalue" },
-                                img("/content.fake/path.img")
-                            )
-                        )
-                    ),
-                    div({ class: "nav-container" },
-                        label("NAV"),
-                        div({ class: "navContainervalue" },
-                            div({ class: "navRatevalue" },
-                                div({ class: "fundValue" }, "133.65"),
-                                div({ class: "fundRateValue", style: "color: red" }, "(2.22%)")
-                            ),
-                            div({ class: "navFundDate" }, "As on 30 Apr 2025")
-                        )
-                    ),
-                    div({ class: "cagr-container" },
-                        label({ class: "CAGRContainer" }, "CAGR",
-                            select(
-                                option("SI"),
-                                option({ selected: "true" }, "1 Year"),
-                                option("3 Year"),
-                                option("5 Year")
+        ...dataObjAllFundBoost.data.data.data.map((ele, index) => {
+            dataMapObj.DuplicateRemove = []
+            dataMapObj.siperiods = []
+            dataMapObj.tags = [];
+            ele.tags.forEach((element) => {
+                let temp = ["Active", "Index", "ETFs"]
+                if (!temp.includes(element)) {
+                    dataMapObj.tags.push(element)
+                }
+            })
+            ele.return.forEach((element) => {
+                if (!dataMapObj.siperiods.includes(element.period.replaceAll("yr", " Year"))) {
+                    dataMapObj.siperiods.push(element.period.replaceAll("yr", " Year"))
+                }
+            })
+            dataMapObj.siperiods = dataMapObj.siperiods.sort();
+            return index !== 0 && dataMapObj.filterSeachArr.includes(ele.schDetail.schName) ? div({ class: "submain-container-bottom" },
+                div({ class: "fundCard" },
+                    div({ class: "submain-Header" },
+                        div({ class: "name-content-container" },
+                            div({ class: "logoName" }, "Logo"),
+                            div({ class: "planName" }, a(ele.schDetail.schName))
+                        ),
+                        div({ class: "dropdown-container" },
+                            span({ class: "fundOption" },
+                                select(
+                                    ...ele.planList.map((seleOp) => {
+                                        if (!dataMapObj.DuplicateRemove.includes(seleOp.optionName)) {
+                                            dataMapObj.DuplicateRemove.push(seleOp.optionName)
+                                            return option(seleOp.optionName)
+                                        }
+                                    })
+                                )
                             )
                         ),
-                        div({ class: "cagr-rate" }, "152.5" + "%"),
-                        div({ class: "cagr-rateDate" }, "As on 30 Apr 2025")
+                        div({ class: "category-container" },
+                            span(dataMapObj.tags.join("|"))
+                        )
+                    ),
+                    div({ class: "submain-Footer" },
+                        div({ class: "row valueFactor-container" },
+                            div({ class: "factor-container" },
+                                div({ class: "amu-container" },
+                                    label("AMU"),
+                                    span({ class: "amuvalue" }, (ele.aum[0].latestAum == null ? "" : "₹" + ele.aum[0].latestAum + " " + "Crs"))
+                                ),
+                                div({ class: "risk-container" },
+                                    label("Risk"),
+                                    div({ class: "riskvalue" },
+                                        div({ class: "risklabelvalue" }, ele.risk.risk),
+                                        div({ class: "riskinfoiconvalue" },
+                                            img("/content.fake/path.img")
+                                        )
+                                    )
+                                ),
+                                div({ class: "nav-container" },
+                                    label("NAV"),
+                                    div({ class: "navContainervalue" },
+                                        div({ class: "navRatevalue" },
+                                            div({ class: "fundValue" }, ele.nav[0].nav),
+                                            div({ class: "fundRateValue", style: Math.sign(ele.nav[0].navChng) == -1 ? "color:red" : "color:green" }, "(" + ele.nav[0].navChng + "%)")
+                                        ),
+                                        div({ class: "navFundDate" }, navDate(ele.nav[0].navRecdt.split(" ")[0]))
+                                    )
+                                ),
+                                div({ class: "cagr-container" },
+                                    label({ class: "CAGRContainer" }, "CAGR",
+                                        select(
+                                            ...dataMapObj.siperiods.map((ele) => {
+                                                return option(ele.toUpperCase())
+                                            })
+                                        )
+                                    ),
+                                    div({ class: "cagr-rate" }, ele.return.length != 0 ? ele.return[0].schReturnCagr + "%" : ""),
+                                    div({ class: "cagr-rateDate" }, ele.return.length != 0 ? cgarDate(ele.return[0].schReturnAsOnDt) : "")
+                                )
+                            )
+                        ),
+                        div({ class: "buttonFactor-container" },
+                            div({ class: "button-container" },
+                                div({ class: "know-more-btn" }, a({ class: "know-more" }, "Know More")),
+                            ),
+                            div({ class: "invest-now-btn" }, a({ class: "Invest-now" }), "Invest Now")
+                        )
                     )
-                ),
-                div({ class: "buttonFactor-container" },
-                    button(a({ class: "know-more" }), "Know More"),
-                    button(a({ class: "Invest-now" }), "Invest Now")
                 )
-            )
-        )
+            ) : ""
+        })
+
     )
 
     block.querySelector(".inner1-container2").innerHTML = "";
@@ -15844,4 +15954,175 @@ export default async function decorate(block) {
         block.querySelector(".dropdown-modal").style.display = "none";
     });
 
+    function eventTriggerRending(param) {
+        let InvestMethod = block.querySelector("input[type='radio']:checked").value;
+        dataMapObj.filterSeachArr = [];
+        let mop = [];
+        block.querySelectorAll("[type='checkbox']").forEach((element) => {
+            if (element.checked) {
+                mop.push(element.getAttribute("dataattr"))
+            }
+        })
+        mop = mop.length === 0 ? "" : mop.join("-");
+        param.forEach((elem) => {
+            elem.planList.forEach((element) => {
+                if (!dataMapObj.filterSeachArr.includes(elem.schDetail.schName) && mop.length === 0) {
+                    dataMapObj.filterSeachArr.push(elem.schDetail.schName)
+                } else {
+                    if (!dataMapObj.filterSeachArr.includes(elem.schDetail.schName) && mop.includes(elem.schCode)) {
+                        dataMapObj.filterSeachArr.push(elem.schDetail.schName)
+                    }
+                }
+            })
+
+        })
+        const rightTopContianer = div({ class: "rightTopContainer" },
+            div({ class: "searchBarContainer" },
+                label("Search"),
+                div({ class: "inputContainer" },
+                    input({
+                        class: "searchField",
+                        placeholder: "Search Fund",
+                        onfocus: () => {
+                            block.querySelector(".searchModal").style.display = "block";
+                        },
+                        onmouseout: () => {
+                            block.querySelector(".searchModal").style.display = "none";
+                        }
+                    }),
+                    div({ class: "searchModal", style: "display:none" },
+                        ul(
+                            ...dataMapObj.filterSeachArr.map((element) => {
+                                return li(element)
+                            })
+                        )
+                    )
+                )
+            ),
+            div({ class: "dropDownField" },
+                label("Sort Funds By"),
+                div({ class: "dropDownField-container" },
+                    div({ class: "container-box" },
+                        input({ class: "seachBox", placeholder: "Popular" })
+                    ),
+                    div({ class: "dropdown-modal" },
+                        ul(
+                            ...dataObj.data.data.sort.map((e) => {
+                                return li({
+                                    onclick: (event) => {
+                                        block.querySelectorAll(".inner2-container1 .dropdown-modal ul li").forEach((el) => {
+                                            el.classList.remove("active");
+                                        })
+                                        event.target.classList.add("active");
+                                        block.querySelector(".inner2-container1 .seachBox").value = event.target.textContent.trim()
+                                        block.querySelector(".inner2-container1 .dropdown-modal").style.display = "none";
+                                    }
+                                }, e.sortName)
+                            })
+                        )
+                    )
+                )
+            )
+        )
+        const rightBottomContainer = div({ class: "main-container-bottom" },
+            ...dataObjAllFundBoost.data.data.data.map((ele, index) => {
+                dataMapObj.DuplicateRemove = []
+                dataMapObj.siperiods = []
+                dataMapObj.tags = [];
+                ele.tags.forEach((element) => {
+                    let temp = ["Active", "Index", "ETFs"]
+                    if (!temp.includes(element)) {
+                        dataMapObj.tags.push(element)
+                    }
+                })
+                ele.return.forEach((element) => {
+                    if (!dataMapObj.siperiods.includes(element.period.replaceAll("yr", " Year"))) {
+                        dataMapObj.siperiods.push(element.period.replaceAll("yr", " Year"))
+                    }
+                })
+                dataMapObj.siperiods = dataMapObj.siperiods.sort();
+                return index !== 0 && dataMapObj.filterSeachArr.includes(ele.schDetail.schName) ? div({ class: "submain-container-bottom" },
+                    div({ class: "fundCard" },
+                        div({ class: "submain-Header" },
+                            div({ class: "name-content-container" },
+                                div({ class: "logoName" }, "Logo"),
+                                div({ class: "planName" }, a(ele.schDetail.schName))
+                            ),
+                            div({ class: "dropdown-container" },
+                                span({ class: "fundOption" },
+                                    select(
+                                        ...ele.planList.map((seleOp) => {
+                                            if (!dataMapObj.DuplicateRemove.includes(seleOp.optionName)) {
+                                                dataMapObj.DuplicateRemove.push(seleOp.optionName)
+                                                return option(seleOp.optionName)
+                                            }
+                                        })
+                                    )
+                                )
+                            ),
+                            div({ class: "category-container" },
+                                span(dataMapObj.tags.join("|"))
+                            )
+                        ),
+                        div({ class: "submain-Footer" },
+                            div({ class: "row valueFactor-container" },
+                                div({ class: "factor-container" },
+                                    div({ class: "amu-container" },
+                                        label("AMU"),
+                                        span({ class: "amuvalue" }, (ele.aum[0].latestAum == null ? "" : "₹" + ele.aum[0].latestAum + " " + "Crs"))
+                                    ),
+                                    div({ class: "risk-container" },
+                                        label("Risk"),
+                                        div({ class: "riskvalue" },
+                                            div({ class: "risklabelvalue" }, ele.risk.risk),
+                                            div({ class: "riskinfoiconvalue" },
+                                                img("/content.fake/path.img")
+                                            )
+                                        )
+                                    ),
+                                    div({ class: "nav-container" },
+                                        label("NAV"),
+                                        div({ class: "navContainervalue" },
+                                            div({ class: "navRatevalue" },
+                                                div({ class: "fundValue" }, ele.nav[0].nav),
+                                                div({ class: "fundRateValue", style: Math.sign(ele.nav[0].navChng) == -1 ? "color:red" : "color:green" }, "(" + ele.nav[0].navChng + "%)")
+                                            ),
+                                            div({ class: "navFundDate" }, navDate(ele.nav[0].navRecdt.split(" ")[0]))
+                                        )
+                                    ),
+                                    div({ class: "cagr-container" },
+                                        label({ class: "CAGRContainer" }, "CAGR",
+                                            select(
+                                                ...dataMapObj.siperiods.map((ele) => {
+                                                    return option(ele.toUpperCase())
+                                                })
+                                            )
+                                        ),
+                                        div({ class: "cagr-rate" }, ele.return.length != 0 ? ele.return[0].schReturnCagr + "%" : ""),
+                                        div({ class: "cagr-rateDate" }, ele.return.length != 0 ? cgarDate(ele.return[0].schReturnAsOnDt) : "")
+                                    )
+                                )
+                            ),
+                            div({ class: "buttonFactor-container" },
+                                div({ class: "button-container" },
+                                    div({ class: "know-more-btn" }, a({ class: "know-more" }, "Know More")),
+                                ),
+                                div({ class: "invest-now-btn" }, a({ class: "Invest-now" }), "Invest Now")
+                            )
+                        )
+                    )
+                ) : ""
+            })
+
+        )
+
+
+        block.querySelector(".inner2-container1").innerHTML = "";
+        const headerRightConyainer = h3({ id: "our-funds" }, "Our Funds")
+        block.querySelector(".inner2-container1").append(headerRightConyainer);
+        block.querySelector(".inner2-container1").append(rightTopContianer);
+
+        block.querySelector(".inner2-container2").innerHTML = "";
+        block.querySelector(".inner2-container2").append(rightBottomContainer);
+    }
 }
