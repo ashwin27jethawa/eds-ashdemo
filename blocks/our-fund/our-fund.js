@@ -15587,15 +15587,17 @@ export default async function decorate(block) {
                 select({
                     onchange: function (event) {
                       let dataCode = event.currentTarget.options[event.target.options.selectedIndex].getAttribute("dataCode");
-                      let AumValue = '',
-                        dataAum = ''
-                      ele.aum.forEach((Aum) => {
+                      let AumValue = '', dataAum = '';
+                      [...ele.aum,...ele.nav].forEach((Aum) => {
                         let tempAumCode = Aum.planCode + Aum.optionCode;
                         if (tempAumCode == dataCode) {
-                          AumValue = Aum.latestAum;
-                          dataAum = Aum.latestAumAsOnDt
+                          AumValue = Aum.latestAum ?. Aum.latestAum;
+                          dataAum = Aum.latestAumAsOnDt ?. Aum.latestAumAsOnDt
+                          navValue = Aum.nav ?. Aum.nav
+                          navRecdt = Aum.navRecdt ?. Aum.navRecdt
                         }
                       })
+                      
                       console.log(AumValue, dataAum);
 
                     }
