@@ -15488,6 +15488,20 @@ export default async function decorate(block) {
                   const dropdown = block.querySelector('#dropdown');
                   const tags = block.querySelector('#tags');
 
+                  const value = event.target.getAttribute('data-value');
+
+                  // Hide selected item from dropdown
+                  event.target.style.display = 'none';
+
+                  // Create a tag
+                  const tag = document.createElement('div');
+                  tag.className = 'tag';
+                  tag.innerHTML = `${value}<span onclick="removeTag(this, '${value}')">&times;</span>`;
+                  tags.insertBefore(tag, inputBox);
+
+                  inputBox.value = '';
+                  dropdown.style.display = 'none';
+
                   block.querySelector(".searchModal").style.display = "block";
                   const search = inputBox.value.toLowerCase();
                   const items = block.querySelectorAll('.dropdown-item');
