@@ -15590,7 +15590,7 @@ export default async function decorate(block) {
                       dataMapObj.DuplicateRemove.push(seleOp.optionName)
                       return option({
                         dataCode : seleOp.planCode + seleOp.optionCode,
-                        onclick:function(event){
+                        onchange:function(event){
                             let dataCode = event.target.getAttribute("dataCode");
                             let AumValue='',dataAum =''
                             ele.aum.forEach((Aum)=>{
