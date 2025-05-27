@@ -15460,7 +15460,7 @@ export default async function decorate(block) {
 
             block.querySelector(".searchModal").style.display = "block";
             const search = inputBox.value.toLowerCase();
-            const items = dropdown.querySelectorAll('.dropdown-item');
+            const items = block.querySelectorAll('.dropdown-item');
 
             items.forEach(item => {
               const text = item.getAttribute('dataValue').toLowerCase();
