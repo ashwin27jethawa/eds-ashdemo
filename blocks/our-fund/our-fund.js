@@ -15453,7 +15453,7 @@ export default async function decorate(block) {
           id: "inputBox",
           class: "searchField input-box",
           placeholder: "Search Fund",
-          onfocus: () => {
+          onclick: () => {
             const inputBox = block.querySelector('#inputBox');
             const dropdown = block.querySelector('#dropdown');
             const tags = block.querySelector('#tags');
