@@ -15538,6 +15538,12 @@ export default async function decorate(block) {
       class: "main-container-bottom"
     },
     ...dataObjAllFundBoost.data.data.data.map((ele, index) => {
+      let InvestBtn = ''
+      block.querySelectorAll(".radio-button-container [type=radio]").forEach((el) => {
+        if (el.checked) {
+          InvestBtn = el.value;
+        }
+      })
       dataMapObj.DuplicateRemove = []
       dataMapObj.siperiods = []
       dataMapObj.tags = [];
@@ -15580,7 +15586,7 @@ export default async function decorate(block) {
                 },
                 select(
                   ...ele.planList.map((seleOp) => {
-                    if (!dataMapObj.DuplicateRemove.includes(seleOp.optionName)) {
+                    if (!dataMapObj.DuplicateRemove.includes(seleOp.optionName) && InvestBtn == seleOp.planName) {
                       dataMapObj.DuplicateRemove.push(seleOp.optionName)
                       return option(seleOp.optionName)
                     }
@@ -15792,7 +15798,7 @@ export default async function decorate(block) {
               class: "dropdown-modal"
             },
             ul(
-              ...dataObj.data.data.sort.map((e,index) => {
+              ...dataObj.data.data.sort.map((e, index) => {
                 return li({
                   dataIndex: index,
                   onclick: (event) => {
@@ -15817,6 +15823,12 @@ export default async function decorate(block) {
         class: "main-container-bottom"
       },
       ...dataObjAllFundBoost.data.data.data.map((ele, index) => {
+        let InvestBtn = ''
+        block.querySelectorAll(".radio-button-container [type=radio]").forEach((el) => {
+          if (el.checked) {
+            InvestBtn = el.value;
+          }
+        })
         dataMapObj.DuplicateRemove = []
         dataMapObj.siperiods = []
         dataMapObj.tags = [];
@@ -15859,7 +15871,7 @@ export default async function decorate(block) {
                   },
                   select(
                     ...ele.planList.map((seleOp) => {
-                      if (!dataMapObj.DuplicateRemove.includes(seleOp.optionName)) {
+                      if (!dataMapObj.DuplicateRemove.includes(seleOp.optionName) && seleOp.planName == InvestBtn) {
                         dataMapObj.DuplicateRemove.push(seleOp.optionName)
                         return option(seleOp.optionName)
                       }
