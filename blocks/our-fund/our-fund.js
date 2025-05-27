@@ -15587,9 +15587,9 @@ export default async function decorate(block) {
                 select({
                     onchange: function (event) {
                       let dataCode = event.currentTarget.options[event.target.options.selectedIndex].getAttribute("dataCode");
-                      let AumValue = '', dataAum = '',navRecdt='',navValue='';
-                      [...ele.aum, ...ele.nav].forEach((Aum) => {
-                        let tempAumCode = Aum.planCode + Aum.optionCode;
+                      let AumValue = '', dataAum = '',navRecdt='',navValue='',navChngPer='',schReturnCagr = '',schReturnAsOnDt='';
+                      [...ele.aum, ...ele.nav, ...ele.return].forEach((Aum) => {
+                        let tempAumCode = Aum.schemeCode + Aum.planCode;
                         if (tempAumCode == dataCode) {
                           if (Aum.latestAum) {
                             AumValue = Aum.latestAum;
@@ -15603,11 +15603,19 @@ export default async function decorate(block) {
                           if (Aum.navRecdt) {
                             navRecdt = Aum.navRecdt;
                           }
-
+                          if (Aum.navChngPer) {
+                            navChngPer = Aum.navChngPer;
+                          }
+                          if(Aum.schReturnCagr){
+                            schReturnCagr = Aum.schReturnCagr
+                          }
+                          if (Aum.schReturnAsOnDt) {
+                            schReturnAsOnDt = Aum.schReturnAsOnDt
+                          }
                         }
                       })
 
-                      console.log(AumValue, dataAum, navValue);
+                      console.log(AumValue, dataAum, navValue,navChngPer,schReturnAsOnDt);
 
                     }
                   },
@@ -15615,7 +15623,7 @@ export default async function decorate(block) {
                     if (!dataMapObj.DuplicateRemove.includes(seleOp.optionName) && InvestBtn == seleOp.planName) {
                       dataMapObj.DuplicateRemove.push(seleOp.optionName)
                       return option({
-                        dataCode: seleOp.planCode + seleOp.optionCode,
+                        dataCode: seleOp.schemeCode+ seleOp.planCode,
                       }, seleOp.optionName)
                     }
                   })
