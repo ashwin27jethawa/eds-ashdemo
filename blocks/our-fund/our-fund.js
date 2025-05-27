@@ -15453,7 +15453,7 @@ export default async function decorate(block) {
           id: "inputBox",
           class: "searchField input-box",
           placeholder: "Search Fund",
-          onclick: () => {
+          onfocus: () => {
             const inputBox = block.querySelector('#inputBox');
             const dropdown = block.querySelector('#dropdown');
             const tags = block.querySelector('#tags');
@@ -15473,26 +15473,6 @@ export default async function decorate(block) {
               item.style.display = (!isAlreadySelected && text.includes(search)) ? 'block' : 'none';
             });
           },
-          oninput: (() => {
-            const inputBox = block.querySelector('#inputBox');
-            const dropdown = block.querySelector('#dropdown');
-            const tags = block.querySelector('#tags');
-
-            block.querySelector(".searchModal").style.display = "block";
-            const search = inputBox.value.toLowerCase();
-            const items = block.querySelectorAll('.dropdown-item');
-
-            items.forEach(item => {
-              const text = item.getAttribute('dataValue').toLowerCase();
-
-              // Only show if it matches search AND is not already selected (displayed as tag)
-              const isAlreadySelected = Array.from(tags.children).some(tag =>
-                tag.textContent.replace('×', '').trim().toLowerCase() === text
-              );
-
-              item.style.display = (!isAlreadySelected && text.includes(search)) ? 'block' : 'none';
-            });
-          })
         }),
         div({
             class: "searchModal",
@@ -15503,18 +15483,26 @@ export default async function decorate(block) {
               return li({
                 class: "dropdown-item",
                 dataValue: element,
-                onclick: (element) => {
-                  console.log(element.target.textContent.trim());
-                  //   let temp = div(
-                  //     div(
-                  //       p("X"),
-                  //       p(element.target.textContent.trim())
-                  //     )
-                  //   )
-                  //   block.querySelector(".searchField").value = element.target.textContent.trim() + " X";
-                  //   block.querySelector(".searchModal").style.display = "none"
+                onclick: (() => {
+                  const inputBox = block.querySelector('#inputBox');
+                  const dropdown = block.querySelector('#dropdown');
+                  const tags = block.querySelector('#tags');
 
-                }
+                  block.querySelector(".searchModal").style.display = "block";
+                  const search = inputBox.value.toLowerCase();
+                  const items = block.querySelectorAll('.dropdown-item');
+
+                  items.forEach(item => {
+                    const text = item.getAttribute('dataValue').toLowerCase();
+
+                    // Only show if it matches search AND is not already selected (displayed as tag)
+                    const isAlreadySelected = Array.from(tags.children).some(tag =>
+                      tag.textContent.replace('×', '').trim().toLowerCase() === text
+                    );
+
+                    item.style.display = (!isAlreadySelected && text.includes(search)) ? 'block' : 'none';
+                  });
+                })
               }, element)
             })
           )
