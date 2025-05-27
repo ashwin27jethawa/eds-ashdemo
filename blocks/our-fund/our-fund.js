@@ -15489,7 +15489,7 @@ export default async function decorate(block) {
                   const dropdown = block.querySelector('#dropdown');
                   const tags = block.querySelector('#tags');
 
-                  const value = event.target.getAttribute('data-value');
+                  const value = event.target.getAttribute('dataValue');
 
                   // Hide selected item from dropdown
                   event.target.style.display = 'none';
