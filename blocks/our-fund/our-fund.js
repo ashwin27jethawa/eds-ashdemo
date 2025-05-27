@@ -15808,8 +15808,9 @@ export default async function decorate(block) {
                 ),
                 div({ class: "dropdown-modal" },
                     ul(
-                        ...dataObj.data.data.sort.map((e) => {
+                        ...dataObj.data.data.sort.map((e,index) => {
                             return li({
+                                dataIndex : index,
                                 onclick: (event) => {
                                     block.querySelectorAll(".inner2-container1 .dropdown-modal ul li").forEach((el) => {
                                         el.classList.remove("active");
@@ -16009,6 +16010,7 @@ export default async function decorate(block) {
                         ul(
                             ...dataObj.data.data.sort.map((e) => {
                                 return li({
+                                    dataIndex : index,
                                     onclick: (event) => {
                                         block.querySelectorAll(".inner2-container1 .dropdown-modal ul li").forEach((el) => {
                                             el.classList.remove("active");
