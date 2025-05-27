@@ -15539,7 +15539,7 @@ export default async function decorate(block) {
     },
     ...dataObjAllFundBoost.data.data.data.map((ele, index) => {
       let InvestBtn = ''
-      block.querySelectorAll(".radio-button-container [type=radio]").forEach((el) => {
+      block.querySelectorAll(".radio-button-container [type=radio]").length === 0 ? InvestBtn = "Direct" : block.querySelectorAll(".radio-button-container [type=radio]").forEach((el) => {
         if (el.checked) {
           InvestBtn = el.value;
         }
