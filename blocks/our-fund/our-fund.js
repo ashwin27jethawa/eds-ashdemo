@@ -15588,7 +15588,22 @@ export default async function decorate(block) {
                   ...ele.planList.map((seleOp) => {
                     if (!dataMapObj.DuplicateRemove.includes(seleOp.optionName) && InvestBtn == seleOp.planName) {
                       dataMapObj.DuplicateRemove.push(seleOp.optionName)
-                      return option(seleOp.optionName)
+                      return option({
+                        dataCode : seleOp.planCode + seleOp.optionCode,
+                        onclick:function(event){
+                            let dataCode = event.target.getAttribute("dataCode");
+                            let AumValue='',dataAum =''
+                            ele.aum.forEach((Aum)=>{
+                                let tempAumCode = Aum.planCode + Aum.optionCode;
+                                if (tempAumCode == dataCode) {
+                                    AumValue = Aum.latestAum;
+                                    dataAum = Aum.latestAumAsOnDt
+                                }
+                            })
+                            console.log(AumValue,dataAum);
+                            
+                        }
+                      },seleOp.optionName)
                     }
                   })
                 )
