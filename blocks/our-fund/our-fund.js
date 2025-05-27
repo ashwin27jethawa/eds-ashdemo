@@ -15584,13 +15584,8 @@ export default async function decorate(block) {
               span({
                   class: "fundOption"
                 },
-                select(
-                  ...ele.planList.map((seleOp) => {
-                    if (!dataMapObj.DuplicateRemove.includes(seleOp.optionName) && InvestBtn == seleOp.planName) {
-                      dataMapObj.DuplicateRemove.push(seleOp.optionName)
-                      return option({
-                        dataCode : seleOp.planCode + seleOp.optionCode,
-                        onchange:function(event){
+                select({
+                    onchange:function(event){
                             let dataCode = event.target.getAttribute("dataCode");
                             let AumValue='',dataAum =''
                             ele.aum.forEach((Aum)=>{
@@ -15603,6 +15598,12 @@ export default async function decorate(block) {
                             console.log(AumValue,dataAum);
                             
                         }
+                },
+                  ...ele.planList.map((seleOp) => {
+                    if (!dataMapObj.DuplicateRemove.includes(seleOp.optionName) && InvestBtn == seleOp.planName) {
+                      dataMapObj.DuplicateRemove.push(seleOp.optionName)
+                      return option({
+                        dataCode : seleOp.planCode + seleOp.optionCode,
                       },seleOp.optionName)
                     }
                   })
