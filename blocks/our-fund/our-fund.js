@@ -15585,9 +15585,17 @@ export default async function decorate(block) {
                   class: "fundOption"
                 },
                 select({
+                    dataCardIndex: index,
                     onchange: function (event) {
+                      let cardIndex = event.target.getAttribute("dataCardIndex");
                       let dataCode = event.currentTarget.options[event.target.options.selectedIndex].getAttribute("dataCode");
-                      let AumValue = '', dataAum = '',navRecdt='',navValue='',navChngPer='',schReturnCagr = '',schReturnAsOnDt='';
+                      let AumValue = '',
+                        dataAum = '',
+                        navRecdt = '',
+                        navValue = '',
+                        navChngPer = '',
+                        schReturnCagr = '',
+                        schReturnAsOnDt = '';
                       [...ele.aum, ...ele.nav, ...ele.return].forEach((Aum) => {
                         let tempAumCode = Aum.schemeCode + Aum.planCode;
                         if (tempAumCode == dataCode) {
@@ -15606,7 +15614,7 @@ export default async function decorate(block) {
                           if (Aum.navChngPer) {
                             navChngPer = Aum.navChngPer;
                           }
-                          if(Aum.schReturnCagr){
+                          if (Aum.schReturnCagr) {
                             schReturnCagr = Aum.schReturnCagr
                           }
                           if (Aum.schReturnAsOnDt) {
@@ -15614,30 +15622,33 @@ export default async function decorate(block) {
                           }
                         }
                       })
-                      block.querySelector(".amuvalue").textContent = "";
-                      block.querySelector(".amuvalue").textContent = AumValue;
+                      Array.from(block.querySelector(".main-container-bottom").children).forEach((eleHTML, indexHTML) => {
+                        if (indexHTML == cardIndex) {
+                          eleHTML.querySelector(".amuvalue").textContent = "";
+                          eleHTML.querySelector(".amuvalue").textContent = AumValue;
 
-                      block.querySelector(".fundValue").textContent = "";
-                      block.querySelector(".fundValue").textContent = navValue;
-                      block.querySelector(".fundRateValue").textContent = "";
-                      block.querySelector(".fundRateValue").style.color = Math.sign(navChngPer) == -1 ? "red" : "green"
-                      block.querySelector(".fundRateValue").textContent = "("+navChngPer+"%)";
-                      block.querySelector(".navFundDate").textContent = "";
-                      block.querySelector(".navFundDate").textContent = navDate(navRecdt);
-                      
-                      block.querySelector(".cagr-rate").textContent = "";
-                      block.querySelector(".cagr-rate").textContent = schReturnCagr;
-                      block.querySelector(".cagr-rateDate").textContent = "";
-                      block.querySelector(".cagr-rateDate").textContent = cgarDate(schReturnAsOnDt);
+                          eleHTML.querySelector(".fundValue").textContent = "";
+                          eleHTML.querySelector(".fundValue").textContent = navValue;
+                          eleHTML.querySelector(".fundRateValue").textContent = "";
+                          eleHTML.querySelector(".fundRateValue").style.color = Math.sign(navChngPer) == -1 ? "red" : "green"
+                          eleHTML.querySelector(".fundRateValue").textContent = "(" + navChngPer + "%)";
+                          eleHTML.querySelector(".navFundDate").textContent = "";
+                          eleHTML.querySelector(".navFundDate").textContent = navDate(navRecdt);
 
-                    //   console.log(AumValue, dataAum, navValue,navChngPer,schReturnAsOnDt);
+                          eleHTML.querySelector(".cagr-rate").textContent = "";
+                          eleHTML.querySelector(".cagr-rate").textContent = schReturnCagr;
+                          eleHTML.querySelector(".cagr-rateDate").textContent = "";
+                          eleHTML.querySelector(".cagr-rateDate").textContent = cgarDate(schReturnAsOnDt);
+                        }
+                      })
+                      //   console.log(AumValue, dataAum, navValue,navChngPer,schReturnAsOnDt);
                     }
                   },
                   ...ele.planList.map((seleOp) => {
                     if (!dataMapObj.DuplicateRemove.includes(seleOp.optionName) && InvestBtn == seleOp.planName) {
                       dataMapObj.DuplicateRemove.push(seleOp.optionName)
                       return option({
-                        dataCode: seleOp.schemeCode+ seleOp.planCode,
+                        dataCode: seleOp.schemeCode + seleOp.planCode,
                       }, seleOp.optionName)
                     }
                   })
