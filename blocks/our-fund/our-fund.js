@@ -15623,7 +15623,7 @@ export default async function decorate(block) {
                         }
                       })
                       Array.from(block.querySelector(".main-container-bottom").children).forEach((eleHTML, indexHTML) => {
-                        if (indexHTML == cardIndex) {
+                        if (indexHTML == (cardIndex -1)) {
                           eleHTML.querySelector(".amuvalue").textContent = "";
                           eleHTML.querySelector(".amuvalue").textContent = AumValue;
 
