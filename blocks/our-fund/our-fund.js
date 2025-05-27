@@ -15614,9 +15614,23 @@ export default async function decorate(block) {
                           }
                         }
                       })
+                      block.querySelector(".amuvalue").textContent = "";
+                      block.querySelector(".amuvalue").textContent = AumValue;
 
-                      console.log(AumValue, dataAum, navValue,navChngPer,schReturnAsOnDt);
+                      block.querySelector(".fundValue").textContent = "";
+                      block.querySelector(".fundValue").textContent = navValue;
+                      block.querySelector(".fundRateValue").textContent = "";
+                      block.querySelector(".fundRateValue").style.color = Math.sign(navChngPer) == -1 ? "red" : "green"
+                      block.querySelector(".fundRateValue").textContent = "("+navChngPer+"%)";
+                      block.querySelector(".navFundDate").textContent = "";
+                      block.querySelector(".navFundDate").textContent = navDate(navRecdt);
+                      
+                      block.querySelector(".cagr-rate").textContent = "";
+                      block.querySelector(".cagr-rate").textContent = schReturnCagr;
+                      block.querySelector(".cagr-rateDate").textContent = "";
+                      block.querySelector(".cagr-rateDate").textContent = cgarDate(schReturnAsOnDt);
 
+                    //   console.log(AumValue, dataAum, navValue,navChngPer,schReturnAsOnDt);
                     }
                   },
                   ...ele.planList.map((seleOp) => {
