@@ -152,28 +152,28 @@
     height: 100%;
 }
 
-.block.our-fund .inner2 .inner2-container1 .rightTopContainer .searchBarContainer .inputContainer .searchModal ul{
+.block.our-fund .inner2 .inner2-container1 .rightTopContainer .searchBarContainer .inputContainer .searchModal ul {
     margin: 0;
     padding: 8px 0;
     background-color: #fff;
     list-style: none;
     height: 300px;
     overflow: auto;
-    border: 1px solid rgba(0,0,0,.15);
+    border: 1px solid rgba(0, 0, 0, .15);
     border-radius: 4px;
 }
 
-.block.our-fund .inner2 .inner2-container1 .rightTopContainer .searchBarContainer .inputContainer .searchModal ul li{
+.block.our-fund .inner2 .inner2-container1 .rightTopContainer .searchBarContainer .inputContainer .searchModal ul li {
     padding: 4px 24px;
     color: #212529;
 }
 
-.block.our-fund .inner2 .inner2-container1 .rightTopContainer .searchBarContainer .inputContainer .searchModal ul li:hover{
+.block.our-fund .inner2 .inner2-container1 .rightTopContainer .searchBarContainer .inputContainer .searchModal ul li:hover {
     color: #16181b;
     background-color: #e9ecef;
 }
 
-.block.our-fund .inner2 .inner2-container1 .rightTopContainer .searchBarContainer .inputContainer .searchModal ul li:active{
+.block.our-fund .inner2 .inner2-container1 .rightTopContainer .searchBarContainer .inputContainer .searchModal ul li:active {
     color: #fff;
     background-color: #007bff;
 }
@@ -529,4 +529,77 @@
 
 .block .inner2 .inner2-container2 .main-container-bottom .submain-container-bottom .fundCard .submain-Footer .buttonFactor-container .invest-now-btn:hover {
     background-color: #007bff;
+}
+
+
+/* Input Search Start */
+body {
+    font-family: Arial, sans-serif;
+    padding: 40px;
+    background: #f5f5f5;
+}
+
+.wrapper {
+    width: 320px;
+    position: relative;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 8px;
+}
+
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    min-height: 38px;
+}
+
+.tag {
+    background: #e7f4ff;
+    color: #007bff;
+    ;
+    padding: 5px 10px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.tag span {
+    margin-left: 8px;
+    color: red;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.input-box {
+    border: none;
+    outline: none;
+    flex-grow: 1;
+    min-width: 100px;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    border: 1px solid #ccc;
+    background: #fff;
+    display: none;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 10;
+}
+
+.dropdown-item {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: #f0f0f0;
 }

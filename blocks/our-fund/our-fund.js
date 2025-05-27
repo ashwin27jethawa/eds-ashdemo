@@ -15441,17 +15441,37 @@ export default async function decorate(block) {
       class: "rightTopContainer"
     },
     div({
-        class: "searchBarContainer"
+        class: "searchBarContainer wrapper"
       },
       label("Search"),
       div({
-          class: "inputContainer"
+          id: "tags",
+          class: "inputContainer tag-container"
         },
         input({
-          class: "searchField",
+          type: "text",
+          id: "inputBox",
+          class: "searchField input-box",
           placeholder: "Search Fund",
           onfocus: () => {
+            const inputBox = block.querySelector('#inputBox');
+            const dropdown = block.querySelector('#dropdown');
+            const tags = block.querySelector('#tags');
+
             block.querySelector(".searchModal").style.display = "block";
+            const search = inputBox.value.toLowerCase();
+            const items = dropdown.querySelectorAll('.dropdown-item');
+
+            items.forEach(item => {
+              const text = item.getAttribute('dataValue').toLowerCase();
+
+              // Only show if it matches search AND is not already selected (displayed as tag)
+              const isAlreadySelected = Array.from(tags.children).some(tag =>
+                tag.textContent.replace('×', '').trim().toLowerCase() === text
+              );
+
+              item.style.display = (!isAlreadySelected && text.includes(search)) ? 'block' : 'none';
+            });
           }
         }),
         div({
@@ -15461,16 +15481,18 @@ export default async function decorate(block) {
           ul(
             ...dataMapObj.filterSeachArr.map((element) => {
               return li({
+                class: "dropdown-item",
+                dataValue: element,
                 onclick: (element) => {
                   console.log(element.target.textContent.trim());
-                  let temp = div(
-                    div(
-                      p("X"),
-                      p(element.target.textContent.trim())
-                    )
-                  )
-                  block.querySelector(".searchField").value = element.target.textContent.trim() + " X";
-                  block.querySelector(".searchModal").style.display = "none"
+                  //   let temp = div(
+                  //     div(
+                  //       p("X"),
+                  //       p(element.target.textContent.trim())
+                  //     )
+                  //   )
+                  //   block.querySelector(".searchField").value = element.target.textContent.trim() + " X";
+                  //   block.querySelector(".searchModal").style.display = "none"
 
                 }
               }, element)
@@ -15849,14 +15871,17 @@ export default async function decorate(block) {
         class: "rightTopContainer"
       },
       div({
-          class: "searchBarContainer"
+          class: "searchBarContainer wrapper"
         },
         label("Search"),
         div({
-            class: "inputContainer"
+            class: "inputContainer tag-container",
+            id: "tags",
           },
           input({
-            class: "searchField",
+            type: "text",
+            id: "inputBox",
+            class: "searchField input-box",
             placeholder: "Search Fund",
             onfocus: () => {
               block.querySelector(".searchModal").style.display = "block";
@@ -15866,12 +15891,16 @@ export default async function decorate(block) {
             }
           }),
           div({
-              class: "searchModal",
+              id: "dropdown",
+              class: "searchModal dropdown",
               style: "display:none"
             },
             ul(
               ...dataMapObj.filterSeachArr.map((element) => {
-                return li(element)
+                return li({
+                  class: "dropdown-item",
+                  dataValue: element
+                }, element)
               })
             )
           )
@@ -15998,7 +16027,7 @@ export default async function decorate(block) {
                     label("AMU"),
                     span({
                       class: "amuvalue"
-                    }, (ele.aum[0].latestAum == null ? "" :  "₹" + ele.aum[0].latestAum + " " + "Crs"))
+                    }, (ele.aum[0].latestAum == null ? "" : "₹" + ele.aum[0].latestAum + " " + "Crs"))
                   ),
                   div({
                       class: "risk-container"
