@@ -15502,21 +15502,6 @@ export default async function decorate(block) {
 
                   inputBox.value = '';
                   dropdown.style.display = 'none';
-
-                  block.querySelector(".searchModal").style.display = "block";
-                  const search = inputBox.value.toLowerCase();
-                  const items = block.querySelectorAll('.dropdown-item');
-
-                  items.forEach(item => {
-                    const text = event.target.getAttribute('dataValue').toLowerCase();
-
-                    // Only show if it matches search AND is not already selected (displayed as tag)
-                    const isAlreadySelected = Array.from(tags.children).some(tag =>
-                      tag.textContent.replace('×', '').trim().toLowerCase() === text
-                    );
-
-                    item.style.display = (!isAlreadySelected && text.includes(search)) ? 'block' : 'none';
-                  });
                 })
               }, element)
             })
