@@ -15772,7 +15772,7 @@ export default async function decorate(block) {
                   }, schReturnCagr != '' ? schReturnCagr + "%" : ""),
                   div({
                     class: "cagr-rateDate"
-                  }, schReturnAsOnDt != '' ? cgarDate(elschReturnAsOnDt) : "")
+                  }, schReturnAsOnDt != '' ? cgarDate(schReturnAsOnDt) : "")
                 )
               )
             ),
