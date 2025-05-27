@@ -15483,7 +15483,7 @@ export default async function decorate(block) {
               return li({
                 class: "dropdown-item",
                 dataValue: element,
-                onclick: (() => {
+                onclick: ((event) => {
                   const inputBox = block.querySelector('#inputBox');
                   const dropdown = block.querySelector('#dropdown');
                   const tags = block.querySelector('#tags');
@@ -15493,7 +15493,7 @@ export default async function decorate(block) {
                   const items = block.querySelectorAll('.dropdown-item');
 
                   items.forEach(item => {
-                    const text = item.getAttribute('dataValue').toLowerCase();
+                    const text = event.target.getAttribute('dataValue').toLowerCase();
 
                     // Only show if it matches search AND is not already selected (displayed as tag)
                     const isAlreadySelected = Array.from(tags.children).some(tag =>
