@@ -15475,7 +15475,8 @@ export default async function decorate(block) {
           },
         }),
         div({
-            class: "searchModal",
+            id:"dropdown",
+            class: "searchModal dropdown",
             style: "display:none"
           },
           ul(
