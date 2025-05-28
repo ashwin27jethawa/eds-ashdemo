@@ -15502,7 +15502,7 @@ export default async function decorate(block) {
 
                   dataMapObj.inputSelectArr.forEach((elem,ind)=>{
                     submainContainerCard.forEach((item,index)=>{
-                      if (item.querySelector(".planName") == elem) {
+                      if (item.querySelector(".planName").textContent.trim() == elem) {
                         item.style.display = "block"
                       }else{
                         item.style.display = "none"
