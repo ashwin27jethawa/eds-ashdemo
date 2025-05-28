@@ -15534,6 +15534,7 @@ export default async function decorate(block) {
                       if (dataMapObj.inputSelectArr.length != 0) {
                         submainContainerCard.forEach((item, index) => {
                           if (item.querySelector(".planName").textContent.trim() == event.target.getAttribute("dataClose")) {
+                            item.setAttribute("searchplane", "no")
                             item.style.display = "none"
                           }
                         })
