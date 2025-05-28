@@ -15499,6 +15499,17 @@ export default async function decorate(block) {
                   // Hide selected item from dropdown
                   event.target.style.display = 'none';
                   dataMapObj.inputSelectArr.push(value);
+
+                  dataMapObj.inputSelectArr.forEach((elem,ind)=>{
+                    submainContainerCard.forEach((item,index)=>{
+                      if (item.querySelector(".planName") == elem) {
+                        item.style.display = "block"
+                      }else{
+                        item.style.display = "none"
+                      }
+                    })
+                  })
+
                   // Create a tag
                   const tagsAppend = span({
                     dataClose: value,
