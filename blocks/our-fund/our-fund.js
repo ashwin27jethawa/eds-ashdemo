@@ -15495,10 +15495,6 @@ export default async function decorate(block) {
                   event.target.style.display = 'none';
 
                   // Create a tag
-                  const tag = div({
-                    class: 'tag'
-                  })
-                  tag.className = 'tag';
                   const tagsAppend = div(value,
                     span({
                       dataClose: value,
@@ -15513,8 +15509,10 @@ export default async function decorate(block) {
                       })
                     }, '&times;')
                   );
+                  const tag = div({
+                    class: 'tag'
+                  }, tagsAppend)
 
-                  tag.innerHTML = tagsAppend;
                   tags.insertBefore(tag, inputBox);
 
                   inputBox.value = '';
