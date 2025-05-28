@@ -15507,7 +15507,7 @@ export default async function decorate(block) {
 
                       const items = dropdown.querySelectorAll('.dropdown-item');
 
-                      dataMapObj.inputSelectArr.filter((ele, ind) => {
+                      dataMapObj.inputSelectArr = dataMapObj.inputSelectArr.filter((ele, ind) => {
                         return dataMapObj.inputSelectArr.indexOf(event.target.getAttribute("dataClose")) != ind
                       })
                       items.forEach(item => {
@@ -15515,20 +15515,6 @@ export default async function decorate(block) {
                           item.style.display = 'block';
                         }
                       });
-
-                      if (dataMapObj.inputSelectArr.length != 0) {
-                        submainContainerCard.forEach((item, index) => {
-                          if (dataMapObj.inputSelectArr[index] === item.querySelector(".planName").textContent.trim()) {
-                            item.style.display = 'block';
-                          } else {
-                            item.style.display = 'none';
-                          }
-                        });
-                      } else {
-                        submainContainerCard.forEach((item, index) => {
-                          item.style.display = 'block'
-                        });
-                      }
 
                     })
                   }, 'x');
@@ -15543,15 +15529,6 @@ export default async function decorate(block) {
 
                   inputBox.value = '';
                   dropdown.style.display = 'none';
-
-                  submainContainerCard.forEach((item, index) => {
-                    if (dataMapObj.inputSelectArr[index] === item.querySelector(".planName").textContent.trim()) {
-                      item.style.display = 'block';
-                    } else {
-                      item.style.display = 'none';
-                    }
-                  });
-
                 })
               }, element)
             })
