@@ -15495,7 +15495,7 @@ export default async function decorate(block) {
                   const tags = block.querySelector('#tags');
 
                   const value = event.target.getAttribute('dataValue');
-
+                  let submainContainerCard = block.querySelectorAll(".submain-container-bottom");
                   // Hide selected item from dropdown
                   event.target.style.display = 'none';
                   dataMapObj.inputSelectArr.push(value);
@@ -15504,16 +15504,32 @@ export default async function decorate(block) {
                     dataClose: value,
                     onclick: ((event) => {
                       event.currentTarget.parentElement.remove(); // Remove tag
-                      const items = dropdown.querySelectorAll('.dropdown-item');
-                      dataMapObj.inputSelectArr.filter((ele, ind) => {
-                        return dataMapObj.inputSelectArr.indexOf(event.target.getAttribute("dataClose")) != dataMapObj.inputSelectArr[ind]
-                      })
 
+                      const items = dropdown.querySelectorAll('.dropdown-item');
+
+                      dataMapObj.inputSelectArr.filter((ele, ind) => {
+                        return dataMapObj.inputSelectArr.indexOf(event.target.getAttribute("dataClose")) != ind
+                      })
                       items.forEach(item => {
                         if (item.getAttribute('dataValue') === event.currentTarget.getAttribute("dataClose")) {
                           item.style.display = 'block';
                         }
                       });
+
+                      if (dataMapObj.inputSelectArr.length != 0) {
+                        submainContainerCard.forEach((item, index) => {
+                          if (dataMapObj.inputSelectArr[index] === index) {
+                            item.style.display = 'block';
+                          } else {
+                            item.style.display = 'none';
+                          }
+                        });
+                      } else {
+                        submainContainerCard.forEach((item, index) => {
+                          item.style.display = 'block'
+                        });
+                      }
+
                     })
                   }, 'x');
 
@@ -15527,6 +15543,15 @@ export default async function decorate(block) {
 
                   inputBox.value = '';
                   dropdown.style.display = 'none';
+
+                  submainContainerCard.forEach((item, index) => {
+                    if (dataMapObj.inputSelectArr.indexOf(event.target.getAttribute("dataValue")) === index) {
+                      item.style.display = 'block';
+                    } else {
+                      item.style.display = 'none';
+                    }
+                  });
+
                 })
               }, element)
             })
