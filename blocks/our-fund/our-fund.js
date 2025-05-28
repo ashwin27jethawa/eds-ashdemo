@@ -16,6 +16,7 @@ import {
 // import data from "./our-fund.json"
 export default async function decorate(block) {
   const dataMapObj = {}
+
   const dataObj = {
     "data": {
       "success": true,
@@ -15429,6 +15430,7 @@ export default async function decorate(block) {
 
   let InvestMethod = "Direct"; //document.querySelector("input[type='radio']:checked").value;
   dataMapObj.filterSeachArr = [];
+  dataMapObj.inputSelectArr = [];
   dataObjAllFundBoost.data.data.data.forEach((elem) => {
     elem.planList.forEach((element) => {
       if (!dataMapObj.filterSeachArr.includes(elem.schDetail.schName)) { //element.planName == InvestMethod &&
@@ -15454,24 +15456,7 @@ export default async function decorate(block) {
           class: "searchField input-box",
           placeholder: "Search Fund",
           onfocus: () => {
-            const inputBox = block.querySelector('#inputBox');
-            const dropdown = block.querySelector('#dropdown');
-            const tags = block.querySelector('#tags');
-
             block.querySelector(".searchModal").style.display = "block";
-            const search = inputBox.value.toLowerCase();
-            const items = block.querySelectorAll('.dropdown-item');
-
-            items.forEach(item => {
-              const text = item.getAttribute('dataValue').toLowerCase();
-
-              // Only show if it matches search AND is not already selected (displayed as tag)
-              const isAlreadySelected = Array.from(tags.children).some(tag =>
-                tag.textContent.replace('×', '').trim().toLowerCase() === text
-              );
-
-              item.style.display = (!isAlreadySelected && text.includes(search)) ? 'block' : 'none';
-            });
           },
           oninput: () => {
             const inputBox = block.querySelector('#inputBox');
@@ -15513,13 +15498,17 @@ export default async function decorate(block) {
 
                   // Hide selected item from dropdown
                   event.target.style.display = 'none';
-
+                  dataMapObj.inputSelectArr.push(value);
                   // Create a tag
                   const tagsAppend = span({
                     dataClose: value,
                     onclick: ((event) => {
                       event.currentTarget.parentElement.remove(); // Remove tag
                       const items = dropdown.querySelectorAll('.dropdown-item');
+                      dataMapObj.inputSelectArr.filter((ele, ind) => {
+                        return dataMapObj.inputSelectArr.indexOf(event.target.getAttribute("dataClose")) != dataMapObj.inputSelectArr[ind]
+                      })
+
                       items.forEach(item => {
                         if (item.getAttribute('dataValue') === event.currentTarget.getAttribute("dataClose")) {
                           item.style.display = 'block';
