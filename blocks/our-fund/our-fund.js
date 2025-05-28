@@ -15500,16 +15500,21 @@ export default async function decorate(block) {
                   event.target.style.display = 'none';
                   dataMapObj.inputSelectArr.push(value);
 
-                  dataMapObj.inputSelectArr.forEach((elem,ind)=>{
-                    submainContainerCard.forEach((item,index)=>{
+                  dataMapObj.inputSelectArr.forEach((elem, ind) => {
+                    submainContainerCard.forEach((item, index) => {
                       if (item.querySelector(".planName").textContent.trim() == elem) {
-                        item.style.display = "block"
-                      }else{
-                        item.style.display = "none"
+                        item.setAttribute("searchplane", "yes")
                       }
                     })
                   })
 
+                  submainContainerCard.forEach((item, index) => {
+                    if (item.getAttribute("searchplane") == "yes") {
+                      item.style.display = "block"
+                    } else {
+                      item.style.display = "none"
+                    }
+                  })
                   // Create a tag
                   const tagsAppend = span({
                     dataClose: value,
