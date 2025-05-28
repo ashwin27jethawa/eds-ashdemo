@@ -15476,7 +15476,7 @@ export default async function decorate(block) {
         }),
         div({
             id:"dropdown",
-            class: "searchModal dropdown",
+            class: "searchModal",
             style: "display:none"
           },
           ul(
@@ -15900,7 +15900,7 @@ export default async function decorate(block) {
           }),
           div({
               id: "dropdown",
-              class: "searchModal dropdown",
+              class: "searchModal",
               style: "display:none"
             },
             ul(
