@@ -15531,7 +15531,17 @@ export default async function decorate(block) {
                           item.style.display = 'block';
                         }
                       });
-
+                      if (dataMapObj.inputSelectArr.length != 0) {
+                        submainContainerCard.forEach((item, index) => {
+                          if (item.querySelector(".planName").textContent.trim() == event.target.getAttribute("dataClose")) {
+                            item.style.display = "none"
+                          }
+                        })
+                      }else{
+                        submainContainerCard.forEach((item, index) => {
+                          item.style.display = "block"
+                        })
+                      }
                     })
                   }, 'x');
 
