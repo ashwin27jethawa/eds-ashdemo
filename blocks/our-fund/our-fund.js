@@ -15518,7 +15518,7 @@ export default async function decorate(block) {
 
                       if (dataMapObj.inputSelectArr.length != 0) {
                         submainContainerCard.forEach((item, index) => {
-                          if (dataMapObj.inputSelectArr[index] === index) {
+                          if (dataMapObj.inputSelectArr[index] === item.querySelector(".planName").textContent.trim()) {
                             item.style.display = 'block';
                           } else {
                             item.style.display = 'none';
@@ -15545,7 +15545,7 @@ export default async function decorate(block) {
                   dropdown.style.display = 'none';
 
                   submainContainerCard.forEach((item, index) => {
-                    if (dataMapObj.inputSelectArr.indexOf(event.target.getAttribute("dataValue")) === index) {
+                    if (dataMapObj.inputSelectArr[index] === item.querySelector(".planName").textContent.trim()) {
                       item.style.display = 'block';
                     } else {
                       item.style.display = 'none';
