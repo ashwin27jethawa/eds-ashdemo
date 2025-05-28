@@ -15495,23 +15495,24 @@ export default async function decorate(block) {
                   event.target.style.display = 'none';
 
                   // Create a tag
-                  const tagsAppend = div(value,
-                    span({
-                      dataClose: value,
-                      onclick: ((event) => {
-                        event.currentTarget.parentElement.remove(); // Remove tag
-                        const items = dropdown.querySelectorAll('.dropdown-item');
-                        items.forEach(item => {
-                          if (item.getAttribute('dataValue') === event.currentTarget.getAttribute("dataClose")) {
-                            item.style.display = 'block';
-                          }
-                        });
-                      })
-                    }, '&times;')
-                  );
+                  const tagsAppend = span({
+                    dataClose: value,
+                    onclick: ((event) => {
+                      event.currentTarget.parentElement.remove(); // Remove tag
+                      const items = dropdown.querySelectorAll('.dropdown-item');
+                      items.forEach(item => {
+                        if (item.getAttribute('dataValue') === event.currentTarget.getAttribute("dataClose")) {
+                          item.style.display = 'block';
+                        }
+                      });
+                    })
+                  }, 'x');
+
                   const tag = div({
-                    class: 'tag'
-                  }, tagsAppend)
+                      class: 'tag'
+                    },
+                    value,
+                    tagsAppend)
 
                   tags.insertBefore(tag, inputBox);
 
