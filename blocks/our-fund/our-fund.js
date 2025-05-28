@@ -15542,6 +15542,7 @@ export default async function decorate(block) {
                           item.style.display = "block"
                         })
                       }
+                      dropdown.style.display = 'none';
                     })
                   }, 'x');
 
