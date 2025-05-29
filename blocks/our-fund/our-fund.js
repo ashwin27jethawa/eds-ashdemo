@@ -15431,4 +15431,173 @@ export default async function decorate(block) {
   block.querySelector(".inner1-container2").append(leftContainer);
   // Left Container End
 
+
+  // Right Top Start
+  const rightTopContianer = div({
+      class: "rightTopContainer"
+    },
+    div({
+        class: "searchBarContainer wrapper"
+      },
+      label("Search"),
+      div({
+          id: "tags",
+          class: "inputContainer tag-container"
+        },
+        input({
+          type: "text",
+          id: "inputBox",
+          class: "searchField input-box",
+          placeholder: "Search Fund",
+          onfocus: () => {
+            block.querySelector(".searchModal").style.display = "block";
+          },
+          oninput: () => {
+            const inputBox = block.querySelector('#inputBox');
+            const dropdown = block.querySelector('#dropdown');
+            const tags = block.querySelector('#tags');
+
+            block.querySelector(".searchModal").style.display = "block";
+            const search = inputBox.value.toLowerCase();
+            const items = block.querySelectorAll('.dropdown-item');
+
+            items.forEach(item => {
+              const text = item.getAttribute('dataValue').toLowerCase();
+
+              // Only show if it matches search AND is not already selected (displayed as tag)
+              const isAlreadySelected = Array.from(tags.children).some(tag =>
+                tag.textContent.replace('×', '').trim().toLowerCase() === text
+              );
+
+              item.style.display = (!isAlreadySelected && text.includes(search)) ? 'block' : 'none';
+            });
+          },
+        }),
+        div({
+            id: "dropdown",
+            class: "searchModal",
+            style: "display:none"
+          },
+          ul(
+            ...dataMapObj.filterSeachArr.map((element) => {
+              return li({
+                class: "dropdown-item",
+                dataValue: element,
+                onclick: ((event) => {
+                  const inputBox = block.querySelector('#inputBox');
+                  const dropdown = block.querySelector('#dropdown');
+                  const tags = block.querySelector('#tags');
+
+                  const value = event.target.getAttribute('dataValue');
+                  let submainContainerCard = block.querySelectorAll(".submain-container-bottom");
+                  // Hide selected item from dropdown
+                  event.target.style.display = 'none';
+                  dataMapObj.inputSelectArr.push(value);
+
+                  dataMapObj.inputSelectArr.forEach((elem, ind) => {
+                    submainContainerCard.forEach((item, index) => {
+                      if (item.querySelector(".planName").textContent.trim() == elem) {
+                        item.setAttribute("searchplane", "yes")
+                      }
+                    })
+                  })
+
+                  submainContainerCard.forEach((item, index) => {
+                    if (item.getAttribute("searchplane") == "yes") {
+                      item.style.display = "block"
+                    } else {
+                      item.style.display = "none"
+                    }
+                  })
+                  // Create a tag
+                  const tagsAppend = span({
+                    dataClose: value,
+                    onclick: ((event) => {
+                      event.currentTarget.parentElement.remove(); // Remove tag
+
+                      const items = dropdown.querySelectorAll('.dropdown-item');
+
+                      dataMapObj.inputSelectArr = dataMapObj.inputSelectArr.filter((ele, ind) => {
+                        return dataMapObj.inputSelectArr.indexOf(event.target.getAttribute("dataClose")) != ind
+                      })
+                      items.forEach(item => {
+                        if (item.getAttribute('dataValue') === event.currentTarget.getAttribute("dataClose")) {
+                          item.style.display = 'block';
+                        }
+                      });
+                      if (dataMapObj.inputSelectArr.length != 0) {
+                        submainContainerCard.forEach((item, index) => {
+                          if (item.querySelector(".planName").textContent.trim() == event.target.getAttribute("dataClose")) {
+                            item.setAttribute("searchplane", "no")
+                            item.style.display = "none"
+                          }
+                        })
+                      } else {
+                        submainContainerCard.forEach((item, index) => {
+                          item.style.display = "block"
+                        })
+                      }
+                      dropdown.style.display = 'none';
+                    })
+                  }, 'x');
+
+                  const tag = div({
+                      class: 'tag'
+                    },
+                    value,
+                    tagsAppend)
+
+                  tags.insertBefore(tag, inputBox);
+
+                  inputBox.value = '';
+                  dropdown.style.display = 'none';
+                })
+              }, element)
+            })
+          )
+        )
+      )
+    ),
+    div({
+        class: "dropDownField"
+      },
+      label("Sort Funds By"),
+      div({
+          class: "dropDownField-container"
+        },
+        div({
+            class: "container-box"
+          },
+          input({
+            class: "seachBox",
+            placeholder: "Popular"
+          }),
+        ),
+        div({
+            class: "dropdown-modal"
+          },
+          ul(
+            ...dataObj.data.data.sort.map((e, index) => {
+              return li({
+                dataIndex: index,
+                onclick: (event) => {
+                  block.querySelectorAll(".inner2-container1 .dropdown-modal ul li").forEach((el) => {
+                    el.classList.remove("active");
+                  })
+                  event.target.classList.add("active");
+                  block.querySelector(".inner2-container1 .seachBox").value = event.target.textContent.trim()
+                  block.querySelector(".inner2-container1 .dropdown-modal").style.display = "none";
+                  let schemes = dataObj.data.data.sort[event.target.getAttribute("dataIndex")].schemes
+
+                }
+              }, e.sortName)
+            })
+          )
+        )
+      )
+    )
+  )
+  block.querySelector(".inner2-container1").innerHTML = "";
+  block.querySelector(".inner2-container1").append(rightTopContianer);
+  // Right Top End
 }
