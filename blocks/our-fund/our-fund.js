@@ -15282,4 +15282,152 @@ export default async function decorate(block) {
       elementer.classList.add("inner" + (index + 1) + "-container" + (indexer + 1))
     })
   })
+  renderData();
+  function renderData() {
+    const leftContainer = div({
+        class: "left-container"
+      },
+      label("Investment Method"),
+      div({
+          class: "radio-button-container"
+        },
+        label(
+          input({
+            type: "radio",
+            value: "Direct",
+            cheked: "true",
+            onclick: function (ele) {
+              document.querySelector("input[value='Regular']").checked = false
+              eventTriggerRending(dataObjAllFundBoost.data.data.data)
+            },
+            checked: true
+          }), "Direct"
+        ),
+        label(
+          input({
+            type: "radio",
+            value: "Regular",
+            onclick: function (ele) {
+              document.querySelector("input[value='Direct']").checked = false
+              eventTriggerRending(dataObjAllFundBoost.data.data.data)
+            }
+          }), "Regular"
+        )
+      ),
+      div({
+          class: "FundCategory-container"
+        },
+        div({
+            class: "title-container"
+          },
+          label("Fund Category"),
+          label("Clear")
+        ),
+        div({
+            class: "filter-container"
+          },
+          ...dataObj.data.data.fundCategory.map((element, index) => {
+            if (dataMapObj[index] == undefined) {
+              dataMapObj[index] = 0
+
+            }
+            element.subCategory.forEach((elme, ind) => {
+              dataMapObj[index] += elme.schemes.length
+            })
+            let strSchme = [];
+            element.subCategory.forEach((elem) => {
+              strSchme.push(elem.schemes.join("-"));
+            })
+            if (element.categoryName === "Indian Equity") {
+              dataMapObj[index + "ArrayDoc"] = div({
+                  class: "Indian-Equity-container"
+                },
+                ...element.subCategory.map((elme, ind) => {
+                  return label({
+                      class: "checkbox-label-container"
+                    },
+                    span({
+                        class: "square-shape"
+                      },
+                      input({
+                        class: "categorey-direct",
+                        type: "checkbox",
+                        dataattr: elme.schemes.join("-"),
+                        onclick: function (ele) {
+                          console.log(ele.target.getAttribute("dataattr"));
+                          eventTriggerRending(dataObjAllFundBoost.data.data.data)
+                        }
+                      })
+                    ),
+                    span(elme.categoryName)
+                  )
+                })
+              )
+            }
+            return label({
+                class: "checkbox-label-container"
+              },
+              span({
+                  class: "square-shape"
+                },
+                input({
+                  class: "categorey-direct",
+                  type: "checkbox",
+                  dataattr: strSchme.join("-"),
+                  onclick: function (ele) {
+                    console.log(ele.target.getAttribute("dataattr"));
+                    if (ele.currentTarget.parentElement.nextElementSibling.textContent.trim().includes("Indian Equity")) {
+                      block.querySelectorAll(".Indian-Equity-container .categorey-direct").forEach((element) => {
+                        element.checked = ele.currentTarget.checked ? true : false;
+                      })
+                    }
+                    eventTriggerRending(dataObjAllFundBoost.data.data.data)
+                  }
+                })
+              ),
+              span(element.categoryName + "(" + dataMapObj[index] + ")"),
+              element.categoryName === "Indian Equity" ? div({
+                class: "innerIndianEquity"
+              }, dataMapObj[index + "ArrayDoc"]) : ""
+            )
+          })
+        )
+      ),
+      div({
+          class: "FundTye-container"
+        },
+        div({
+            class: "title-container"
+          },
+          label("Fund Type"),
+          label("Clear")
+        ),
+        div({
+            class: "fund-container"
+          },
+          ...dataObj.data.data.fundType.map((element) => {
+            return label({
+                class: "checkbox-label-container"
+              },
+              span({
+                  class: "square-shape"
+                },
+                input({
+                  class: "categorey-direct",
+                  type: "checkbox",
+                  dataattr: element.schemes.join("-"),
+                  onclick: function (ele) {
+                    console.log(ele.target.getAttribute("dataattr"));
+                    eventTriggerRending(dataObjAllFundBoost.data.data.data)
+                  }
+                })
+              ),
+              span(element.typeName + "(" + element.schemes.length + ")"),
+            )
+          })
+        )
+      )
+    )
+  }
+
 }
