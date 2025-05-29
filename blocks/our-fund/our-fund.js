@@ -15283,6 +15283,119 @@ export default async function decorate(block) {
     })
   })
 
+  // const lumpsumFunds = div({
+  //     class: "lumpsum-main-container"
+  //   },
+  //   div({
+  //       class: "lumpsumTabPackage"
+  //     },
+  //     div({
+  //         class: "row"
+  //       },
+  //       div({
+  //           class: "col-md-12"
+  //         },
+  //         div({
+  //             class: "amtSec pt-0"
+  //           },
+  //           div({
+  //               class: "form-group"
+  //             },
+  //             label({
+  //               class: "lumpsumInvestment"
+  //             }, "Enter your investment amount"),
+  //             div({
+  //                 class: "input-box"
+  //               },
+  //               input({
+  //                 autocomplete: "off",
+  //                 type: "text",
+  //                 name: "amount",
+  //                 class: "txtbox biginput mt-4",
+  //                 maxlength: "13",
+  //                 value: "₹40,000",
+  //               }),
+  //               span({
+  //                 class: "error-message"
+  //               })
+  //             )
+  //           )
+  //         )
+  //       )
+  //     )
+  //   ),
+  //   div({class:"fundCard-button-list"},
+  //     ul(
+  //       li(a("ADD TO CART")),
+  //       li(a("INVEST NOW"))
+  //     )
+  //   )
+  // );
+  // const sipFunds = div({class:"sipTabPackage-main-container"},
+  //   div({class:"sipTabPackage"},
+  //     div({class:"col-md-12 "},
+  //       div({class:"row mt-3"},
+  //         div({class:"col-md-6"},
+  //           div({class:"form-group"},
+  //             label({class:"lbl input-lable"},"ENTER AMOUNT"),
+  //             div({class: "input-box"},
+  //               input({
+  //                 autocomplete: "off",
+  //                 type: "text",
+  //                 name: "amount",
+  //                 class: "txtbox biginput mt-4",
+  //                 maxlength: "13",
+  //                 value: "₹40,000",
+  //               }),
+  //               span({
+  //                 class: "error-message"
+  //               })
+  //             )
+  //           )
+  //         ),
+  //         div({class:"col-md-6"},
+  //           div({class:"form-group"},
+  //             label({class:"lbl input-lable"}," 2nd SIP Starts From"),
+  //             div({class:"calender_position"})
+  //           )
+  //         )
+  //       )
+  //     )
+  //   ),
+  //   div({class:"fundCard-button-list"},
+  //     ul(
+  //       li(a("ADD TO CART")),
+  //       li(a("INVEST NOW"))
+  //     )
+  //   )
+  // );
+
+  // const modalFunds = div({
+  //     class: "main-modal-funds"
+  //   },
+  //   div({
+  //       class: "modal-modal-sub-fund"
+  //     },
+  //     div({
+  //         class: "modal-modal-subinner-fund"
+  //       },
+  //       div({
+  //           class: "modal-tablist-cross"
+  //         },
+  //         button({
+  //           class: "cross-button"
+  //         }, span("x")),
+  //         ul({
+  //             class: "tablist-type"
+  //           },
+  //           li("lumpsum"),
+  //           li("sip")
+  //         )
+  //       )
+  //     )
+  //   )
+  // )
+
   const leftContainer = div({
       class: "left-container"
     },
@@ -15538,7 +15651,7 @@ export default async function decorate(block) {
                             item.style.display = "none"
                           }
                         })
-                      }else{
+                      } else {
                         submainContainerCard.forEach((item, index) => {
                           item.style.display = "block"
                         })
@@ -15697,7 +15810,8 @@ export default async function decorate(block) {
                 class: "logoName"
               }, "Logo"),
               div({
-                class: "planName"
+                class: "planName",
+                dataschCode: ele.schCode
               }, a(ele.schDetail.schName))
             ),
             div({
@@ -15938,8 +16052,8 @@ export default async function decorate(block) {
         },
         label("Search"),
         div({
-            class: "inputContainer tag-container",
             id: "tags",
+            class: "inputContainer tag-container"
           },
           input({
             type: "text",
@@ -15949,9 +16063,26 @@ export default async function decorate(block) {
             onfocus: () => {
               block.querySelector(".searchModal").style.display = "block";
             },
-            onmouseout: () => {
-              block.querySelector(".searchModal").style.display = "none";
-            }
+            oninput: () => {
+              const inputBox = block.querySelector('#inputBox');
+              const dropdown = block.querySelector('#dropdown');
+              const tags = block.querySelector('#tags');
+
+              block.querySelector(".searchModal").style.display = "block";
+              const search = inputBox.value.toLowerCase();
+              const items = block.querySelectorAll('.dropdown-item');
+
+              items.forEach(item => {
+                const text = item.getAttribute('dataValue').toLowerCase();
+
+                // Only show if it matches search AND is not already selected (displayed as tag)
+                const isAlreadySelected = Array.from(tags.children).some(tag =>
+                  tag.textContent.replace('×', '').trim().toLowerCase() === text
+                );
+
+                item.style.display = (!isAlreadySelected && text.includes(search)) ? 'block' : 'none';
+              });
+            },
           }),
           div({
               id: "dropdown",
@@ -15962,7 +16093,76 @@ export default async function decorate(block) {
               ...dataMapObj.filterSeachArr.map((element) => {
                 return li({
                   class: "dropdown-item",
-                  dataValue: element
+                  dataValue: element,
+                  onclick: ((event) => {
+                    const inputBox = block.querySelector('#inputBox');
+                    const dropdown = block.querySelector('#dropdown');
+                    const tags = block.querySelector('#tags');
+
+                    const value = event.target.getAttribute('dataValue');
+                    let submainContainerCard = block.querySelectorAll(".submain-container-bottom");
+                    // Hide selected item from dropdown
+                    event.target.style.display = 'none';
+                    dataMapObj.inputSelectArr.push(value);
+
+                    dataMapObj.inputSelectArr.forEach((elem, ind) => {
+                      submainContainerCard.forEach((item, index) => {
+                        if (item.querySelector(".planName").textContent.trim() == elem) {
+                          item.setAttribute("searchplane", "yes")
+                        }
+                      })
+                    })
+
+                    submainContainerCard.forEach((item, index) => {
+                      if (item.getAttribute("searchplane") == "yes") {
+                        item.style.display = "block"
+                      } else {
+                        item.style.display = "none"
+                      }
+                    })
+                    // Create a tag
+                    const tagsAppend = span({
+                      dataClose: value,
+                      onclick: ((event) => {
+                        event.currentTarget.parentElement.remove(); // Remove tag
+
+                        const items = dropdown.querySelectorAll('.dropdown-item');
+
+                        dataMapObj.inputSelectArr = dataMapObj.inputSelectArr.filter((ele, ind) => {
+                          return dataMapObj.inputSelectArr.indexOf(event.target.getAttribute("dataClose")) != ind
+                        })
+                        items.forEach(item => {
+                          if (item.getAttribute('dataValue') === event.currentTarget.getAttribute("dataClose")) {
+                            item.style.display = 'block';
+                          }
+                        });
+                        if (dataMapObj.inputSelectArr.length != 0) {
+                          submainContainerCard.forEach((item, index) => {
+                            if (item.querySelector(".planName").textContent.trim() == event.target.getAttribute("dataClose")) {
+                              item.setAttribute("searchplane", "no")
+                              item.style.display = "none"
+                            }
+                          })
+                        } else {
+                          submainContainerCard.forEach((item, index) => {
+                            item.style.display = "block"
+                          })
+                        }
+                        dropdown.style.display = 'none';
+                      })
+                    }, 'x');
+
+                    const tag = div({
+                        class: 'tag'
+                      },
+                      value,
+                      tagsAppend)
+
+                    tags.insertBefore(tag, inputBox);
+
+                    inputBox.value = '';
+                    dropdown.style.display = 'none';
+                  })
                 }, element)
               })
             )
@@ -15982,7 +16182,7 @@ export default async function decorate(block) {
             input({
               class: "seachBox",
               placeholder: "Popular"
-            })
+            }),
           ),
           div({
               class: "dropdown-modal"
@@ -15998,9 +16198,8 @@ export default async function decorate(block) {
                     event.target.classList.add("active");
                     block.querySelector(".inner2-container1 .seachBox").value = event.target.textContent.trim()
                     block.querySelector(".inner2-container1 .dropdown-modal").style.display = "none";
-
                     let schemes = dataObj.data.data.sort[event.target.getAttribute("dataIndex")].schemes
-                    // eventTriggerRending(dataObjAllFundBoost.data.data.data)
+
                   }
                 }, e.sortName)
               })
@@ -16050,7 +16249,8 @@ export default async function decorate(block) {
                   class: "logoName"
                 }, "Logo"),
                 div({
-                  class: "planName"
+                  class: "planName",
+                  dataschCode: ele.schCode
                 }, a(ele.schDetail.schName))
               ),
               div({
@@ -16189,4 +16389,5 @@ export default async function decorate(block) {
     block.querySelector(".inner2-container2").innerHTML = "";
     block.querySelector(".inner2-container2").append(rightBottomContainer);
   }
+
 }
