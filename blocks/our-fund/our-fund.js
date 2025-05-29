@@ -16233,6 +16233,42 @@ export default async function decorate(block) {
           }
         })
         dataMapObj.siperiods = dataMapObj.siperiods.sort();
+        let AumValue = '',
+          dataAum = '',
+          navRecdt = '',
+          navValue = '',
+          navChngPer = '',
+          schReturnCagr = '',
+          schReturnAsOnDt = '';
+        ele.planList.forEach((eleTemp) => {
+          let dataCode = eleTemp.schemeCode + eleTemp.planCode;
+          [...ele.aum, ...ele.nav, ...ele.return].forEach((Aum) => {
+            let tempAumCode = Aum.schemeCode + Aum.planCode;
+            if (tempAumCode == dataCode) {
+              if (Aum.latestAum) {
+                AumValue = Aum.latestAum;
+              }
+              if (Aum.latestAumAsOnDt) {
+                dataAum = Aum.latestAumAsOnDt;
+              }
+              if (Aum.nav) {
+                navValue = Aum.nav;
+              }
+              if (Aum.navRecdt) {
+                navRecdt = Aum.navRecdt;
+              }
+              if (Aum.navChngPer) {
+                navChngPer = Aum.navChngPer;
+              }
+              if (Aum.schReturnCagr) {
+                schReturnCagr = Aum.schReturnCagr
+              }
+              if (Aum.schReturnAsOnDt) {
+                schReturnAsOnDt = Aum.schReturnAsOnDt
+              }
+            }
+          })
+        })
         return index !== 0 && dataMapObj.filterSeachArr.includes(ele.schDetail.schName) ? div({
             class: "submain-container-bottom"
           },
@@ -16259,11 +16295,72 @@ export default async function decorate(block) {
                 span({
                     class: "fundOption"
                   },
-                  select(
+                  select({
+                      dataCardIndex: index,
+                      onchange: function (event) {
+                        let cardIndex = event.target.getAttribute("dataCardIndex");
+                        let dataCode = event.currentTarget.options[event.target.options.selectedIndex].getAttribute("dataCode");
+                        let AumValue = '',
+                          dataAum = '',
+                          navRecdt = '',
+                          navValue = '',
+                          navChngPer = '',
+                          schReturnCagr = '',
+                          schReturnAsOnDt = '';
+                        [...ele.aum, ...ele.nav, ...ele.return].forEach((Aum) => {
+                          let tempAumCode = Aum.schemeCode + Aum.planCode;
+                          if (tempAumCode == dataCode) {
+                            if (Aum.latestAum) {
+                              AumValue = Aum.latestAum;
+                            }
+                            if (Aum.latestAumAsOnDt) {
+                              dataAum = Aum.latestAumAsOnDt;
+                            }
+                            if (Aum.nav) {
+                              navValue = Aum.nav;
+                            }
+                            if (Aum.navRecdt) {
+                              navRecdt = Aum.navRecdt;
+                            }
+                            if (Aum.navChngPer) {
+                              navChngPer = Aum.navChngPer;
+                            }
+                            if (Aum.schReturnCagr) {
+                              schReturnCagr = Aum.schReturnCagr
+                            }
+                            if (Aum.schReturnAsOnDt) {
+                              schReturnAsOnDt = Aum.schReturnAsOnDt
+                            }
+                          }
+                        })
+                        Array.from(block.querySelector(".main-container-bottom").children).forEach((eleHTML, indexHTML) => {
+                          if (indexHTML == (cardIndex - 1)) {
+                            eleHTML.querySelector(".amuvalue").textContent = "";
+                            eleHTML.querySelector(".amuvalue").textContent = AumValue;
+
+                            eleHTML.querySelector(".fundValue").textContent = "";
+                            eleHTML.querySelector(".fundValue").textContent = navValue;
+                            eleHTML.querySelector(".fundRateValue").textContent = "";
+                            eleHTML.querySelector(".fundRateValue").style.color = Math.sign(navChngPer) == -1 ? "red" : "green"
+                            eleHTML.querySelector(".fundRateValue").textContent = "(" + navChngPer + "%)";
+                            eleHTML.querySelector(".navFundDate").textContent = "";
+                            eleHTML.querySelector(".navFundDate").textContent = navDate(navRecdt.split(" ")[0]);
+
+                            eleHTML.querySelector(".cagr-rate").textContent = "";
+                            eleHTML.querySelector(".cagr-rate").textContent = schReturnCagr;
+                            eleHTML.querySelector(".cagr-rateDate").textContent = "";
+                            eleHTML.querySelector(".cagr-rateDate").textContent = cgarDate(schReturnAsOnDt);
+                          }
+                        })
+                        //   console.log(AumValue, dataAum, navValue,navChngPer,schReturnAsOnDt);
+                      }
+                    },
                     ...ele.planList.map((seleOp) => {
-                      if (!dataMapObj.DuplicateRemove.includes(seleOp.optionName) && seleOp.planName == InvestBtn) {
+                      if (!dataMapObj.DuplicateRemove.includes(seleOp.optionName) && InvestBtn == seleOp.planName) {
                         dataMapObj.DuplicateRemove.push(seleOp.optionName)
-                        return option(seleOp.optionName)
+                        return option({
+                          dataCode: seleOp.schemeCode + seleOp.planCode,
+                        }, seleOp.optionName)
                       }
                     })
                   )
@@ -16290,7 +16387,7 @@ export default async function decorate(block) {
                     label("AMU"),
                     span({
                       class: "amuvalue"
-                    }, (ele.aum[0].latestAum == null ? "" : "₹" + ele.aum[0].latestAum + " " + "Crs"))
+                    }, ("₹" + AumValue + " " + "Crs"))
                   ),
                   div({
                       class: "risk-container"
@@ -16321,15 +16418,15 @@ export default async function decorate(block) {
                         },
                         div({
                           class: "fundValue"
-                        }, ele.nav[0].nav),
+                        }, navValue),
                         div({
                           class: "fundRateValue",
-                          style: Math.sign(ele.nav[0].navChng) == -1 ? "color:red" : "color:green"
-                        }, "(" + ele.nav[0].navChng + "%)")
+                          style: Math.sign(navChngPer) == -1 ? "color:red" : "color:green"
+                        }, "(" + navChngPer + "%)")
                       ),
                       div({
                         class: "navFundDate"
-                      }, navDate(ele.nav[0].navRecdt.split(" ")[0]))
+                      }, navDate(navRecdt.split(" ")[0]))
                     )
                   ),
                   div({
@@ -16346,10 +16443,10 @@ export default async function decorate(block) {
                     ),
                     div({
                       class: "cagr-rate"
-                    }, ele.return.length != 0 ? ele.return[0].schReturnCagr + "%" : ""),
+                    }, schReturnCagr != '' ? schReturnCagr + "%" : ""),
                     div({
                       class: "cagr-rateDate"
-                    }, ele.return.length != 0 ? cgarDate(ele.return[0].schReturnAsOnDt) : "")
+                    }, schReturnAsOnDt != '' ? cgarDate(schReturnAsOnDt) : "")
                   )
                 )
               ),
