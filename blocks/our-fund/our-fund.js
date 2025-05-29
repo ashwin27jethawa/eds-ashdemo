@@ -15433,171 +15433,286 @@ export default async function decorate(block) {
 
 
   // Right Top Start
-  const rightTopContianer = div({
-      class: "rightTopContainer"
-    },
-    div({
-        class: "searchBarContainer wrapper"
+  function eventTriggerRending(param) {
+    let InvestMethod = block.querySelector("input[type='radio']:checked").value;
+    dataMapObj.filterSeachArr = [];
+    let mop = [];
+    block.querySelectorAll("[type='checkbox']").forEach((element) => {
+      if (element.checked) {
+        mop.push(element.getAttribute("dataattr"))
+      }
+    })
+    mop = mop.length === 0 ? "" : mop.join("-");
+    param.forEach((elem) => {
+      elem.planList.forEach((element) => {
+        if (!dataMapObj.filterSeachArr.includes(elem.schDetail.schName) && mop.length === 0) {
+          dataMapObj.filterSeachArr.push(elem.schDetail.schName)
+        } else {
+          if (!dataMapObj.filterSeachArr.includes(elem.schDetail.schName) && mop.includes(elem.schCode)) {
+            dataMapObj.filterSeachArr.push(elem.schDetail.schName)
+          }
+        }
+      })
+
+    })
+    const rightTopContianer = div({
+        class: "rightTopContainer"
       },
-      label("Search"),
       div({
-          id: "tags",
-          class: "inputContainer tag-container"
+          class: "searchBarContainer wrapper"
         },
-        input({
-          type: "text",
-          id: "inputBox",
-          class: "searchField input-box",
-          placeholder: "Search Fund",
-          onfocus: () => {
-            block.querySelector(".searchModal").style.display = "block";
-          },
-          oninput: () => {
-            const inputBox = block.querySelector('#inputBox');
-            const dropdown = block.querySelector('#dropdown');
-            const tags = block.querySelector('#tags');
-
-            block.querySelector(".searchModal").style.display = "block";
-            const search = inputBox.value.toLowerCase();
-            const items = block.querySelectorAll('.dropdown-item');
-
-            items.forEach(item => {
-              const text = item.getAttribute('dataValue').toLowerCase();
-
-              // Only show if it matches search AND is not already selected (displayed as tag)
-              const isAlreadySelected = Array.from(tags.children).some(tag =>
-                tag.textContent.replace('×', '').trim().toLowerCase() === text
-              );
-
-              item.style.display = (!isAlreadySelected && text.includes(search)) ? 'block' : 'none';
-            });
-          },
-        }),
+        label("Search"),
         div({
-            id: "dropdown",
-            class: "searchModal",
-            style: "display:none"
-          },
-          ul(
-            ...dataMapObj.filterSeachArr.map((element) => {
-              return li({
-                class: "dropdown-item",
-                dataValue: element,
-                onclick: ((event) => {
-                  const inputBox = block.querySelector('#inputBox');
-                  const dropdown = block.querySelector('#dropdown');
-                  const tags = block.querySelector('#tags');
-
-                  const value = event.target.getAttribute('dataValue');
-                  let submainContainerCard = block.querySelectorAll(".submain-container-bottom");
-                  // Hide selected item from dropdown
-                  event.target.style.display = 'none';
-                  dataMapObj.inputSelectArr.push(value);
-
-                  dataMapObj.inputSelectArr.forEach((elem, ind) => {
-                    submainContainerCard.forEach((item, index) => {
-                      if (item.querySelector(".planName").textContent.trim() == elem) {
-                        item.setAttribute("searchplane", "yes")
-                      }
-                    })
-                  })
-
-                  submainContainerCard.forEach((item, index) => {
-                    if (item.getAttribute("searchplane") == "yes") {
-                      item.style.display = "block"
-                    } else {
-                      item.style.display = "none"
-                    }
-                  })
-                  // Create a tag
-                  const tagsAppend = span({
-                    dataClose: value,
-                    onclick: ((event) => {
-                      event.currentTarget.parentElement.remove(); // Remove tag
-
-                      const items = dropdown.querySelectorAll('.dropdown-item');
-
-                      dataMapObj.inputSelectArr = dataMapObj.inputSelectArr.filter((ele, ind) => {
-                        return dataMapObj.inputSelectArr.indexOf(event.target.getAttribute("dataClose")) != ind
-                      })
-                      items.forEach(item => {
-                        if (item.getAttribute('dataValue') === event.currentTarget.getAttribute("dataClose")) {
-                          item.style.display = 'block';
-                        }
-                      });
-                      if (dataMapObj.inputSelectArr.length != 0) {
-                        submainContainerCard.forEach((item, index) => {
-                          if (item.querySelector(".planName").textContent.trim() == event.target.getAttribute("dataClose")) {
-                            item.setAttribute("searchplane", "no")
-                            item.style.display = "none"
-                          }
-                        })
-                      } else {
-                        submainContainerCard.forEach((item, index) => {
-                          item.style.display = "block"
-                        })
-                      }
-                      dropdown.style.display = 'none';
-                    })
-                  }, 'x');
-
-                  const tag = div({
-                      class: 'tag'
-                    },
-                    value,
-                    tagsAppend)
-
-                  tags.insertBefore(tag, inputBox);
-
-                  inputBox.value = '';
-                  dropdown.style.display = 'none';
-                })
-              }, element)
-            })
-          )
-        )
-      )
-    ),
-    div({
-        class: "dropDownField"
-      },
-      label("Sort Funds By"),
-      div({
-          class: "dropDownField-container"
-        },
-        div({
-            class: "container-box"
+            class: "inputContainer tag-container",
+            id: "tags",
           },
           input({
-            class: "seachBox",
-            placeholder: "Popular"
+            type: "text",
+            id: "inputBox",
+            class: "searchField input-box",
+            placeholder: "Search Fund",
+            onfocus: () => {
+              block.querySelector(".searchModal").style.display = "block";
+            },
+            onmouseout: () => {
+              block.querySelector(".searchModal").style.display = "none";
+            }
           }),
-        ),
+          div({
+              id: "dropdown",
+              class: "searchModal",
+              style: "display:none"
+            },
+            ul(
+              ...dataMapObj.filterSeachArr.map((element) => {
+                return li({
+                  class: "dropdown-item",
+                  dataValue: element
+                }, element)
+              })
+            )
+          )
+        )
+      ),
+      div({
+          class: "dropDownField"
+        },
+        label("Sort Funds By"),
         div({
-            class: "dropdown-modal"
+            class: "dropDownField-container"
           },
-          ul(
-            ...dataObj.data.data.sort.map((e, index) => {
-              return li({
-                dataIndex: index,
-                onclick: (event) => {
-                  block.querySelectorAll(".inner2-container1 .dropdown-modal ul li").forEach((el) => {
-                    el.classList.remove("active");
-                  })
-                  event.target.classList.add("active");
-                  block.querySelector(".inner2-container1 .seachBox").value = event.target.textContent.trim()
-                  block.querySelector(".inner2-container1 .dropdown-modal").style.display = "none";
-                  let schemes = dataObj.data.data.sort[event.target.getAttribute("dataIndex")].schemes
-
-                }
-              }, e.sortName)
+          div({
+              class: "container-box"
+            },
+            input({
+              class: "seachBox",
+              placeholder: "Popular"
             })
+          ),
+          div({
+              class: "dropdown-modal"
+            },
+            ul(
+              ...dataObj.data.data.sort.map((e, index) => {
+                return li({
+                  dataIndex: index,
+                  onclick: (event) => {
+                    block.querySelectorAll(".inner2-container1 .dropdown-modal ul li").forEach((el) => {
+                      el.classList.remove("active");
+                    })
+                    event.target.classList.add("active");
+                    block.querySelector(".inner2-container1 .seachBox").value = event.target.textContent.trim()
+                    block.querySelector(".inner2-container1 .dropdown-modal").style.display = "none";
+
+                    let schemes = dataObj.data.data.sort[event.target.getAttribute("dataIndex")].schemes
+                    // eventTriggerRending(dataObjAllFundBoost.data.data.data)
+                  }
+                }, e.sortName)
+              })
+            )
           )
         )
       )
     )
-  )
-  block.querySelector(".inner2-container1").innerHTML = "";
-  block.querySelector(".inner2-container1").append(rightTopContianer);
+    const rightBottomContainer = div({
+        class: "main-container-bottom"
+      },
+      ...dataObjAllFundBoost.data.data.data.map((ele, index) => {
+        let InvestBtn = ''
+        block.querySelectorAll(".radio-button-container [type=radio]").forEach((el) => {
+          if (el.checked) {
+            InvestBtn = el.value;
+          }
+        })
+        dataMapObj.DuplicateRemove = []
+        dataMapObj.siperiods = []
+        dataMapObj.tags = [];
+        ele.tags.forEach((element) => {
+          let temp = ["Active", "Index", "ETFs"]
+          if (!temp.includes(element)) {
+            dataMapObj.tags.push(element)
+          }
+        })
+        ele.return.forEach((element) => {
+          if (!dataMapObj.siperiods.includes(element.period.replaceAll("yr", " Year"))) {
+            dataMapObj.siperiods.push(element.period.replaceAll("yr", " Year"))
+          }
+        })
+        dataMapObj.siperiods = dataMapObj.siperiods.sort();
+        return index !== 0 && dataMapObj.filterSeachArr.includes(ele.schDetail.schName) ? div({
+            class: "submain-container-bottom"
+          },
+          div({
+              class: "fundCard"
+            },
+            div({
+                class: "submain-Header"
+              },
+              div({
+                  class: "name-content-container"
+                },
+                div({
+                  class: "logoName"
+                }, "Logo"),
+                div({
+                  class: "planName"
+                }, a(ele.schDetail.schName))
+              ),
+              div({
+                  class: "dropdown-container"
+                },
+                span({
+                    class: "fundOption"
+                  },
+                  select(
+                    ...ele.planList.map((seleOp) => {
+                      if (!dataMapObj.DuplicateRemove.includes(seleOp.optionName) && seleOp.planName == InvestBtn) {
+                        dataMapObj.DuplicateRemove.push(seleOp.optionName)
+                        return option(seleOp.optionName)
+                      }
+                    })
+                  )
+                )
+              ),
+              div({
+                  class: "category-container"
+                },
+                span(dataMapObj.tags.join("|"))
+              )
+            ),
+            div({
+                class: "submain-Footer"
+              },
+              div({
+                  class: "row valueFactor-container"
+                },
+                div({
+                    class: "factor-container"
+                  },
+                  div({
+                      class: "amu-container"
+                    },
+                    label("AMU"),
+                    span({
+                      class: "amuvalue"
+                    }, (ele.aum[0].latestAum == null ? "" : "₹" + ele.aum[0].latestAum + " " + "Crs"))
+                  ),
+                  div({
+                      class: "risk-container"
+                    },
+                    label("Risk"),
+                    div({
+                        class: "riskvalue"
+                      },
+                      div({
+                        class: "risklabelvalue"
+                      }, ele.risk.risk),
+                      div({
+                          class: "riskinfoiconvalue"
+                        },
+                        img("/content.fake/path.img")
+                      )
+                    )
+                  ),
+                  div({
+                      class: "nav-container"
+                    },
+                    label("NAV"),
+                    div({
+                        class: "navContainervalue"
+                      },
+                      div({
+                          class: "navRatevalue"
+                        },
+                        div({
+                          class: "fundValue"
+                        }, ele.nav[0].nav),
+                        div({
+                          class: "fundRateValue",
+                          style: Math.sign(ele.nav[0].navChng) == -1 ? "color:red" : "color:green"
+                        }, "(" + ele.nav[0].navChng + "%)")
+                      ),
+                      div({
+                        class: "navFundDate"
+                      }, navDate(ele.nav[0].navRecdt.split(" ")[0]))
+                    )
+                  ),
+                  div({
+                      class: "cagr-container"
+                    },
+                    label({
+                        class: "CAGRContainer"
+                      }, "CAGR",
+                      select(
+                        ...dataMapObj.siperiods.map((ele) => {
+                          return option(ele.toUpperCase())
+                        })
+                      )
+                    ),
+                    div({
+                      class: "cagr-rate"
+                    }, ele.return.length != 0 ? ele.return[0].schReturnCagr + "%" : ""),
+                    div({
+                      class: "cagr-rateDate"
+                    }, ele.return.length != 0 ? cgarDate(ele.return[0].schReturnAsOnDt) : "")
+                  )
+                )
+              ),
+              div({
+                  class: "buttonFactor-container"
+                },
+                div({
+                    class: "button-container"
+                  },
+                  div({
+                    class: "know-more-btn"
+                  }, a({
+                    class: "know-more"
+                  }, "Know More")),
+                ),
+                div({
+                  class: "invest-now-btn"
+                }, a({
+                  class: "Invest-now"
+                }), "Invest Now")
+              )
+            )
+          )
+        ) : ""
+      })
+
+    )
+
+
+    block.querySelector(".inner2-container1").innerHTML = "";
+    const headerRightConyainer = h3({
+      id: "our-funds"
+    }, "Our Funds")
+    block.querySelector(".inner2-container1").append(headerRightConyainer);
+    block.querySelector(".inner2-container1").append(rightTopContianer);
+
+    block.querySelector(".inner2-container2").innerHTML = "";
+    block.querySelector(".inner2-container2").append(rightBottomContainer);
+  }
   // Right Top End
 }
