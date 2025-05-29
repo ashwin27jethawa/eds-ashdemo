@@ -15747,7 +15747,7 @@ export default async function decorate(block) {
                       Array.from(block.querySelector(".main-container-bottom").children).forEach((eleHTML, indexHTML) => {
                         if (indexHTML == (cardIndex - 1)) {
                           eleHTML.querySelector(".amuvalue").textContent = "";
-                          eleHTML.querySelector(".amuvalue").textContent = AumValue;
+                          eleHTML.querySelector(".amuvalue").textContent = "₹" + AumValue + " " + "Crs";
 
                           eleHTML.querySelector(".fundValue").textContent = "";
                           eleHTML.querySelector(".fundValue").textContent = navValue;
