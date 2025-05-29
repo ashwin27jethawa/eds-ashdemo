@@ -15283,6 +15283,7 @@ export default async function decorate(block) {
     })
   })
   renderData();
+
   function renderData() {
     const leftContainer = div({
         class: "left-container"
@@ -15428,6 +15429,8 @@ export default async function decorate(block) {
         )
       )
     )
+    block.querySelector(".inner1-container2").innerHTML = "";
+    block.querySelector(".inner1-container2").append(leftContainer);
   }
 
 }
