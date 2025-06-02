@@ -15698,7 +15698,7 @@ export default async function decorate(block) {
           ul(
             ...dataObj.data.data.sort.map((e, index) => {
               return li({
-                class: e.sortName.toLocaleLowerCase() == block.querySelector(".dropdown-modal .active").textContent.trim().toLocaleLowerCase() ? 'active' : "",
+                class: e.sortName.toLocaleLowerCase() == 'popular' ? 'active' : "",
                 dataIndex: index,
                 datafond: e.schemes.join("-"),
                 onclick: (event) => {
@@ -16204,6 +16204,7 @@ export default async function decorate(block) {
             ul(
               ...dataObj.data.data.sort.map((e, index) => {
                 return li({
+                  class: e.sortName.toLocaleLowerCase() == block.querySelector(".dropdown-modal .active").textContent.trim().toLocaleLowerCase() ? 'active' : "",
                   dataIndex: index,
                   datafond: e.schemes.join("-"),
                   onclick: (event) => {
