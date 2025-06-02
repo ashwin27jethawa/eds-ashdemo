@@ -15708,8 +15708,7 @@ export default async function decorate(block) {
                   event.target.classList.add("active");
                   block.querySelector(".inner2-container1 .seachBox").value = event.target.textContent.trim()
                   block.querySelector(".inner2-container1 .dropdown-modal").style.display = "none";
-                  let schemes = dataObj.data.data.sort[event.target.getAttribute("dataIndex")].schemes
-
+                  eventTriggerRending(dataObjAllFundBoost.data.data.data)
                 }
               }, e.sortName)
             })
@@ -16033,6 +16032,9 @@ export default async function decorate(block) {
         mop.push(element.getAttribute("dataattr"))
       }
     })
+    if (block.querySelector(".dropdown-modal .active").getAttribute("datafond")) {
+      mop.push(block.querySelector(".dropdown-modal .active").getAttribute("datafond"))
+    }
     mop = mop.length === 0 ? "" : mop.join("-");
     param.forEach((elem) => {
       elem.planList.forEach((element) => {
@@ -16192,7 +16194,6 @@ export default async function decorate(block) {
             ul(
               ...dataObj.data.data.sort.map((e, index) => {
                 return li({
-                  class: e.sortName.toLocaleLowerCase() == 'popular'? 'active' :"",
                   dataIndex: index,
                   datafond:e.schemes.join("-"),
                   onclick: (event) => {
@@ -16202,8 +16203,7 @@ export default async function decorate(block) {
                     event.target.classList.add("active");
                     block.querySelector(".inner2-container1 .seachBox").value = event.target.textContent.trim()
                     block.querySelector(".inner2-container1 .dropdown-modal").style.display = "none";
-                    let schemes = dataObj.data.data.sort[event.target.getAttribute("dataIndex")].schemes
-
+                    eventTriggerRending(dataObjAllFundBoost.data.data.data);
                   }
                 }, e.sortName)
               })
