@@ -15698,9 +15698,9 @@ export default async function decorate(block) {
           ul(
             ...dataObj.data.data.sort.map((e, index) => {
               return li({
-                class: e.sortName.toLocaleLowerCase() == 'popular'? 'active' :"",
+                class: e.sortName.toLocaleLowerCase() == 'popular' ? 'active' : "",
                 dataIndex: index,
-                datafond:e.schemes.join("-"),
+                datafond: e.schemes.join("-"),
                 onclick: (event) => {
                   block.querySelectorAll(".inner2-container1 .dropdown-modal ul li").forEach((el) => {
                     el.classList.remove("active");
@@ -16035,14 +16035,14 @@ export default async function decorate(block) {
     })
     if (block.querySelector(".dropdown-modal .active").getAttribute("datafond") && mop.length == 0) {
       mop.push(block.querySelector(".dropdown-modal .active").getAttribute("datafond"))
-    }else{
+    } else {
       var tempmop = [];
       mop = mop.flat()
-      block.querySelector(".dropdown-modal .active").getAttribute("datafond").split("-").forEach((elem)=>{
+      block.querySelector(".dropdown-modal .active").getAttribute("datafond").split("-").forEach((elem) => {
         if (mop.includes(elem)) {
-          tempmop.push(elem) 
+          tempmop.push(elem)
         }
-      }) 
+      })
       mop = tempmop.length != 0 ? tempmop : mop;
     }
     mop = mop.length === 0 ? "" : mop.join("-");
@@ -16205,7 +16205,7 @@ export default async function decorate(block) {
               ...dataObj.data.data.sort.map((e, index) => {
                 return li({
                   dataIndex: index,
-                  datafond:e.schemes.join("-"),
+                  datafond: e.schemes.join("-"),
                   onclick: (event) => {
                     block.querySelectorAll(".inner2-container1 .dropdown-modal ul li").forEach((el) => {
                       el.classList.remove("active");
@@ -16499,6 +16499,18 @@ export default async function decorate(block) {
 
     block.querySelector(".inner2-container2").innerHTML = "";
     block.querySelector(".inner2-container2").append(rightBottomContainer);
+    block.querySelector(".inner2-container1 .seachBox").addEventListener("focusin", (element) => {
+      block.querySelector(".inner2-container1 .container-box").classList.add("active");
+      block.querySelector(".dropdown-modal").style.display = element ? "block" : "none"
+    })
+
+    block.querySelector(".inner2-container1 .dropdown-modal").addEventListener("mouseover", () => {
+      block.querySelector(".dropdown-modal").style.display = "block";
+    });
+
+    block.querySelector(".inner2-container1 .dropdown-modal").addEventListener("mouseleave", () => {
+      block.querySelector(".dropdown-modal").style.display = "none";
+    });
   }
 
 }
