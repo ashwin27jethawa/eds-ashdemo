@@ -16204,7 +16204,6 @@ export default async function decorate(block) {
             ul(
               ...dataObj.data.data.sort.map((e, index) => {
                 return li({
-                  class : dataMapObj.sortbyValue.toLocaleLowerCase() == e.toLocaleLowerCase() ? 'active' : "",
                   dataIndex: index,
                   datafond:e.schemes.join("-"),
                   onclick: (event) => {
