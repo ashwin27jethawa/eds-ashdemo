@@ -15708,6 +15708,7 @@ export default async function decorate(block) {
                   event.target.classList.add("active");
                   block.querySelector(".inner2-container1 .seachBox").value = event.target.textContent.trim()
                   block.querySelector(".inner2-container1 .dropdown-modal").style.display = "none";
+                  dataMapObj.sortbyValue = event.target.textContent.trim();
                   eventTriggerRending(dataObjAllFundBoost.data.data.data)
                 }
               }, e.sortName)
@@ -16032,8 +16033,16 @@ export default async function decorate(block) {
         mop.push(element.getAttribute("dataattr"))
       }
     })
-    if (block.querySelector(".dropdown-modal .active").getAttribute("datafond")) {
+    if (block.querySelector(".dropdown-modal .active").getAttribute("datafond") && mop.length == 0) {
       mop.push(block.querySelector(".dropdown-modal .active").getAttribute("datafond"))
+    }else{
+      var tempmop = [];
+      block.querySelector(".dropdown-modal .active").getAttribute("datafond").split("-").forEach((elem)=>{
+        if (mop.includes(elem)) {
+          tempmop.push(elem) 
+        }
+      }) 
+      mop = tempmop;
     }
     mop = mop.length === 0 ? "" : mop.join("-");
     param.forEach((elem) => {
@@ -16194,6 +16203,7 @@ export default async function decorate(block) {
             ul(
               ...dataObj.data.data.sort.map((e, index) => {
                 return li({
+                  class : dataMapObj.sortbyValue.toLocaleLowerCase() == e.toLocaleLowerCase() ? 'active' : "",
                   dataIndex: index,
                   datafond:e.schemes.join("-"),
                   onclick: (event) => {
