@@ -16453,7 +16453,7 @@ export default async function decorate(block) {
                       select(
                         ...dataMapObj.siperiods.map((ele) => {
                           return option({
-                          selected : parseInt(block.querySelector(".dropdown-modal .active").textContent.trim()) == parseInt(ele) ? true : false;
+                          selected : parseInt(block.querySelector(".dropdown-modal .active").textContent.trim()) == parseInt(ele) ? true : false,
                         },ele.toUpperCase())
                         })
                       )
