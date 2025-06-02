@@ -16030,13 +16030,14 @@ export default async function decorate(block) {
     let mop = [];
     block.querySelectorAll("[type='checkbox']").forEach((element) => {
       if (element.checked) {
-        mop.push(element.getAttribute("dataattr").replaceAll("-",","))
+        mop.push(element.getAttribute("dataattr").split("-"))
       }
     })
     if (block.querySelector(".dropdown-modal .active").getAttribute("datafond") && mop.length == 0) {
       mop.push(block.querySelector(".dropdown-modal .active").getAttribute("datafond"))
     }else{
       var tempmop = [];
+      mop = mop.flat()l
       block.querySelector(".dropdown-modal .active").getAttribute("datafond").split("-").forEach((elem)=>{
         if (mop.includes(elem)) {
           tempmop.push(elem) 
