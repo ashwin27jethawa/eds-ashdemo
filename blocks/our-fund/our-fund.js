@@ -16450,11 +16450,11 @@ export default async function decorate(block) {
                     label({
                         class: "CAGRContainer"
                       }, "CAGR",
-                      select(
+                      select({
+                          value: parseInt(block.querySelector(".dropdown-modal .active").textContent.trim()) == parseInt(ele) ? ele : "",
+                        },
                         ...dataMapObj.siperiods.map((ele) => {
-                          return option({
-                            value: parseInt(block.querySelector(".dropdown-modal .active").textContent.trim()) == parseInt(ele) ? ele : "",
-                          }, ele.toUpperCase())
+                          return option(ele.toUpperCase())
                         })
                       )
                     ),
