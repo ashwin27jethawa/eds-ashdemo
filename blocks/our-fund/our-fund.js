@@ -15916,7 +15916,7 @@ export default async function decorate(block) {
                   label("AMU"),
                   span({
                     class: "amuvalue",
-                  }, ("₹" + AumValue + " " + "Crs"))
+                  }, ("₹" + AumValue == '' ? "NIL" : AumValue  + " " + "Crs"))
                 ),
                 div({
                     class: "risk-container"
@@ -16404,7 +16404,7 @@ export default async function decorate(block) {
                     label("AMU"),
                     span({
                       class: "amuvalue"
-                    }, ("₹" + AumValue + " " + "Crs"))
+                    }, ("₹" + AumValue == '' ? "NIL" : AumValue + " " + "Crs"))
                   ),
                   div({
                       class: "risk-container"
