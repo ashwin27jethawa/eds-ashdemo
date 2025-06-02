@@ -16195,7 +16195,8 @@ export default async function decorate(block) {
             },
             input({
               class: "seachBox",
-              placeholder: "Popular"
+              placeholder: "Popular",
+              value: block.querySelector(".dropdown-modal .active").textContent.trim()
             }),
           ),
           div({
