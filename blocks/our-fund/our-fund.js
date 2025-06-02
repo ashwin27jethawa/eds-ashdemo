@@ -16256,8 +16256,10 @@ export default async function decorate(block) {
           navValue = '',
           navChngPer = '',
           schReturnCagr = '',
-          schReturnAsOnDt = '';
+          schReturnAsOnDt = '',
+        planListAry = [];
         ele.planList.forEach((eleTemp) => {
+          planListAry.push(eleTemp.planName);
           let dataCode = eleTemp.schemeCode + eleTemp.planCode;
           [...ele.aum, ...ele.nav, ...ele.return].forEach((Aum) => {
             let tempAumCode = Aum.schemeCode + Aum.planCode;
