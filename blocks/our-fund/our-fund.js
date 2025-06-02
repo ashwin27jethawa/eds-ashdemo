@@ -16037,7 +16037,7 @@ export default async function decorate(block) {
       mop.push(block.querySelector(".dropdown-modal .active").getAttribute("datafond"))
     }else{
       var tempmop = [];
-      mop = mop.flat()l
+      mop = mop.flat()
       block.querySelector(".dropdown-modal .active").getAttribute("datafond").split("-").forEach((elem)=>{
         if (mop.includes(elem)) {
           tempmop.push(elem) 
