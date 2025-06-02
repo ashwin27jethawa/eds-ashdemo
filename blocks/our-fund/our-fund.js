@@ -15766,8 +15766,10 @@ export default async function decorate(block) {
         navValue = '',
         navChngPer = '',
         schReturnCagr = '',
-        schReturnAsOnDt = '';
+        schReturnAsOnDt = '',
+        planListAry = [];
       ele.planList.forEach((eleTemp) => {
+        planListAry.push(eleTemp.planName);
         let dataCode = eleTemp.schemeCode + eleTemp.planCode;
         [...ele.aum, ...ele.nav, ...ele.return].forEach((Aum) => {
           let tempAumCode = Aum.schemeCode + Aum.planCode;
@@ -15822,7 +15824,7 @@ export default async function decorate(block) {
               span({
                   class: "fundOption"
                 },
-                ele.planList.length != 0 ? select({
+                ele.planList.length != 0 && planListAry.includes(InvestBtn) ? select({
                     dataCardIndex: index,
                     onchange: function (event) {
                       let cardIndex = event.target.getAttribute("dataCardIndex");
@@ -16310,7 +16312,7 @@ export default async function decorate(block) {
                 span({
                     class: "fundOption"
                   },
-                  ele.planList.length != 0 ? select({
+                  ele.planList.length != 0 && planListAry.includes(InvestBtn) ? select({
                       dataCardIndex: index,
                       onchange: function (event) {
                         let cardIndex = event.target.getAttribute("dataCardIndex");
