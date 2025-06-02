@@ -16451,7 +16451,7 @@ export default async function decorate(block) {
                         class: "CAGRContainer"
                       }, "CAGR",
                       select({
-                          value: dataMapObj.siperiods[block.querySelector(".dropdown-modal .active").textContent.trim().getAttribute("dataindex")],
+                          value: dataMapObj.siperiods[block.querySelector(".dropdown-modal .active").getAttribute("dataindex")],
                         },
                         ...dataMapObj.siperiods.map((ele) => {
                           return option(ele.toUpperCase())
