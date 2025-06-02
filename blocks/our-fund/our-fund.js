@@ -16030,7 +16030,7 @@ export default async function decorate(block) {
     let mop = [];
     block.querySelectorAll("[type='checkbox']").forEach((element) => {
       if (element.checked) {
-        mop.push(element.getAttribute("dataattr"))
+        mop.push(element.getAttribute("dataattr").replaceAll("-",","))
       }
     })
     if (block.querySelector(".dropdown-modal .active").getAttribute("datafond") && mop.length == 0) {
