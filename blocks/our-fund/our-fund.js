@@ -16042,7 +16042,7 @@ export default async function decorate(block) {
           tempmop.push(elem) 
         }
       }) 
-      mop = tempmop;
+      mop = tempmop.length != 0 ? tempmop : mop;
     }
     mop = mop.length === 0 ? "" : mop.join("-");
     param.forEach((elem) => {
