@@ -16452,7 +16452,9 @@ export default async function decorate(block) {
                       }, "CAGR",
                       select(
                         ...dataMapObj.siperiods.map((ele) => {
-                          return option(ele.toUpperCase())
+                          return option({
+                          selected : parseInt(block.querySelector(".dropdown-modal .active").textContent.trim()) == parseInt(ele) ? true : false;
+                        },ele.toUpperCase())
                         })
                       )
                     ),
