@@ -15822,7 +15822,7 @@ export default async function decorate(block) {
               span({
                   class: "fundOption"
                 },
-                select({
+                ele.planList.length != 0 ? select({
                     dataCardIndex: index,
                     onchange: function (event) {
                       let cardIndex = event.target.getAttribute("dataCardIndex");
@@ -15890,7 +15890,7 @@ export default async function decorate(block) {
                       }, seleOp.optionName)
                     }
                   })
-                )
+                ) : ""
               )
             ),
             div({
