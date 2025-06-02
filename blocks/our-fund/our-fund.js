@@ -16450,12 +16450,13 @@ export default async function decorate(block) {
                     label({
                         class: "CAGRContainer"
                       }, "CAGR",
-                      select({
-                          value: dataMapObj.siperiods[block.querySelector(".dropdown-modal .active").getAttribute("dataindex")],
-                        },
+                      select(
                         ...dataMapObj.siperiods.map((ele) => {
                           return option(ele.toUpperCase())
-                        })
+                        }),
+                        {
+                          value: dataMapObj.siperiods[block.querySelector(".dropdown-modal .active").getAttribute("dataindex")],
+                        }
                       )
                     ),
                     div({
