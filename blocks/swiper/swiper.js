@@ -28,18 +28,18 @@ export default function decorate(block) {
   block.appendChild(RightArrow);
 
   SwiperText(block, {
+    loop:true,
+    navigation: {
+      nextEl: RightArrow,
+      prevEl: LeftArrow,
+    },
     pagination: {
-      loop:true,
       el: divPagination,
       clickable: true,
       renderBullet: function (index, className) {
         // Use your text for each bullet based on index
         return '<span class="' + className + '">' + paginationTexts[index] + '</span>';
-      },
-      navigation: {
-          nextEl: RightArrow,
-          prevEl: LeftArrow,
-      },
+      }
     },
   })
 
