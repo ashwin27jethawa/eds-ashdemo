@@ -25,7 +25,7 @@ export default function decorate(block) {
       clickable: true,
       renderBullet: function (index, className) {
         // Use your text for each bullet based on index
-        return '<span>' + paginationTexts[index] + '</span>';
+        return '<span class="' + className + '">' + paginationTexts[index] + '</span>';
       },
     },
   })
