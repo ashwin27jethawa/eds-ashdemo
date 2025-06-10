@@ -29,6 +29,7 @@ export default function decorate(block) {
 
   SwiperText(block, {
     pagination: {
+      loop:true,
       el: divPagination,
       clickable: true,
       renderBullet: function (index, className) {
