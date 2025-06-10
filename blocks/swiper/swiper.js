@@ -2,7 +2,7 @@ import SwiperText from "../swiper/swiper-bundle.min.js"
 
 
 export default function decorate(block) {
-  const paginationTexts = ['First', 'Second', 'Third', 'Fourth']; 
+  const paginationTexts = ['First', 'Second', 'Third', 'Fourth'];
   console.log(block);
   block.classList.add("swiper");
   const swapperWapper = document.createElement("div");
@@ -19,6 +19,14 @@ export default function decorate(block) {
   divPagination.classList.add("swiper-pagination");
   block.append(divPagination);
 
+  const LeftArrow = document.createElement("div");
+  LeftArrow.classList.add("swiper-button-prev");
+  block.appendChild(LeftArrow);
+
+  const RightArrow = document.createElement("div")
+  RightArrow.classList.add("swiper-button-next");
+  block.appendChild(RightArrow);
+
   SwiperText(block, {
     pagination: {
       el: divPagination,
@@ -26,6 +34,10 @@ export default function decorate(block) {
       renderBullet: function (index, className) {
         // Use your text for each bullet based on index
         return '<span class="' + className + '">' + paginationTexts[index] + '</span>';
+      },
+      navigation: {
+          nextEl: RightArrow,
+          prevEl: LeftArrow,
       },
     },
   })
