@@ -20,7 +20,7 @@ export default function decorate(block) {
   divPagination.classList.add("swiper-pagination");
   btnWrapper.append(divPagination);
 
-  if (!block.classList.includes("cards-carousel-v3")) {
+  if (!Array.from(block.classList).includes("cards-carousel-v3")) {
     const LeftArrow = document.createElement("div");
     LeftArrow.classList.add("swiper-button-prev");
     btnWrapper.appendChild(LeftArrow);
@@ -35,13 +35,13 @@ export default function decorate(block) {
   SwiperText(block, {
     loop: true,
     navigation: {
-      nextEl: !block.classList.includes("cards-carousel-v3") ?? RightArrow,
-      prevEl: !block.classList.includes("cards-carousel-v3") ?? LeftArrow,
+      nextEl: !Array.from(block.classList).includes("cards-carousel-v3") ?? RightArrow,
+      prevEl: !Array.from(block.classList).includes("cards-carousel-v3") ?? LeftArrow,
     },
     pagination: {
       el: divPagination,
       clickable: true,
-      slidesPerView: !block.classList.includes("cards-carousel-v3") ? 1 : 3,
+      slidesPerView: !Array.from(block.classList).includes("cards-carousel-v3") ? 1 : 3,
       renderBullet: function (index, className) {
         // Use your text for each bullet based on index
         return '<span class="' + className + '">' + paginationTexts[index] + '</span>';
