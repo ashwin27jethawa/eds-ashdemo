@@ -30,7 +30,7 @@ export default function decorate(block) {
 
   block.append(btnWrapper)
   let swiperProperties;
-  if (Array.from(block.classList).includes("cards-carousel-v3")) {
+  if (Array.from(block.classList).indexOf("cards-carousel-v3") != -1) {
     swiperProperties = {
       loop: true,
       slidesPerView: 3,
@@ -59,7 +59,7 @@ export default function decorate(block) {
     }
   }
 
-  const swiperContainer = block.closest(".section").querySelector('.swiper');
+  const swiperContainer = Array.from(block.classList).indexOf('.swiper') != -1;
   if (!swiperContainer) {
     console.warn('Swiper container not found');
     return;
