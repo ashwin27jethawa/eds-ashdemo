@@ -11,7 +11,7 @@ export default function decorate(block) {
     element.classList.add("swiper-slide")
     swapperWapper.append(element);
   })
-  block.append()
+  block.append(swapperWapper)
   // swiper-paginationswapperWapper
   const btnWrapper = document.createElement("div");
   btnWrapper.classList.add("btnWrapper");
