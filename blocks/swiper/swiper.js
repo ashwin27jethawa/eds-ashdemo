@@ -35,13 +35,14 @@ export default function decorate(block) {
   SwiperText(block, {
     loop: true,
     navigation: {
-      nextEl: !Array.from(block.classList).includes("cards-carousel-v3") ? RightArrow : "",
-      prevEl: !Array.from(block.classList).includes("cards-carousel-v3") ? LeftArrow : "",
+      nextEl: Array.from(block.classList).includes("cards-carousel-v3") ? "" : RightArrow,
+      prevEl: Array.from(block.classList).includes("cards-carousel-v3") ? "" : LeftArrow,
     },
     pagination: {
       el: divPagination,
       clickable: true,
-      slidesPerView: !Array.from(block.classList).includes("cards-carousel-v3") ? 1 : 3,
+      slidesPerView: Array.from(block.classList).includes("cards-carousel-v3") ? 3 : 1,
+      spaceBetween: Array.from(block.classList).includes("cards-carousel-v3") ? 10 :  0,
       // renderBullet: function (index, className) {
       //   // Use your text for each bullet based on index
       //   return '<span class="' + className + '">' + paginationTexts[index] + '</span>';
