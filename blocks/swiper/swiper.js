@@ -35,8 +35,8 @@ export default function decorate(block) {
   SwiperText(block, {
     loop: true,
     navigation: {
-      nextEl: !Array.from(block.classList).includes("cards-carousel-v3") ?? RightArrow,
-      prevEl: !Array.from(block.classList).includes("cards-carousel-v3") ?? LeftArrow,
+      nextEl: !Array.from(block.classList).includes("cards-carousel-v3") ? RightArrow : "",
+      prevEl: !Array.from(block.classList).includes("cards-carousel-v3") ? LeftArrow : "",
     },
     pagination: {
       el: divPagination,
