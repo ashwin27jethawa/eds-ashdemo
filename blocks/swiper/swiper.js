@@ -58,6 +58,12 @@ export default function decorate(block) {
     }
   }
 
-  SwiperText(block, swiperProperties)
+  const swiperContainer = block.querySelector('.swiper');
+  if (!swiperContainer) {
+    console.warn('Swiper container not found');
+    return;
+  }
+
+  SwiperText(swiperContainer, swiperProperties)
 
 }
