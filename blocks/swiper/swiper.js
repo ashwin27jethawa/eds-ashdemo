@@ -4,7 +4,7 @@ export default function decorate(block) {
   console.log(block);
   block.classList.add("swiper");
   const swapperWapper = document.createElement("div");
-  swapperWapper.add.classList("swiper-wrapper")
+  swapperWapper.classList.add("swiper-wrapper")
 
   Array.from(block.children).forEach((element) => {
     element.classList.add("swiper-slide")
