@@ -19,13 +19,13 @@ export default function decorate(block) {
   const divPagination = document.createElement("div");
   divPagination.classList.add("swiper-pagination");
   btnWrapper.append(divPagination);
-
+  let LeftArrow, RightArrow;
   if (!Array.from(block.classList).includes("cards-carousel-v3")) {
-    const LeftArrow = document.createElement("div");
+    LeftArrow = document.createElement("div");
     LeftArrow.classList.add("swiper-button-prev");
     btnWrapper.appendChild(LeftArrow);
 
-    const RightArrow = document.createElement("div")
+    RightArrow = document.createElement("div")
     RightArrow.classList.add("swiper-button-next");
     btnWrapper.appendChild(RightArrow);
   }
