@@ -65,6 +65,6 @@ export default function decorate(block) {
     return;
   }
 
-  SwiperText(swiperContainer, swiperProperties)
+  SwiperText(block, swiperProperties)
 
 }
