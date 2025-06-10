@@ -11,8 +11,8 @@ export default function decorate(block) {
     element.classList.add("swiper-slide")
     swapperWapper.append(element);
   })
-  block.append(swapperWapper)
-  // swiper-pagination
+  block.append()
+  // swiper-paginationswapperWapper
   const btnWrapper = document.createElement("div");
   btnWrapper.classList.add("btnWrapper");
 
@@ -20,20 +20,23 @@ export default function decorate(block) {
   divPagination.classList.add("swiper-pagination");
   btnWrapper.append(divPagination);
 
-  const LeftArrow = document.createElement("div");
-  LeftArrow.classList.add("swiper-button-prev");
-  btnWrapper.appendChild(LeftArrow);
+  if (!block.classList.includes("cards-carousel-v3")) {
+    const LeftArrow = document.createElement("div");
+    LeftArrow.classList.add("swiper-button-prev");
+    btnWrapper.appendChild(LeftArrow);
 
-  const RightArrow = document.createElement("div")
-  RightArrow.classList.add("swiper-button-next");
-  btnWrapper.appendChild(RightArrow);
-  
+    const RightArrow = document.createElement("div")
+    RightArrow.classList.add("swiper-button-next");
+    btnWrapper.appendChild(RightArrow);
+  }
+
+
   block.append(btnWrapper)
   SwiperText(block, {
     loop: true,
     navigation: {
-      nextEl: RightArrow,
-      prevEl: LeftArrow,
+      nextEl: !block.classList.includes("cards-carousel-v3") ?? RightArrow,
+      prevEl: !block.classList.includes("cards-carousel-v3") ?? LeftArrow,
     },
     pagination: {
       el: divPagination,
