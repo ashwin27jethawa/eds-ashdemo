@@ -41,6 +41,7 @@ export default function decorate(block) {
     pagination: {
       el: divPagination,
       clickable: true,
+      slidesPerView: !block.classList.includes("cards-carousel-v3") ? 1 : 3,
       renderBullet: function (index, className) {
         // Use your text for each bullet based on index
         return '<span class="' + className + '">' + paginationTexts[index] + '</span>';
