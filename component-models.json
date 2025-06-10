@@ -1,8 +1,6 @@
-[
-  {
+[{
     "id": "image",
-    "fields": [
-      {
+    "fields": [{
         "component": "reference",
         "name": "image",
         "label": "Image",
@@ -17,8 +15,7 @@
   },
   {
     "id": "title",
-    "fields": [
-      {
+    "fields": [{
         "component": "text",
         "name": "title",
         "label": "Title"
@@ -27,8 +24,7 @@
         "component": "select",
         "name": "titleType",
         "label": "Title Type",
-        "options": [
-          {
+        "options": [{
             "name": "h1",
             "value": "h1"
           },
@@ -58,8 +54,7 @@
   },
   {
     "id": "button",
-    "fields": [
-      {
+    "fields": [{
         "component": "aem-content",
         "name": "link",
         "label": "Link"
@@ -78,8 +73,7 @@
         "component": "select",
         "name": "linkType",
         "label": "Type",
-        "options": [
-          {
+        "options": [{
             "name": "default",
             "value": ""
           },
@@ -97,8 +91,7 @@
   },
   {
     "id": "section",
-    "fields": [
-      {
+    "fields": [{
         "component": "text",
         "name": "name",
         "label": "Section Name",
@@ -108,19 +101,16 @@
         "component": "multiselect",
         "name": "style",
         "label": "Style",
-        "options": [
-          {
-            "name": "Highlight",
-            "value": "highlight"
-          }
-        ]
+        "options": [{
+          "name": "Highlight",
+          "value": "highlight"
+        }]
       }
     ]
   },
   {
     "id": "card",
-    "fields": [
-      {
+    "fields": [{
         "component": "reference",
         "valueType": "string",
         "name": "image",
@@ -138,8 +128,7 @@
   },
   {
     "id": "columns",
-    "fields": [
-      {
+    "fields": [{
         "component": "text",
         "valueType": "number",
         "name": "columns",
@@ -157,18 +146,15 @@
   },
   {
     "id": "fragment",
-    "fields": [
-      {
-        "component": "aem-content",
-        "name": "reference",
-        "label": "Reference"
-      }
-    ]
+    "fields": [{
+      "component": "aem-content",
+      "name": "reference",
+      "label": "Reference"
+    }]
   },
   {
     "id": "hero",
-    "fields": [
-      {
+    "fields": [{
         "component": "reference",
         "valueType": "string",
         "name": "image",
@@ -188,6 +174,46 @@
         "value": "",
         "label": "Text",
         "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "hero-block-item-v3",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image_one",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "image_oneAlt",
+        "label": "Alt",
+        "value": ""
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image_two",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "image_twoAlt",
+        "label": "Alt",
+        "value": ""
       }
     ]
   }
