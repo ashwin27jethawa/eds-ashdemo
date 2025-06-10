@@ -47,6 +47,7 @@ export default function decorate(block) {
         nextEl: RightArrow,
         prevEl: LeftArrow,
       },
+      slidesPerView: 1,
       pagination: {
         el: divPagination,
         clickable: true,
