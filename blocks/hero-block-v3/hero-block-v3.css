@@ -1,1 +1,11 @@
 @import url('../swiper/swiper-bundle.min.css');
+
+.section h2 {
+    font-size: 3rem;
+    -webkit-font-kerning: auto;
+    font-kerning: auto;
+    letter-spacing: normal;
+    line-height: 3.625rem;
+    text-align: center;
+    font-weight: 900;
+}
