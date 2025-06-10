@@ -2,7 +2,7 @@ import SwiperText from "../swiper/swiper-bundle.min.js"
 
 export default function decorate(block) {
   console.log(block);
-  block.add.classList("swiper");
+  block.classList.add("swiper");
   const swapperWapper = document.createElement("div");
   swapperWapper.add.classList("swiper-wrapper")
 
