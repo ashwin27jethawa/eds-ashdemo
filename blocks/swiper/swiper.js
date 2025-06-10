@@ -7,28 +7,30 @@ export default function decorate(block) {
   block.classList.add("swiper");
   const swapperWapper = document.createElement("div");
   swapperWapper.classList.add("swiper-wrapper")
-
   Array.from(block.children).forEach((element) => {
     element.classList.add("swiper-slide")
     swapperWapper.append(element);
   })
-
   block.append(swapperWapper)
   // swiper-pagination
+  const btnWrapper = document.createElement("div");
+  btnWrapper.classList.add("btnWrapper");
+
   const divPagination = document.createElement("div");
   divPagination.classList.add("swiper-pagination");
-  block.append(divPagination);
+  btnWrapper.append(divPagination);
 
   const LeftArrow = document.createElement("div");
   LeftArrow.classList.add("swiper-button-prev");
-  block.appendChild(LeftArrow);
+  btnWrapper.appendChild(LeftArrow);
 
   const RightArrow = document.createElement("div")
   RightArrow.classList.add("swiper-button-next");
-  block.appendChild(RightArrow);
-
+  btnWrapper.appendChild(RightArrow);
+  
+  block.append(btnWrapper)
   SwiperText(block, {
-    loop:true,
+    loop: true,
     navigation: {
       nextEl: RightArrow,
       prevEl: LeftArrow,
