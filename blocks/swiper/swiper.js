@@ -58,7 +58,7 @@ export default function decorate(block) {
     }
   }
 
-  const swiperContainer = block.querySelector('.swiper');
+  const swiperContainer = block.closest(".section").querySelector('.swiper');
   if (!swiperContainer) {
     console.warn('Swiper container not found');
     return;
