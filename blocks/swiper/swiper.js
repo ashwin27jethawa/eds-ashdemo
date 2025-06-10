@@ -42,10 +42,10 @@ export default function decorate(block) {
       el: divPagination,
       clickable: true,
       slidesPerView: !Array.from(block.classList).includes("cards-carousel-v3") ? 1 : 3,
-      renderBullet: function (index, className) {
-        // Use your text for each bullet based on index
-        return '<span class="' + className + '">' + paginationTexts[index] + '</span>';
-      }
+      // renderBullet: function (index, className) {
+      //   // Use your text for each bullet based on index
+      //   return '<span class="' + className + '">' + paginationTexts[index] + '</span>';
+      // }
     },
   })
 
