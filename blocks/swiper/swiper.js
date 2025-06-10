@@ -18,8 +18,6 @@ export default function decorate(block) {
   block.append(divPagination);
 
   SwiperText(block, {
-    loop: true,
-    autoplay: true,
     pagination: {
       el: divPagination,
       clickable: true
