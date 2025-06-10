@@ -59,7 +59,7 @@ export default function decorate(block) {
     }
   }
 
-  const swiperContainer = Array.from(block.classList).indexOf('.swiper') != -1;
+  const swiperContainer = Array.from(block.classList).indexOf('swiper') != -1;
   if (!swiperContainer) {
     console.warn('Swiper container not found');
     return;
