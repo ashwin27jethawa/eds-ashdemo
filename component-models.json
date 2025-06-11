@@ -181,8 +181,8 @@
     "id": "swiper",
     "fields": [{
       "component": "select",
-      "name": "componentType",
-      "label": "Component Type",
+      "name": "swiper",
+      "label": "Swiper Variant",
       "options": [{
           "name": "default",
           "value": "Default"
