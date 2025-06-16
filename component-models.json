@@ -193,14 +193,6 @@
               "value": "mobile-auto-scroll"
             },
             {
-              "name": "Pagination",
-              "value": "pagination"
-            },
-            {
-              "name": "Action Button",
-              "value": "left-right-navigation-btn"
-            },
-            {
               "name": "1.5 View",
               "value": "one-point-five-view"
             },
