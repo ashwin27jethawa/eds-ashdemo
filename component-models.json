@@ -178,10 +178,11 @@
     ]
   },
   {
-    "id": "swiper",
-    "fields": [{
+    "id": "carousel-block",
+    "fields": [
+      {
       "component": "select",
-      "name": "swiper",
+      "name": "classes",
       "label": "Swiper Variant",
       "options": [{
           "name": "default",
@@ -194,8 +195,37 @@
         {
           "name": "pagination",
           "value": "Pagination"
+        },
+        {
+          "name": "slidepreview",
+          "value": "slidepreview"
+        },
+        {
+          "name": "slidepreviewauto",
+          "value": "slidepreviewauto"
+        },
+        {
+          "name": "breakpointswipper",
+          "value": "breakpointswipper"
         }
       ]
-    }]
+      }
+    ]
+  },
+  {
+    "id": "carousel-block-item",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Alt Text"
+      }
+    ]
   }
 ]
