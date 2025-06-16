@@ -181,7 +181,7 @@
     "id": "carousel-block",
     "fields": [{
       "component": "multiselect",
-      "name": "property",
+      "name": "classes",
       "label": "Multiselect field",
       "valueType": "string",
       "required": true,
