@@ -182,60 +182,56 @@
     "fields": [{
       "component": "multiselect",
       "name": "property",
-      "label": "Swiper Variant",
+      "label": "Multiselect field",
       "valueType": "string",
       "required": true,
-      "options": [
-        {
+      "options": [{
           "name": "Common Setting",
-          "children": [
+          "children": [{
+              "name": "Pagination",
+              "value": "pagination"
+            },
             {
-            "name": "Pagination",
-            "value": "pagination"
-          },
-          {
-            "name": "Action Button",
-            "value": "left-right-navigation-btn"
-          }
-        ]
+              "name": "Action Button",
+              "value": "left-right-navigation-btn"
+            }
+          ]
         },
         {
           "name": "Mobile Setting",
-          "children": [
+          "children": [{
+              "name": "Auto Scroll",
+              "value": "mobile-auto-scroll"
+            },
             {
-            "name": "Auto Scroll",
-            "value": "mobile-auto-scroll"
-          },
-          {
-            "name": "1.5 View",
-            "value": "one-point-five-view"
-          },
-          {
-            "name": "2.5 View",
-            "value": "two-point-five-view"
-          },
-          {
-            "name": "3.5 View",
-            "value": "three-point-five-view"
-          }
-        ]
+              "name": "1.5 View",
+              "value": "one-point-five-view"
+            },
+            {
+              "name": "2.5 View",
+              "value": "two-point-five-view"
+            },
+            {
+              "name": "3.5 View",
+              "value": "three-point-five-view"
+            }
+          ]
         },
         {
           "name": "Desktop Setting",
-          "children": [
+          "children": [{
+              "name": "Pagination",
+              "value": "desk-pagination"
+            },
             {
-            "name": "Pagination",
-            "value": "desk-pagination"
-          },
-          {
-            "name": "Action Button",
-            "value": "left-right-navigation-btn"
-          },
-          {
-            "name": "3 View",
-            "value": "three-point-view"
-          }
-        ]
+              "name": "Action Button",
+              "value": "left-right-navigation-btn"
+            },
+            {
+              "name": "3 View",
+              "value": "three-point-view"
+            }
+          ]
         }
       ]
     }]
