@@ -181,36 +181,55 @@
     "id": "carousel-block",
     "fields": [{
       "component": "multiselect",
-      "name": "property",
+      "name": "classes",
       "label": "Multiselect field",
       "valueType": "string",
       "required": true,
-      "maxSize": 2,
       "options": [{
-          "name": "Theme",
+          "name": "Common Setting",
           "children": [{
-              "name": "Light",
-              "value": "light"
+              "name": "Pagination",
+              "value": "pagination"
             },
             {
-              "name": "Dark",
-              "value": "dark"
+              "name": "Action Button",
+              "value": "left-right-navigation-btn"
             }
           ]
         },
         {
-          "name": "Type",
+          "name": "Mobile Setting",
           "children": [{
-              "name": "Alpha",
-              "value": "alpha"
+              "name": "Auto Scroll",
+              "value": "mobile-auto-scroll"
             },
             {
-              "name": "Beta",
-              "value": "beta"
+              "name": "1.5 View",
+              "value": "one-point-five-view"
             },
             {
-              "name": "Gamma",
-              "value": "gamma"
+              "name": "2.5 View",
+              "value": "two-point-five-view"
+            },
+            {
+              "name": "3.5 View",
+              "value": "three-point-five-view"
+            }
+          ]
+        },
+        {
+          "name": "Desktop Setting",
+          "children": [{
+              "name": "Pagination",
+              "value": "desk-pagination"
+            },
+            {
+              "name": "Action Button",
+              "value": "left-right-navigation-btn"
+            },
+            {
+              "name": "3 View",
+              "value": "three-point-view"
             }
           ]
         }
