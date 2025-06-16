@@ -13,6 +13,7 @@ let objClassSwipper = {
     loop: true,
     pagination: {
       el: ".swiper-pagination",
+      clickable:true
     },
   },
   "slidepreview": {
