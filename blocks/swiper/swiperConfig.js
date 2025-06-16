@@ -11,10 +11,10 @@ let objClassSwipper = {
   },
   "pagination": {
     loop: true,
-    autoplay:true,
+    autoplay: true,
     pagination: {
       el: ".swiper-pagination",
-      clickable:true
+      clickable: true
     },
   },
   "slidepreview": {
@@ -37,22 +37,36 @@ let objClassSwipper = {
   "breakpointswipper": {
     slidesPerView: 1.5,
     spaceBetween: 10,
-    pagination: {
-      el: ".swiper-pagination",
-      clickable: true,
-    },
     breakpoints: {
+      480: {
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        }
+      },
       640: {
         slidesPerView: 1.5,
         spaceBetween: 20,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        }
       },
       768: {
         slidesPerView: 2,
         spaceBetween: 40,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        }
       },
       1024: {
         slidesPerView: 3,
         spaceBetween: 50,
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        }
       },
     },
   }
