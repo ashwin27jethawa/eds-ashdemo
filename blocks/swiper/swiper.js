@@ -84,5 +84,5 @@ export default function decorate(block) {
             return decryptObj[itemclass]
          }
     })
-    SwipperText(block,config)
+    SwipperText(block,swipperConfig[config[0]])
 } 
