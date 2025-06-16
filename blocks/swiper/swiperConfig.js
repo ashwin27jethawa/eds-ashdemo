@@ -47,11 +47,11 @@ let objClassSwipper = {
         spaceBetween: 20,
       },
       768: {
-        slidesPerView: auto,
+        slidesPerView: 2,
         spaceBetween: 40,
       },
       1024: {
-        slidesPerView: auto,
+        slidesPerView: 3,
         spaceBetween: 50,
       },
     },
