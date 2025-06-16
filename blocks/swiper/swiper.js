@@ -11,7 +11,7 @@ export default function decorate(block) {
     })
     let leftprevbtn,rightprevbtn,swiperPagination;
     let config = Array.from(block.classList).filter((itemclass)=>{
-        let decryptObj  = JSON.parse(window.btoa(swipperConfig[itemclass]))
+        let decryptObj  = swipperConfig;//[itemclass];//JSON.parse(window.btoa(swipperConfig[itemclass]))
          if(decryptObj[itemclass] != undefined){
             if (itemclass == "navigation") {
                 leftprevbtn = document.createElement("div");

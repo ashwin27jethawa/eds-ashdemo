@@ -53,6 +53,5 @@ let objClassSwipper = {
     },
   }
 }
-objClassSwipper = window.atob(JSON.stringify(objClassSwipper))
 
 export default objClassSwipper;
