@@ -185,23 +185,20 @@
       "label": "Multiselect field",
       "valueType": "string",
       "required": true,
-      "options": [{
-          "name": "Common Setting",
+      "options": [
+        {
+          "name": "Mobile Setting",
           "children": [{
+              "name": "Auto Scroll",
+              "value": "mobile-auto-scroll"
+            },
+            {
               "name": "Pagination",
               "value": "pagination"
             },
             {
               "name": "Action Button",
               "value": "left-right-navigation-btn"
-            }
-          ]
-        },
-        {
-          "name": "Mobile Setting",
-          "children": [{
-              "name": "Auto Scroll",
-              "value": "mobile-auto-scroll"
             },
             {
               "name": "1.5 View",
