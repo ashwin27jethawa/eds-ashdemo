@@ -86,6 +86,22 @@ export default function decorate(block) {
                     decryptObj[itemclass]['pagination'] = {}
                     decryptObj[itemclass]['pagination']["el"] = swiperPagination; //pagination
                 }
+                leftprevbtn = document.createElement("div");
+                leftprevbtn.classList.add("swiper-button-prev")
+                block.append(leftprevbtn)
+
+                rightprevbtn = document.createElement("div");
+                rightprevbtn.classList.add("swiper-button-next")
+                block.append(rightprevbtn)
+
+                if (decryptObj[itemclass]['navigation'] != undefined) {
+                    decryptObj[itemclass]['navigation']["nextEl"] = rightprevbtn
+                    decryptObj[itemclass]['navigation']["prevEl"] = leftprevbtn    
+                }else{
+                    decryptObj[itemclass]['navigation'] = {}
+                    decryptObj[itemclass]['navigation']["nextEl"] = rightprevbtn
+                    decryptObj[itemclass]['navigation']["prevEl"] = leftprevbtn
+                }
             }
             return decryptObj[itemclass]
          }
