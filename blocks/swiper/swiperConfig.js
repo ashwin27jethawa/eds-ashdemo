@@ -10,11 +10,13 @@ let objClassSwipper = {
     }
   },
   "pagination": {
+    loop: true,
     pagination: {
       el: ".swiper-pagination",
     },
   },
   "slidepreview": {
+    loop: true,
     slidesPerView: 3,
     spaceBetween: 30,
     pagination: {
@@ -23,6 +25,7 @@ let objClassSwipper = {
     }
   },
   "slidepreviewauto": {
+    loop: true,
     slidesPerView: "auto",
     spaceBetween: 30,
     pagination: {
@@ -31,6 +34,7 @@ let objClassSwipper = {
     }
   },
   "breakpointswipper": {
+    loop: true,
     slidesPerView: 1,
     spaceBetween: 10,
     pagination: {
