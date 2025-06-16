@@ -183,6 +183,9 @@
       "component": "multiselect",
       "name": "classes",
       "label": "Swiper Variant",
+      "valueType": "string",
+      "required": true,
+      "maxSize": 3,
       "options": [{
           "name": "Common Setting",
           "children": [{
