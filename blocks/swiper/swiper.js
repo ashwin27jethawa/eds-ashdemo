@@ -9,6 +9,7 @@ export default function decorate(block) {
         eleChild.classList.add("swiper-slide");
         swipperwrapper.append(eleChild);
     })
+    block.append(swipperwrapper);
     let leftprevbtn,rightprevbtn,swiperPagination;
     let config = Array.from(block.classList).filter((itemclass)=>{
         let decryptObj  = swipperConfig;//[itemclass];//JSON.parse(window.btoa(swipperConfig[itemclass]))
@@ -16,11 +17,11 @@ export default function decorate(block) {
             if (itemclass == "navigation") {
                 leftprevbtn = document.createElement("div");
                 leftprevbtn.classList.add("swiper-button-prev")
-                swipperwrapper.append(leftprevbtn)
+                block.append(leftprevbtn)
 
                 rightprevbtn = document.createElement("div");
                 rightprevbtn.classList.add("swiper-button-next")
-                swipperwrapper.append(rightprevbtn)
+                block.append(rightprevbtn)
 
                 if (decryptObj[itemclass]['navigation'] != undefined) {
                     decryptObj[itemclass]['navigation']["nextEl"] = rightprevbtn
@@ -35,7 +36,7 @@ export default function decorate(block) {
             }else if (itemclass == "pagination") {
                 swiperPagination = document.createElement("div");
                 swiperPagination.classList.add("swiper-pagination");
-                swipperwrapper.append(swiperPagination);
+                block.append(swiperPagination);
 
                 if (decryptObj[itemclass]['pagination'] != undefined) {
                     decryptObj[itemclass]['pagination']["el"] = swiperPagination; //pagination    
@@ -47,7 +48,7 @@ export default function decorate(block) {
             }else if (itemclass == "slidepreview") {
                 swiperPagination = document.createElement("div");
                 swiperPagination.classList.add("swiper-pagination");
-                swipperwrapper.append(swiperPagination);
+                block.append(swiperPagination);
 
                 if (decryptObj[itemclass]['pagination'] != undefined) {
                     decryptObj[itemclass]['pagination']["el"] = swiperPagination; //pagination    
@@ -59,7 +60,7 @@ export default function decorate(block) {
             }else if (itemclass == "slidepreviewauto") {
                 swiperPagination = document.createElement("div");
                 swiperPagination.classList.add("swiper-pagination");
-                swipperwrapper.append(swiperPagination);
+                block.append(swiperPagination);
 
                 if (decryptObj[itemclass]['pagination'] != undefined) {
                     decryptObj[itemclass]['pagination']["el"] = swiperPagination; //pagination    
@@ -71,7 +72,7 @@ export default function decorate(block) {
             }else if (itemclass == "breakpointswipper") {
                 swiperPagination = document.createElement("div");
                 swiperPagination.classList.add("swiper-pagination");
-                swipperwrapper.append(swiperPagination);
+                block.append(swiperPagination);
 
                 if (decryptObj[itemclass]['pagination'] != undefined) {
                     decryptObj[itemclass]['pagination']["el"] = swiperPagination; //pagination    
@@ -83,6 +84,5 @@ export default function decorate(block) {
             return decryptObj[itemclass]
          }
     })
-    block.append(swipperwrapper)
     SwipperText(block,config)
 } 
