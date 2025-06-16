@@ -34,7 +34,6 @@ let objClassSwipper = {
     }
   },
   "breakpointswipper": {
-    loop: true,
     slidesPerView: 1,
     spaceBetween: 10,
     pagination: {
