@@ -179,43 +179,63 @@
   },
   {
     "id": "carousel-block",
-    "fields": [
-      {
-      "component": "select",
+    "fields": [{
+      "component": "multiselect",
       "name": "classes",
       "label": "Swiper Variant",
       "options": [{
-          "name": "default",
-          "value": "Default"
+          "name": "Common Setting",
+          "children": [{
+            "name": "Pagination",
+            "value": "pagination"
+          },
+          {
+            "name": "Action Button",
+            "value": "left-right-navigation-btn"
+          }
+        ]
+        }, {
+          "name": "Mobile Setting",
+          "children": [{
+            "name": "Auto Scroll",
+            "value": "mobile-auto-scroll"
+          },
+          {
+            "name": "1.5 View",
+            "value": "one-point-five-view"
+          },
+          {
+            "name": "2.5 View",
+            "value": "two-point-five-view"
+          },
+          {
+            "name": "3.5 View",
+            "value": "three-point-five-view"
+          }
+        ]
         },
         {
-          "name": "navigation",
-          "value": "Navigation"
-        },
-        {
-          "name": "pagination",
-          "value": "Pagination"
-        },
-        {
-          "name": "slidepreview",
-          "value": "slidepreview"
-        },
-        {
-          "name": "slidepreviewauto",
-          "value": "slidepreviewauto"
-        },
-        {
-          "name": "breakpointswipper",
-          "value": "breakpointswipper"
+          "name": "Desktop Setting",
+          "children": [{
+            "name": "Pagination",
+            "value": "desk-pagination"
+          },
+          {
+            "name": "Action Button",
+            "value": "left-right-navigation-btn"
+          },
+          {
+            "name": "3 View",
+            "value": "three-point-view"
+          }
+        ]
         }
       ]
-      }
-    ]
+    }]
   },
   {
     "id": "carousel-block-item",
-    "fields": [
-      {
+    "fields": [{
         "component": "reference",
         "name": "image",
         "label": "Image",
