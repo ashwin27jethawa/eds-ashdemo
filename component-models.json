@@ -185,10 +185,11 @@
       "label": "Swiper Variant",
       "valueType": "string",
       "required": true,
-      "maxSize": 3,
-      "options": [{
+      "options": [
+        {
           "name": "Common Setting",
-          "children": [{
+          "children": [
+            {
             "name": "Pagination",
             "value": "pagination"
           },
@@ -200,7 +201,8 @@
         },
         {
           "name": "Mobile Setting",
-          "children": [{
+          "children": [
+            {
             "name": "Auto Scroll",
             "value": "mobile-auto-scroll"
           },
@@ -220,7 +222,8 @@
         },
         {
           "name": "Desktop Setting",
-          "children": [{
+          "children": [
+            {
             "name": "Pagination",
             "value": "desk-pagination"
           },
