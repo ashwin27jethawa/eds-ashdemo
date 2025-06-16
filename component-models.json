@@ -216,6 +216,22 @@
               "value": "three-point-five-view"
             }
           ]
+        },
+        {
+          "name": "Desktop Setting",
+          "children": [{
+              "name": "Pagination",
+              "value": "desk-pagination"
+            },
+            {
+              "name": "Action Button",
+              "value": "left-right-navigation-btn"
+            },
+            {
+              "name": "3 View",
+              "value": "three-point-view"
+            }
+          ]
         }
       ]
     }]
