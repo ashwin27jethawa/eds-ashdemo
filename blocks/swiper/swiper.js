@@ -1,6 +1,6 @@
 import SwipperText from "../swiper/swiper-bundle.min.js"
 export default function decorate(block) {
-  var objConfig = {}
+  
   block.classList.add("swiper");
   const swipperwrapper = document.createElement("div");
   swipperwrapper.classList.add("swiper-wrapper");
@@ -15,6 +15,7 @@ export default function decorate(block) {
 
 
   function handleResolution() {
+    var objConfig = {}
     if (window.innerWidth < 768) {
       //Mobile
       if (blockClassList.indexOf("mobile-auto-scroll") != -1) {
