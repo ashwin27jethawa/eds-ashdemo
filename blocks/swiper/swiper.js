@@ -16,7 +16,7 @@ export default function decorate(block) {
     let paginationDots = document.createElement('div');
     paginationDots.classList.add('swiper-pagination');
     block.append(paginationDots);
-
+    objConfig["loop"] = true;
     objConfig['pagination'] = {
       el: paginationDots,
       clickable: true,
@@ -31,7 +31,7 @@ export default function decorate(block) {
     let navPrevbtn = document.createElement('div');
     navPrevbtn.classList.add('swiper-button-prev');
     block.append(navPrevbtn);
-
+    objConfig["loop"] = true;
     objConfig["navigation"]= {
         nextEl: navNextbtn,
         prevEl: navPrevbtn,
