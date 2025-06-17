@@ -68,7 +68,7 @@ export default function decorate(block) {
   }
 
   // Call it on load
-  // handleResolution();
+  handleResolution();
 
   // Also call it on resize
   window.addEventListener('resize', handleResolution)
