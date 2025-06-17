@@ -64,6 +64,7 @@ export default function decorate(block) {
         objConfig['spaceBetween'] = 30;
       }
     }
+    SwipperText(block, objConfig)
   }
 
   // Call it on load
@@ -72,5 +73,5 @@ export default function decorate(block) {
   // Also call it on resize
   window.addEventListener('resize', handleResolution)
 
-  SwipperText(block, objConfig)
+  
 }
