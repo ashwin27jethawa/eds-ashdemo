@@ -60,5 +60,5 @@ export default function decorate(block) {
     objConfig['spaceBetween'] = 30;
   }
 
-SwipperText(block,obj)
+SwipperText(block,objConfig)
 }
