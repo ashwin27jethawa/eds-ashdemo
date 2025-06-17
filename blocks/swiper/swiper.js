@@ -53,7 +53,7 @@ export default function decorate(block) {
         let navPrevbtn = document.createElement('div');
         navPrevbtn.classList.add('swiper-button-prev');
         block.append(navPrevbtn);
-        
+
         objConfig["navigation"] = {
           nextEl: navNextbtn,
           prevEl: navPrevbtn,
@@ -67,7 +67,7 @@ export default function decorate(block) {
   }
 
   // Call it on load
-  handleResolution();
+  // handleResolution();
 
   // Also call it on resize
   window.addEventListener('resize', handleResolution)
