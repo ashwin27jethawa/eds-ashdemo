@@ -1,12 +1,13 @@
 import {
   button,
   div,
-  domEl,
+  textarea,
   label,
   span
-} from "../../scripts/dom-helpers";
+} from "../../scripts/dom-helpers.js";
 
 export default function decorate(block) {
+  block.innerHTML = "";
   block.append(
     div(
       label({
@@ -14,7 +15,7 @@ export default function decorate(block) {
         },
         'Paste your HTML code here:'
       ),
-      domEl({
+      textarea({
         "id": 'html-input',
         "placeholder": 'Paste HTML here...'
       }),
@@ -43,7 +44,7 @@ export default function decorate(block) {
         },
         'DOM Helper Code output:'
       ),
-      domEl({
+      textarea({
         "id": 'output-code',
         "placeholder": 'Converted code will appear here...',
         "readonly": ''
@@ -109,12 +110,12 @@ export default function decorate(block) {
       return `${pad}${fnName}(\n${pad}  ${joinedArgs}\n${pad})`;
     }
   }
-
-  const convertBtn = document.getElementById('convert-btn');
-  const copyBtn = document.getElementById('copy-btn');
-  const htmlInput = document.getElementById('html-input');
-  const outputCode = document.getElementById('output-code');
-  const copyMsg = document.getElementById('copy-msg');
+  
+  const convertBtn = block.querySelector('#convert-btn');
+  const copyBtn = block.querySelector('#copy-btn');
+  const htmlInput = block.querySelector('#html-input');
+  const outputCode = block.querySelector('#output-code');
+  const copyMsg = block.querySelector('#copy-msg');
 
   convertBtn.addEventListener('click', () => {
     const html = htmlInput.value.trim();
