@@ -206,7 +206,7 @@
     "fields":[
       {
         "component": "select",
-        "name": "classess",
+        "name": "classes",
         "label": "Enter Class ListView",
         "options": [
           {
