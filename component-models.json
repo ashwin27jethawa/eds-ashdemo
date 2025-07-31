@@ -200,5 +200,32 @@
         "label": "Title"
       }
     ]
+  },
+  {
+    "id":"list-view-block",
+    "fields":[
+      {
+        "component": "select",
+        "name": "classess",
+        "label": "Enter Class ListView",
+        "options": [
+          {
+            "name": "List View Fund List",
+            "value": "list-view-fund-list"
+          },
+          {
+            "name": "WatchList View",
+            "value": "watchlist-view"
+          }
+        ]
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
+      }
+    ]
   }
 ]

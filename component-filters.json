@@ -16,7 +16,8 @@
       "cards",
       "columns",
       "fragment",
-      "html-to-dom"
+      "html-to-dom",
+      "list-view-block"
     ]
   },
   {
