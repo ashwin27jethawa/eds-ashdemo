@@ -17,7 +17,8 @@
       "columns",
       "fragment",
       "html-to-dom",
-      "list-view-block"
+      "list-view-block",
+      "form-block"
     ]
   },
   {
