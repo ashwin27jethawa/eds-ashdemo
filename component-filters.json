@@ -18,7 +18,8 @@
       "fragment",
       "html-to-dom",
       "list-view-block",
-      "form-block"
+      "form-block",
+      "profile-card"
     ]
   },
   {
