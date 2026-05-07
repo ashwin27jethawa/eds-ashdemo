@@ -259,9 +259,9 @@
       },
       {
         "component": "text",
-        "name": "name",
+        "name": "title",
         "value": "",
-        "label": "Name",
+        "label": "Title",
         "valueType": "string"
       },
       {
