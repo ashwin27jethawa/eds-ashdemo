@@ -29,6 +29,12 @@
     ]
   },
   {
+    "id":"banners",
+    "components": [
+      "banner"
+    ]
+  },
+  {
     "id": "columns",
     "components": [
       "column"
