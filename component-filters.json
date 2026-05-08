@@ -15,24 +15,13 @@
       "hero",
       "cards",
       "columns",
-      "fragment",
-      "html-to-dom",
-      "list-view-block",
-      "form-block",
-      "profile-card",
-      "banners"
+      "fragment"
     ]
   },
   {
     "id": "cards",
     "components": [
       "card"
-    ]
-  },
-  {
-    "id":"banners",
-    "components": [
-      "banner"
     ]
   },
   {
@@ -48,6 +37,13 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "custom-form",
+    "components": [
+      "text",
+      "button"
     ]
   }
 ]

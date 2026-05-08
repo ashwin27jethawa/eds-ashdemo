@@ -1,43 +1,51 @@
 export default function decorate(block) {
   const banners = [...block.children];
-  block.textContent = '';
-  
-  const sliderWrapper = document.createElement('div');
-  sliderWrapper.classList.add('slider-wrapper');
+  block.textContent = "";
+
+  const sliderWrapper = document.createElement("div");
+  sliderWrapper.classList.add("slider-wrapper");
 
   banners.forEach((row, i) => {
-    const slide = document.createElement('div');
-    slide.classList.add('slide');
-    if (i === 0) slide.classList.add('active');
+    console.log(i);
+    
+    // console.log("sliderWrapper", banners);
+    const slide = document.createElement("div");
+    slide.classList.add("slide");
+    if (i === 0) slide.classList.add("active");
     slide.append(...row.children);
+    console.log("slider", slide);
+    
     sliderWrapper.append(slide);
   });
 
   block.append(sliderWrapper);
 
-  const moveSlide = (direction = 'next') => {
-    const active = sliderWrapper.querySelector('.slide.active');
-    active.classList.remove('active');
+  const moveSlide = (direction = "next") => {
+    const active = sliderWrapper.querySelector(".slide.active");
+    active.classList.remove("active");
     let target;
-    if (direction === 'next') {
+    if (direction === "next") {
+        
       target = active.nextElementSibling || sliderWrapper.firstElementChild;
+     
+      
     } else {
       target = active.previousElementSibling || sliderWrapper.lastElementChild;
     }
-    target.classList.add('active');
+    target.classList.add("active");
   };
 
-  const slideDelay = 5000;
-  let autoSlideInterval = setInterval(() => moveSlide('next'), slideDelay);
+  const slideDelay = 3000;
+  let autoSlideInterval = setInterval(() => moveSlide("next"), slideDelay);
 
   const stopAuto = () => clearInterval(autoSlideInterval);
   const startAuto = () => {
     stopAuto();
-    autoSlideInterval = setInterval(() => moveSlide('next'), slideDelay);
+    autoSlideInterval = setInterval(() => moveSlide("next"), slideDelay);
   };
 
-  block.addEventListener('mouseenter', stopAuto);
-  block.addEventListener('mouseleave', startAuto);
+  block.addEventListener("mouseenter", stopAuto);
+  block.addEventListener("mouseleave", startAuto);
 
   let startX = 0;
   let isDragging = false;
@@ -45,41 +53,28 @@ export default function decorate(block) {
   const handleStart = (e) => {
     stopAuto();
     isDragging = true;
-    startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+    startX = e.type.includes("touch") ? e.touches[0].clientX : e.clientX;
   };
 
   const handleEnd = (e) => {
     if (!isDragging) return;
-    const endX = e.type.includes('touch') ? e.changedTouches[0].clientX : e.clientX;
+    const endX = e.type.includes("touch")
+      ? e.changedTouches[0].clientX
+      : e.clientX;
     const distance = startX - endX;
 
     if (Math.abs(distance) > 50) {
-      if (distance > 0) moveSlide('next');
-      else moveSlide('prev');
+      if (distance > 0) moveSlide("next");
+      else moveSlide("prev");
     }
-    
+
     isDragging = false;
     startAuto();
   };
 
-  sliderWrapper.addEventListener('mousedown', handleStart);
-  window.addEventListener('mouseup', handleEnd); // Window so it catches release outside the box
-  
-  sliderWrapper.addEventListener('touchstart', handleStart, { passive: true });
-  sliderWrapper.addEventListener('touchend', handleEnd, { passive: true });
+  sliderWrapper.addEventListener("mousedown", handleStart);
+  window.addEventListener("mouseup", handleEnd);
 
-  if (banners.length > 1) {
-    const nav = document.createElement('div');
-    nav.classList.add('slider-nav');
-    nav.innerHTML = '<button class="prev"></button><button class="next"></button>';
-    block.append(nav);
-
-    nav.querySelectorAll('button').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        stopAuto();
-        moveSlide(btn.classList.contains('next') ? 'next' : 'prev');
-        startAuto();
-      });
-    });
-  }
+  sliderWrapper.addEventListener("touchstart", handleStart, { passive: true });
+  sliderWrapper.addEventListener("touchend", handleEnd, { passive: true });
 }
