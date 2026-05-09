@@ -160,8 +160,6 @@ function autolinkModals(element) {
       const { openModal } = await import(
         `${window.hlx.codeBasePath}/blocks/modal/modal.js`
       );
-      console.log(openModal);
-      
       openModal(origin.href);
     }
   });
