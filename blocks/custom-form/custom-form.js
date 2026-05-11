@@ -42,7 +42,7 @@ export default function decorate(block) {
           <small class="error"></small>
         </div>
 
-        <button type="submit" id="submit-btn" disabled="true">
+        <button type="submit" id="submit-btn" disabled>
           Save
         </button>
 
@@ -72,6 +72,7 @@ export default function decorate(block) {
   const phoneRegex = /^[6-9]\d{9}$/;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+  // local storage
   function getContacts() {
     return JSON.parse(localStorage.getItem("contacts")) || [];
   }
@@ -80,10 +81,11 @@ export default function decorate(block) {
     localStorage.setItem("contacts", JSON.stringify(data));
   }
 
-  // error handling
+  // show error
   function showError(input, message) {
     const field = input.parentElement;
     const error = field.querySelector(".error");
+
     error.textContent = message;
     input.classList.add("invalid");
   }
@@ -92,61 +94,86 @@ export default function decorate(block) {
   function clearError(input) {
     const field = input.parentElement;
     const error = field.querySelector(".error");
+
     error.textContent = "";
     input.classList.remove("invalid");
   }
 
-  // input validation
+  // validate single input
   function validateInput(input) {
     const value = input.value.trim();
-    // name
-    if (input.name == "firstName" || input.name == "lastName") {
+
+    // first name + last name
+    if (input.name === "firstName" || input.name === "lastName") {
       if (!value) {
         showError(input, "This field is required");
         return false;
       }
+
       if (!nameRegex.test(value)) {
-        if (value.includes(" ")) {
-          showError(input, "Only single word allowed (Example: Suresh)");
-          return false;
-        }
+        showError(input, "Only letters allowed");
+        return false;
       }
+
       clearError(input);
       return true;
     }
+
     // email
-    if (input.name == "email") {
+    if (input.name === "email") {
+      if (!value) {
+        showError(input, "Email is required");
+        return false;
+      }
+
       if (!emailRegex.test(value)) {
         showError(input, "Enter valid email");
         return false;
       }
+
       clearError(input);
       return true;
     }
 
-    // usernmae
-    if (input.name == "username") {
-      if (!usernameRegex.test(value)) {
-        showError(
-          input,
-          "Usernames can only contain letters, numbers, and underscores",
-        );
+    // username
+    if (input.name === "username") {
+      if (!value) {
+        showError(input, "Username is required");
         return false;
       }
+
+      if (!usernameRegex.test(value)) {
+        showError(input, "Only letters, numbers and underscores allowed");
+        return false;
+      }
+
       clearError(input);
       return true;
     }
 
-    // phone number
-    if (input.name == "phone") {
-      if (!phoneRegex.test(value)) {
-        const startsCorrectly = phoneRegex.test(value);
+    // phone
+    if (input.name === "phone") {
+      if (!value) {
+        showError(input, "Phone number is required");
+        return false;
+      }
 
-        if (!startsCorrectly) {
-          showError(input, "Phone number must start with 9, 8, 7, or 6");
+      // number start with 6-9
+      if (!phoneRegex.test(value)) {
+        if (!/^[6-9]/.test(value)) {
+          showError(input, "Phone number must start with 6, 7, 8, or 9");
         } else {
-          showError(input, "Phone number must be exactly 10 digits");
+          showError(input, "Phone number must be 10 digits");
         }
+
+        return false;
+      }
+
+      //  same digits in a row
+      const repeatedDigitsRegex = /(\d)\1{3,}/;
+
+      if (repeatedDigitsRegex.test(value)) {
+        showError(input, "More than 3 same digits in a row are not allowed");
         return false;
       }
 
@@ -155,45 +182,47 @@ export default function decorate(block) {
     }
 
     // age
-    if (input.name == "age") {
-      if (!value || Number(value) < 1 || Number(value) > 100) {
+    if (input.name === "age") {
+      if (!value) {
+        showError(input, "Age is required");
+        return false;
+      }
+
+      if (Number(value) < 1 || Number(value) > 100) {
         showError(input, "Enter valid age (1-100)");
         return false;
       }
+
       clearError(input);
       return true;
     }
-    if (!value) {
-      showError(input, "This field is required");
-      return false;
-    }
-    clearError(input);
+
     return true;
   }
 
-  let isValid = true;
-
-  //  validation
-  form.addEventListener("input", (e) => {
-    console.log(e.target);
-
+  // validate full form
+  function validateForm() {
     const inputs = form.querySelectorAll("input");
+    let formValid = true;
 
     inputs.forEach((input) => {
-      console.log("input", input);
-
-      submitBtn.disabled = false;
       if (input.name !== "editIndex") {
         const valid = validateInput(input);
 
         if (!valid) {
-          isValid = false;
-          submitBtn.disabled = true;
-        } else {
-          submitBtn.disabled = false;
+          formValid = false;
         }
       }
     });
+
+    submitBtn.disabled = !formValid;
+
+    return formValid;
+  }
+
+  // live validation
+  form.addEventListener("input", () => {
+    validateForm();
   });
 
   // render contacts
@@ -210,68 +239,50 @@ export default function decorate(block) {
     list.innerHTML = contacts
       .map(
         (item, index) => `
-      <div class="item">
+        <div class="item">
 
-        <div class="info">
-          <strong>
-            ${item.firstName} ${item.lastName}
-          </strong>
+          <div class="info">
+            <strong>
+              ${item.firstName} ${item.lastName}
+            </strong>
 
-          <p>Email: ${item.email}</p>
+            <p>Email: ${item.email}</p>
 
-          <p>Username: ${item.username}</p>
+            <p>Username: ${item.username}</p>
 
-          <p>Phone: ${item.phone}</p>
+            <p>Phone: ${item.phone}</p>
 
-          <small>Age: ${item.age || "N/A"}</small>
+            <small>Age: ${item.age}</small>
+          </div>
+
+          <div class="actions">
+
+            <button class="edit-btn" data-index="${index}">
+              Edit
+            </button>
+
+            <button class="delete-btn" data-index="${index}">
+              Delete
+            </button>
+
+          </div>
+
         </div>
-
-        <div class="actions">
-
-          <button class="edit-btn" data-index="${index}">
-            Edit
-          </button>
-
-          <button class="delete-btn" data-index="${index}">
-            Delete
-          </button>
-
-        </div>
-
-      </div>
-    `,
+      `,
       )
       .join("");
   }
 
-  // form submission
+  // submit form
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const inputs = form.querySelectorAll("input");
-
-    // input validation on user type on sumbut
-
-    // inputs.forEach((input) => {
-    //   console.log("input", inputs);
-
-    //   submitBtn.disabled = false;
-    //   if (input.name !== "editIndex") {
-    //     const valid = validateInput(input);
-
-    //     if (!valid) {
-    //       isValid = false;
-    //       submitBtn.disabled = true;
-    //     } else {
-    //       submitBtn.disabled = false;
-    //     }
-    //   }
-    // });
-
-    if (!isValid) return;
+    // validate before submit
+    if (!validateForm()) return;
 
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
+
     const contacts = getContacts();
 
     const contact = {
@@ -283,6 +294,7 @@ export default function decorate(block) {
       age: data.age,
     };
 
+    // edit
     if (data.editIndex !== "") {
       contacts[data.editIndex] = contact;
     } else {
@@ -290,27 +302,32 @@ export default function decorate(block) {
     }
 
     saveContacts(contacts);
+
     form.reset();
     form.editIndex.value = "";
 
     submitBtn.textContent = "Save";
+    submitBtn.disabled = true;
 
     renderContacts();
   });
 
+  // edit + delete
   list.addEventListener("click", (e) => {
     const contacts = getContacts();
 
-    // delete contact
+    // delete
     if (e.target.classList.contains("delete-btn")) {
       const index = e.target.dataset.index;
+
       contacts.splice(index, 1);
+
       saveContacts(contacts);
 
       renderContacts();
     }
 
-    // edit contact
+    // edit
     if (e.target.classList.contains("edit-btn")) {
       const index = e.target.dataset.index;
 
@@ -326,14 +343,20 @@ export default function decorate(block) {
       form.editIndex.value = index;
 
       submitBtn.textContent = "Update";
+
+      validateForm();
     }
   });
 
-  // clear contacts
+  // clear all
   clearBtn.addEventListener("click", () => {
     localStorage.removeItem("contacts");
+
     renderContacts();
   });
+
+  // initial state
+  submitBtn.disabled = true;
 
   renderContacts();
 }
