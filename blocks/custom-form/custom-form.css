@@ -136,3 +136,20 @@ button {
     gap: 10px;
   }
 }
+
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.error {
+  color: #ef4444;
+  font-size: 11px;
+  margin-top: 4px;
+  min-height: 14px;
+}
+
+.invalid {
+  border-color: #ef4444;
+}
