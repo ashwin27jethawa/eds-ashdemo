@@ -5,9 +5,8 @@
     background-color: #2E2A94; 
     border-radius: 16px;
     height: 160px;
-    overflow: visible;
+    overflow: hidden;
     color: #ffffff;
-    font-family: 'Arial', sans-serif;
 }
 
 .growth-wrapper > .growth {
