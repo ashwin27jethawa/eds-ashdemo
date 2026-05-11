@@ -1,31 +1,88 @@
-.growth-wrapper{
+/* Container styling */
+.growth-wrapper {
     max-width: 1232px;
-    margin: 0 auto;
-    background-color: #2E2A94;
+    margin: 20px auto;
+    background-color: #2E2A94; 
     border-radius: 16px;
     height: 160px;
-    overflow: hidden;
-
+    overflow: visible;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
 }
-/* .growth-wrapper .growth{
-    display: flex;
-    align-items: center;
-    
-} */
 
-.growth-wrapper>div{
+.growth-wrapper > .growth {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: space-around;
     height: 100%;
+    padding: 0 60px 0 0; 
 }
 
-.growth-wrapper>.growth :nth-child(1){
-   display: flex;
-   align-items: center;
+.growth-wrapper .growth > div:first-child > div {
+    display: flex;
+    align-items: center;
 }
 
-.growth-wrapper>.growth>:nth-child(1)>p {
-    width: 109px;
+.growth-wrapper .growth img[data-aue-prop="col1_image"] {
     height: 160px;
+    width: auto;
+    display: block;
+    margin-right: 20px;
+}
+
+.growth-wrapper [data-aue-prop="col1_text"] p {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+}
+
+.growth-wrapper .growth > div:last-child > div {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.growth-wrapper img[data-aue-prop="col2_image2"] {
+    background: white;
+    padding: 6px;
+    border-radius: 8px;
+    width: 75px;
+    height: 75px;
+}
+
+.growth-wrapper [data-aue-prop="col2_text"] {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+}
+
+.growth-wrapper [data-aue-prop="col2_text"] p {
+    margin: 0;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    color: #ccc; 
+}
+
+.growth-wrapper [data-aue-prop="col2_text"] a {
+    display: block;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    margin-left: 5px;
+}
+
+.growth-wrapper .icon img {
+    width: 22px;
+    height: auto;
+    margin-right: 8px;
+}
+/* Arrow decorative image */
+.growth-wrapper img[data-aue-prop="col2_image1"] {
+    height: 100px;
+    width: auto;
+    opacity: 0.6;
 }
