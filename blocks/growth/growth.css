@@ -7,26 +7,25 @@
     overflow: hidden;
 
 }
-.growth-wrapper .growth{
+/* .growth-wrapper .growth{
+    display: flex;
+    align-items: center;
+    
+} */
+
+.growth-wrapper>div{
     display: flex;
     align-items: center;
     justify-content: space-around;
     height: 100%;
 }
 
-.growth-wrapper div{
-    display: flex;
-    /* flex-direction: column; */
-    align-items: center;
-    justify-content: center;
-}
-
-.growth-wrapper .growth :nth-child(1){
+.growth-wrapper>.growth :nth-child(1){
    display: flex;
    align-items: center;
 }
 
-.growth-wrapper .growth :nth-child(1) p {
+.growth-wrapper>.growth>:nth-child(1)>p {
     width: 109px;
     height: 160px;
 }
