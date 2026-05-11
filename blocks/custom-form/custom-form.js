@@ -42,7 +42,7 @@ export default function decorate(block) {
           <small class="error"></small>
         </div>
 
-        <button type="submit" id="submit-btn" disabled = "true">
+        <button type="submit" id="submit-btn" disabled="true">
           Save
         </button>
 
@@ -65,7 +65,6 @@ export default function decorate(block) {
   const list = block.querySelector("#contact-list");
   const clearBtn = block.querySelector("#clear-btn");
   const submitBtn = block.querySelector("#submit-btn");
-
 
   // regex patterns
   const nameRegex = /^[A-Za-z]+$/;
@@ -172,11 +171,29 @@ export default function decorate(block) {
     return true;
   }
 
+  let isValid = true;
+
   //  validation
   form.addEventListener("input", (e) => {
     console.log(e.target);
-    
-    validateInput(e.target);
+
+    const inputs = form.querySelectorAll("input");
+
+    inputs.forEach((input) => {
+      console.log("input", input);
+
+      submitBtn.disabled = false;
+      if (input.name !== "editIndex") {
+        const valid = validateInput(input);
+
+        if (!valid) {
+          isValid = false;
+          submitBtn.disabled = true;
+        } else {
+          submitBtn.disabled = false;
+        }
+      }
+    });
   });
 
   // render contacts
@@ -227,29 +244,29 @@ export default function decorate(block) {
       .join("");
   }
 
-
   // form submission
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
     const inputs = form.querySelectorAll("input");
 
-    let isValid = true;
+    // input validation on user type on sumbut
 
-    // input validation on user type
-    inputs.forEach((input) => {
-      submitBtn.disabled = false;
-      if (input.name !== "editIndex") {
-        const valid = validateInput(input);
+    // inputs.forEach((input) => {
+    //   console.log("input", inputs);
 
-        if (!valid) {
-          isValid = false;
-          submitBtn.disabled = true;
-        } else {
-          submitBtn.disabled = false;
-        }
-      }
-    });
+    //   submitBtn.disabled = false;
+    //   if (input.name !== "editIndex") {
+    //     const valid = validateInput(input);
+
+    //     if (!valid) {
+    //       isValid = false;
+    //       submitBtn.disabled = true;
+    //     } else {
+    //       submitBtn.disabled = false;
+    //     }
+    //   }
+    // });
 
     if (!isValid) return;
 

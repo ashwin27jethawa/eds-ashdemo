@@ -166,6 +166,67 @@
     ]
   },
   {
+    "id": "growth",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "col1_image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_imageAlt",
+        "label": "Alt",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "col1_text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "col2_image1",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col2_image1Alt",
+        "label": "Alt",
+        "value": ""
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "col2_image2",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col2_image2Alt",
+        "label": "Alt",
+        "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "col2_text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "hero",
     "fields": [
       {
@@ -190,32 +251,5 @@
         "valueType": "string"
       }
     ]
-  },
-  {
-    "id": "custom-form",
-    "fields": [
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Form Title",
-        "value": "Contact Registration"
-      },
-      {
-        "component": "text",
-        "name": "successMessage",
-        "label": "Success Message",
-        "value": "Your data has been logged locally!"
-      },
-      {
-        "component": "select",
-        "name": "theme",
-        "label": "Theme",
-        "options": [
-          { "name": "Light", "value": "light" },
-          { "name": "Dark", "value": "dark" }
-        ]
-      }
-    ]
   }
-
 ]
