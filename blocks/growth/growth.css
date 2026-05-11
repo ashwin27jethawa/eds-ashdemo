@@ -1,14 +1,21 @@
-/* Container styling */
+/* ul,
+li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 .growth-wrapper {
     max-width: 1232px;
     margin: 0 auto;
-    background-color: #2E2A94; 
+    background-color: #2e2a94;
     border-radius: 16px;
     height: 160px;
     overflow: hidden;
+    color: #ffffff;
+    font-family: "Arial", sans-serif;
 }
 
-.growth-wrapper > .growth {
+.growth-wrapper .growth {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -18,20 +25,101 @@
 .growth-wrapper .growth > div:first-child > div {
     display: flex;
     align-items: center;
+    height: 100%;
 }
 
-.growth-wrapper .growth img[data-aue-prop="col1_image"] {
-    height: 160px;
+.growth-wrapper .growth > div:first-child img {
+    height: 180px;
     width: auto;
+    margin-top: 10px;
     display: block;
-    margin-right: 20px;
 }
 
-.growth-wrapper [data-aue-prop="col1_text"] p {
-    font-size: 28px;
+.growth-wrapper .growth > div:first-child p:not(:first-child) {
+    font-size: 24px;
     font-weight: 700;
     line-height: 1.1;
     margin: 0;
+    padding-left: 20px;
+}
+
+.growth-wrapper .growth > div:last-child > div {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding-right: 40px;
+}
+
+.growth-wrapper .growth > div:last-child img[alt="two arrow lines"] {
+    margin-top: 25px;
+    height: 160px;
+}
+
+.growth-wrapper .growth > div:last-child img[alt="qrcode png"] {
+    margin: 0;
+    display: flex;
+    width: 84px;
+    height: 84px;
+    padding: 9.471px;
+    justify-content: center;
+    align-items: center;
+    gap: 23.679px;
+    border-radius: 4.736px;
+    background: #fff;
+    margin-right: 18px;
+}
+
+
+.growth-wrapper .growth > div:last-child > div > ul > li {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+}
+
+.growth-wrapper .growth .icon img {
+    width: 20px;
+    height: auto;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+.growth-wrapper .growth a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    display: block;
+} */
+
+
+.growth-wrapper {
+    max-width: 1232px;
+    margin: 0 auto;
+    background-color: #2E2A94;
+    border-radius: 16px;
+    height: 160px;
+    overflow: hidden;
+    color: #ffffff;
+    font-family: sans-serif;
+}
+
+.growth-wrapper .growth {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 0 40px;
+}
+
+.growth-wrapper .growth > div:first-child > div {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.growth-wrapper .growth > div:first-child img {
+    height: 160px;
+    width: auto;
 }
 
 .growth-wrapper .growth > div:last-child > div {
@@ -40,44 +128,51 @@
     gap: 25px;
 }
 
-.growth-wrapper img[data-aue-prop="col2_image2"] {
-    background: white;
-    border-radius: 8px;
-    width: 75px;
-    height: 75px;
-}
-
-.growth-wrapper [data-aue-prop="col2_text"] {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 8px;
-}
-
-.growth-wrapper [data-aue-prop="col2_text"] p {
+.growth-wrapper ul {
+    list-style: none;
     margin: 0;
-    font-size: 11px;
+    padding: 0;
+}
+
+.growth-wrapper .growth > div:last-child > div > ul {
+    display: flex;
+    flex-direction: column; 
+    gap: 12px;
+}
+
+.growth-wrapper .growth > div:last-child > div > ul > li {
     display: flex;
     align-items: center;
-    color: #ccc; 
+    gap: 10px; 
 }
 
-.growth-wrapper [data-aue-prop="col2_text"] a {
-    display: block;
+.growth-wrapper .growth li ul li {
+    font-size: 11px;
+    line-height: 1.2;
+    color: #e0e0e0;
+}
+
+.growth-wrapper .growth a {
     color: #ffffff;
     text-decoration: none;
-    font-size: 15px;
-    font-weight: 600;
-    margin-left: 5px;
+    font-size: 14px;
+    font-weight: 700;
+}
+.growth-wrapper .growth > div:last-child img[alt="two arrow lines"] {
+    margin-top: 25px;
+    height: 160px;
+}
+
+.growth-wrapper img[alt="qrcode png"] {
+    background: white;
+    padding: 9px;
+    border-radius: 4.5px;
+    width: 84px;
+    height: 84px;
 }
 
 .growth-wrapper .icon img {
-    width: 22px;
+    width: 24px;
     height: auto;
-    margin-right: 8px;
-}
-.growth-wrapper img[data-aue-prop="col2_image1"] {
-    height: 160px;
-    width: auto;
-    opacity: 0.6;
+    display: block;
 }
