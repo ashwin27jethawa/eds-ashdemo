@@ -121,7 +121,7 @@
     "id": "accordion",
     "fields": [
       {
-        "component": "multifield",
+        "component": "multi",
         "name": "items",
         "label": "Accordion Items",
         "multi": true,
