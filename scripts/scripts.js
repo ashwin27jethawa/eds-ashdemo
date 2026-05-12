@@ -75,6 +75,26 @@ function buildAutoBlocks() {
   }
 }
 
+
+function decorateEmbeds(main) {
+  const anchors = main.querySelectorAll('a');
+  anchors.forEach((a) => {
+    const parent = a.parentElement;
+    const isOnlyChild = parent.children.length === 1 && parent.tagName === 'P';
+    const isLinkItself = a.href === a.textContent || a.href === decodeURIComponent(a.textContent);
+    
+    // Check if the link is from a supported service
+    const isEmbeddable = ['youtube.com', 'youtu.be', 'vimeo.com', 'twitter.com'].some((s) => a.href.includes(s));
+
+    if (isOnlyChild && isLinkItself && isEmbeddable) {
+      const wrapper = document.createElement('div');
+      wrapper.classList.add('embed'); // This tells EDS to load blocks/embed/embed.js
+      a.parentElement.replaceWith(wrapper);
+      wrapper.append(a);
+    }
+  });
+}
+
 /**
  * Decorates the main element.
  * @param {Element} main The main element
@@ -87,6 +107,7 @@ export function decorateMain(main) {
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
+  decorateEmbeds(main);
 }
 
 /**
