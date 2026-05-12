@@ -287,9 +287,9 @@
         "multi": false
       },
       {
-        "component": "checkbox",
-        "name": "col_autoplay",
-        "label": "Autoplay / Loop"
+        "component": "text",
+        "name": "col_videoSource",
+        "label": "Alt Text"
       }
     ]
   }
