@@ -177,6 +177,10 @@
     ]
   },
   {
+    "id": "form",
+    "fields": []
+  },
+  {
     "id": "fragment",
     "fields": [
       {
