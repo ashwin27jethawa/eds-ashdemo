@@ -305,7 +305,9 @@
       {
         "component": "richtext",
         "name": "tableContent",
-        "label": "Table Content"
+        "label": "Table Content",
+        "value": "",
+        "valueType": "string"
       }
     ]
   },

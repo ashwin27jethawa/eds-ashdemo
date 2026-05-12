@@ -35,7 +35,7 @@
     {
       "id": "table",
       "fields": [
-         {
+        {
           "component": "text",
           "name": "tableTitle",
           "label": "Table Title"
@@ -43,7 +43,9 @@
         {
           "component": "richtext",
           "name": "tableContent",
-          "label": "Table Content"
+          "label": "Table Content",
+          "value": "",
+          "valueType": "string"
         }
       ]
     }
