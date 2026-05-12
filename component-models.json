@@ -272,5 +272,21 @@
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "video",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "col_videoSource",
+        "label": "Video File (MP4)",
+        "multi": false
+      },
+      {
+        "component": "checkbox",
+        "name": "col_autoplay",
+        "label": "Autoplay / Loop"
+      }
+    ]
   }
 ]
