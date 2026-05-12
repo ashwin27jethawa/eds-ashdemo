@@ -125,6 +125,7 @@
         "name": "items",
         "label": "Accordion Items",
         "valueType": "string[]",
+        "multi": true,
         "fields": [
           {
             "component": "text",
