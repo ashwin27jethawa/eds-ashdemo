@@ -50,11 +50,5 @@
       "button",
       "title"
     ]
-  },
-  {
-    "id": "tabs",
-    "components": [
-      "tab-item"
-    ]
   }
 ]
