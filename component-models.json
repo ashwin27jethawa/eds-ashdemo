@@ -118,6 +118,28 @@
     ]
   },
   {
+    "id": "accordion",
+    "fields": [
+      {
+        "component": "multifield",
+        "name": "items",
+        "label": "Accordion Items",
+        "fields": [
+          {
+            "component": "text",
+            "name": "col_label",
+            "label": "Question/Label"
+          },
+          {
+            "component": "aem-content",
+            "name": "col_body",
+            "label": "Answer/Content"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
