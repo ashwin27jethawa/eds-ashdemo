@@ -19,26 +19,25 @@
   "models": [
     {
       "id": "accordion",
-       "fields": [
+      "fields": [
         {
           "component": "multifield",
-          "name": "items",
+          "name": "rows",
           "label": "Accordion Items",
           "fields": [
-              {
-                "component": "text",
-                "name": "col_label",
-                "label": "Question/Label"
-              },
-              {
-                "component": "aem-content",
-                "name": "col_body",
-                "label": "Answer/Content"
-              }
+            {
+              "component": "text",
+              "name": "title",
+              "label": "Title"
+            },
+            {
+              "component": "richtext",
+              "name": "content",
+              "label": "Content"
+            }
           ]
         }
       ]
     }
-  ],
-  "filters": []
+  ]
 }

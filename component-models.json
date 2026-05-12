@@ -122,18 +122,18 @@
     "fields": [
       {
         "component": "multifield",
-        "name": "items",
+        "name": "rows",
         "label": "Accordion Items",
         "fields": [
           {
             "component": "text",
-            "name": "col_label",
-            "label": "Question/Label"
+            "name": "title",
+            "label": "Title"
           },
           {
-            "component": "aem-content",
-            "name": "col_body",
-            "label": "Answer/Content"
+            "component": "richtext",
+            "name": "content",
+            "label": "Content"
           }
         ]
       }
