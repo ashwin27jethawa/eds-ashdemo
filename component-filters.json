@@ -24,9 +24,9 @@
     ]
   },
   {
-    "id": "accordion",
+    "id": "section",
     "components": [
-      "accordion-items"
+      "accordion"
     ]
   },
   {
