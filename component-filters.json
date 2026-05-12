@@ -20,7 +20,8 @@
       "embed",
       "video",
       "accordions",
-      "search"
+      "search",
+      "tabs"
     ]
   },
   {
@@ -48,6 +49,12 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "tabs",
+    "components": [
+      "tab-item"
     ]
   }
 ]

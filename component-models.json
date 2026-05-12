@@ -295,6 +295,34 @@
     ]
   },
   {
+    "id": "tabs",
+    "fields": [
+      {
+        "component": "container",
+        "name": "tab-items",
+        "label": "Tab Items",
+        "model": "tab-item"
+      }
+    ]
+  },
+  {
+    "id": "tab-item",
+    "fields": [
+      {
+        "component": "text",
+        "name": "tabTitle",
+        "label": "Tab Title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "tabContent",
+        "label": "Tab Content",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "video",
     "fields": [
       {

@@ -55,7 +55,8 @@
         "embed",
         "video",
         "accordions",
-        "search"
+        "search",
+        "tabs"
       ]
     }
   ]
