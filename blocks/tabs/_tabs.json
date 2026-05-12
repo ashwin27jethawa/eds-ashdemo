@@ -9,7 +9,22 @@
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
               "name": "Tabs",
-              "model": "tabs"
+              "filter": "tabs"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Tab",
+      "id": "tab",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Tab",
+              "model": "tab"
             }
           }
         }
@@ -18,9 +33,9 @@
   ],
   "models": [
     {
-      "id": "tabs",
+      "id": "tab",
       "fields": [
-        {
+         {
           "component": "text",
           "name": "tabTitle",
           "label": "Tab Title"
@@ -33,7 +48,14 @@
       ]
     }
   ],
-  "filters": []
+  "filters": [
+    {
+      "id": "tabs",
+      "components": [
+        "tab"
+      ]
+    }
+  ]
 }
 
 
