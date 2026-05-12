@@ -121,24 +121,16 @@
     "id": "accordion",
     "fields": [
       {
-        "component": "multi",
-        "name": "items",
-        "label": "Accordion Items",
-        "multi": true,
-        "fields": [
-          {
-            "component": "text",
-            "name": "title",
-            "label": "Question / Title",
-            "value": "New Accordion Item"
-          },
-          {
-            "component": "richtext",
-            "name": "content",
-            "label": "Answer / Content",
-            "value": "<p>Enter your content here</p>"
-          }
-        ]
+        "component": "text",
+        "name": "title",
+        "label": "Question / Title",
+        "value": "New Accordion Item"
+      },
+      {
+        "component": "richtext",
+        "name": "content",
+        "label": "Answer / Content",
+        "value": "<p>Enter your content here</p>"
       }
     ]
   },
