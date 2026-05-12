@@ -20,18 +20,26 @@
     {
       "id": "accordion",
       "fields": [
+        {
+          "component": "multifield",
+          "name": "items",
+          "label": "Accordion Items",
+          "valueType": "string[]",
+          "fields": [
             {
               "component": "text",
               "name": "title",
-              "label": "Question / Title",
-              "value": "New Accordion Item"
+              "label": "Title",
+              "valueType": "string"
             },
             {
               "component": "richtext",
               "name": "content",
-              "label": "Answer / Content",
-              "value": "<p>Enter your content here</p>"
+              "label": "Content",
+              "valueType": "string"
             }
+          ]
+        }
       ]
     }
   ],
