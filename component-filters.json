@@ -19,7 +19,12 @@
       "growth",
       "embed",
       "video",
-      "form",
+      "accordion"
+    ]
+  },
+  {
+    "id": "accordions",
+    "components": [
       "accordion"
     ]
   },
