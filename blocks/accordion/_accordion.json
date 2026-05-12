@@ -24,6 +24,7 @@
           "component": "multifield",
           "name": "items",
           "label": "Accordion Items",
+          "multi": true,
           "fields": [
             {
               "component": "text",
