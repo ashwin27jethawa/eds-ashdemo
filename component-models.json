@@ -304,10 +304,8 @@
       },
       {
         "component": "richtext",
-        "name": "tableContent",
-        "label": "Table Content",
-        "value": "",
-        "valueType": "string"
+        "name": "tablesList",
+        "label": "Table list"
       }
     ]
   },
