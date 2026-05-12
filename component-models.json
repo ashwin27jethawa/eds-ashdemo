@@ -295,6 +295,18 @@
     ]
   },
   {
+    "id": "search",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "col_source",
+        "label": "Search Index Source",
+        "description": "Link to the query-index.json or spreadsheet providing the search data.",
+        "value": "/query-index.json"
+      }
+    ]
+  },
+  {
     "id": "video",
     "fields": [
       {
