@@ -6,14 +6,11 @@ export default function decorate(block) {
   sliderWrapper.classList.add("slider-wrapper");
 
   banners.forEach((row, i) => {
-    console.log(i);
     
-    // console.log("sliderWrapper", banners);
     const slide = document.createElement("div");
     slide.classList.add("slide");
     if (i === 0) slide.classList.add("active");
     slide.append(...row.children);
-    console.log("slider", slide);
     
     sliderWrapper.append(slide);
   });
