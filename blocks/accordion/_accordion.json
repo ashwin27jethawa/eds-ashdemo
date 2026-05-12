@@ -21,9 +21,10 @@
       "id": "accordion",
       "fields": [
         {
-          "component": "multifield",
+          "component": "aem-content",
           "name": "rows",
           "label": "Accordion Items",
+          "multi": true,
           "fields": [
             {
               "component": "text",
@@ -39,5 +40,6 @@
         }
       ]
     }
-  ]
+  ],
+  "filters": []
 }
