@@ -5,18 +5,30 @@
  */
 
 export default function decorate(block) {
+    console.log("block accordion", block);
+    
   [...block.children].forEach((row) => {
-    // decorate accordion item label
+    const details = document.createElement('details');
+    details.className = 'accordion-item';
+
+    if (row.dataset.aueResource) {
+      details.setAttribute('data-aue-resource', row.dataset.aueResource);
+      details.setAttribute('data-aue-type', 'component');
+      details.setAttribute('data-aue-label', 'Accordion Item');
+    }
+
     const label = row.children[0];
     const summary = document.createElement('summary');
     summary.className = 'accordion-item-label';
+    summary.setAttribute('data-aue-prop', 'title');
+    summary.setAttribute('data-aue-type', 'text');
     summary.append(...label.childNodes);
-    // decorate accordion item body
+
     const body = row.children[1];
     body.className = 'accordion-item-body';
-    // decorate accordion item
-    const details = document.createElement('details');
-    details.className = 'accordion-item';
+    body.setAttribute('data-aue-prop', 'content');
+    body.setAttribute('data-aue-type', 'richtext');
+
     details.append(summary, body);
     row.replaceWith(details);
   });

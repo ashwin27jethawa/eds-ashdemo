@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Accordions",
+      "title": "Accordions Container",
       "id": "accordions",
       "plugins": {
         "xwalk": {
@@ -16,7 +16,7 @@
       }
     },
     {
-      "title": "Accordion",
+      "title": "Accordion Item",
       "id": "accordion",
       "plugins": {
         "xwalk": {
@@ -31,31 +31,30 @@
       }
     }
   ],
-   "models": [
+  "models": [
     {
       "id": "accordion",
       "fields": [
-         {
-            "component": "text",
-            "name": "title",
-            "label": "Title",
-            "valueType": "string"
-         },
-          {
-            "component": "richtext",
-            "name": "content",
-            "label": "Content",
-            "valueType": "string"
-          }
+        { 
+          "component": "text", 
+          "name": "title", 
+          "label": "Title" ,
+           "valueType": "string"
+        },
+        { 
+          "component": "richtext", 
+          "name": "content", 
+          "label": "Content",
+           "valueType": "string"
+
+        }
       ]
     }
   ],
   "filters": [
-    {
-      "id": "accordions",
-      "components": [
-        "accordion"
-      ]
+    { 
+      "id": "accordions", 
+      "components": ["accordion"] 
     }
   ]
 }

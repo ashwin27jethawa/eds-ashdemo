@@ -83,7 +83,7 @@
       "id": "blocks",
       "components": [
         {
-          "title": "Accordions",
+          "title": "Accordions Container",
           "id": "accordions",
           "plugins": {
             "xwalk": {
@@ -98,7 +98,7 @@
           }
         },
         {
-          "title": "Accordion",
+          "title": "Accordion Item",
           "id": "accordion",
           "plugins": {
             "xwalk": {
