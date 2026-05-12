@@ -156,6 +156,27 @@
     ]
   },
   {
+    "id": "embed",
+    "fields": [
+      {
+        "component": "aem-content",
+        "name": "col_reference",
+        "label": "Reference"
+      },
+      {
+        "component": "reference",
+        "name": "col_image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "col_imageAlt",
+        "label": "Alt Text"
+      }
+    ]
+  },
+  {
     "id": "fragment",
     "fields": [
       {
