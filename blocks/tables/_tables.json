@@ -37,13 +37,13 @@
       "fields": [
          {
           "component": "text",
-          "name": "tabTitle",
-          "label": "Tab Title"
+          "name": "tableTitle",
+          "label": "Table Title"
         },
         {
           "component": "richtext",
-          "name": "tabContent",
-          "label": "Tab Content"
+          "name": "tableContent",
+          "label": "Table Content"
         }
       ]
     }
