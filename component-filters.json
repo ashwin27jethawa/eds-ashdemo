@@ -21,7 +21,8 @@
       "video",
       "accordions",
       "search",
-      "tabs"
+      "tabs",
+      "tables"
     ]
   },
   {
@@ -49,6 +50,12 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "tables",
+    "components": [
+      "table"
     ]
   },
   {
