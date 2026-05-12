@@ -24,12 +24,6 @@
     ]
   },
   {
-    "id": "section",
-    "components": [
-      "accordion"
-    ]
-  },
-  {
     "id": "cards",
     "components": [
       "card"

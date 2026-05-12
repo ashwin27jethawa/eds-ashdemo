@@ -43,12 +43,5 @@
       ]
     }
   ],
-  "filters": [
-    {
-      "id": "section",
-      "components": [
-        "accordion"
-      ]
-    }
-  ]
+  "filters": []
 }
