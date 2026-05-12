@@ -2,6 +2,8 @@
 import { toClassName } from '../../scripts/aem.js';
 
 export default async function decorate(block) {
+    console.log("block from the tabs", block);
+    
   // build tablist
   const tablist = document.createElement('div');
   tablist.className = 'tabs-list';

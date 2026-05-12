@@ -299,7 +299,7 @@
     "fields": [
       {
         "component": "container",
-        "name": "tab-items",
+        "name": "tabs",
         "label": "Tab Items",
         "model": "tab-item"
       }
