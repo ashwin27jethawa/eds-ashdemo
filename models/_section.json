@@ -51,7 +51,9 @@
         "cards",
         "columns",
         "fragment",
-        "growth"
+        "growth",
+        "embed",
+        "video"
       ]
     }
   ]
