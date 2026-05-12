@@ -9,21 +9,27 @@
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
               "name": "Tables",
-              "filter": "tables"
+              "filter": "tables",
+              "elements": [
+                {
+                  "name": "table",
+                  "model": "table"
+                }
+              ]
             }
           }
         }
       }
     },
     {
-      "title": "Table",
+      "title": "Table Row",
       "id": "table",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "name": "Table",
+              "name": "Table Row",
               "model": "table"
             }
           }
@@ -35,15 +41,15 @@
     {
       "id": "table",
       "fields": [
-         {
+        {
           "component": "text",
-          "name": "tabTitle",
-          "label": "Tab Title"
+          "name": "col1",
+          "label": "Column 1"
         },
         {
           "component": "richtext",
-          "name": "tabContent",
-          "label": "Tab Content"
+          "name": "col2",
+          "label": "Column 2"
         }
       ]
     }

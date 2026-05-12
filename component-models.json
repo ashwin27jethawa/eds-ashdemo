@@ -299,13 +299,13 @@
     "fields": [
       {
         "component": "text",
-        "name": "tabTitle",
-        "label": "Tab Title"
+        "name": "col1",
+        "label": "Column 1"
       },
       {
         "component": "richtext",
-        "name": "tabContent",
-        "label": "Tab Content"
+        "name": "col2",
+        "label": "Column 2"
       }
     ]
   },
