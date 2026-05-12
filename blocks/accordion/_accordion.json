@@ -18,13 +18,13 @@
   ],
   "models": [
     {
-        "id": "accordion",
-        "fields": [
-          {
-            "component": "multifield",
-            "name": "items",
-            "label": "Accordion Items",
-            "fields": [
+      "id": "accordion",
+       "fields": [
+        {
+          "component": "multifield",
+          "name": "items",
+          "label": "Accordion Items",
+          "fields": [
               {
                 "component": "text",
                 "name": "col_label",
@@ -35,9 +35,9 @@
                 "name": "col_body",
                 "label": "Answer/Content"
               }
-            ]
-          }
-        ]
+          ]
+        }
+      ]
     }
   ],
   "filters": []
