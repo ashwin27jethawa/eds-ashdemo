@@ -1,43 +1,54 @@
-/*
- * Table Block
- * Recreate a table
- * https://www.hlx.live/developer/block-collection/table
- */
-
-function buildCell(rowIndex) {
-  const cell = rowIndex
-    ? document.createElement("td")
-    : document.createElement("th");
-  if (!rowIndex) cell.setAttribute("scope", "col");
-  return cell;
-}
-
 export default async function decorate(block) {
   if (window.location.origin.includes("author-p")) {
     return false;
   }
+
+  const tableWrapper = document.createElement("div");
+  tableWrapper.classList.add("table-scroll-container");
+
   const table = document.createElement("table");
   const thead = document.createElement("thead");
   const tbody = document.createElement("tbody");
 
-  const header = !block.classList.contains("no-header");
-  if (header) table.append(thead);
-  table.append(tbody);
+  const headerRow = document.createElement("tr");
+  const bodyRow1 = document.createElement("tr");
+  const bodyRow2 = document.createElement("tr");
 
-  [...block.children].forEach((child, i) => {
-    const row = document.createElement("tr");
-    if (header && i === 0) thead.append(row);
-    else tbody.append(row);
-    [...child.children].forEach((col) => {
-      const cell = buildCell(header ? i : i + 1);
-      const align = col.getAttribute("data-align");
-      const valign = col.getAttribute("data-valign");
-      if (align) cell.style.textAlign = align;
-      if (valign) cell.style.verticalAlign = valign;
-      cell.innerHTML = col.innerHTML;
-      row.append(cell);
+  [...block.children].forEach((child) => {
+    [...child.children].forEach((col, i) => {
+      const isHeader = i % 2 === 0;
+      const cell1 = document.createElement(isHeader ? "th" : "td");
+      const cell2 = document.createElement(isHeader ? "th" : "td");
+
+      const pTag = col.querySelectorAll("p");
+      //   console.log(pTag);
+
+      if (pTag.length > 0) {
+        // console.log(pTag);
+        cell1.innerHTML = pTag[0].innerHTML;
+        if (pTag[1]) {
+          cell2.innerHTML = pTag[1].innerHTML;
+        }
+      }
+
+      if (isHeader) {
+        headerRow.appendChild(cell1);
+      } else {
+        // console.log(cell);
+
+        bodyRow1.appendChild(cell1);
+        bodyRow2.appendChild(cell2);
+      }
     });
   });
+
+  thead.appendChild(headerRow);
+  tbody.appendChild(bodyRow1);
+  tbody.appendChild(bodyRow2);
+  table.append(thead, tbody);
+
+  tableWrapper.append(table);
+
   block.innerHTML = "";
-  block.append(table);
+  block.append(tableWrapper);
 }
