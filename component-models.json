@@ -118,25 +118,17 @@
     ]
   },
   {
-    "id": "accordion",
+    "id": "accordion-items",
     "fields": [
       {
-        "component": "multifield",
-        "name": "rows",
-        "label": "Accordion Items",
-        "multi": true,
-        "fields": [
-          {
-            "component": "text",
-            "name": "title",
-            "label": "Title"
-          },
-          {
-            "component": "richtext",
-            "name": "content",
-            "label": "Content"
-          }
-        ]
+        "component": "text",
+        "name": "title",
+        "label": "Title"
+      },
+      {
+        "component": "richtext",
+        "name": "content",
+        "label": "Content"
       }
     ]
   },
