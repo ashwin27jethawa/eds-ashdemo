@@ -21,7 +21,7 @@
       "id": "accordion",
       "fields": [
         {
-          "component": "aem-content",
+          "component": "multifield",
           "name": "rows",
           "label": "Accordion Items",
           "multi": true,
