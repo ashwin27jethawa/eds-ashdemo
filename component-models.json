@@ -318,14 +318,19 @@
         "label": "Tab Title"
       },
       {
-        "blocks": [
-          "section",
-          "image",
-          "button"
-        ],
-        "component": "block",
+        "component": "richtext",
         "name": "tabContent",
-        "label": "Tab Content"
+        "label": "Tab Content",
+        "plugins": {
+          "rte": {
+            "links": true,
+            "blocks": [
+              "section",
+              "image",
+              "button"
+            ]
+          }
+        }
       }
     ]
   },
