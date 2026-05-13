@@ -307,6 +307,23 @@
     ]
   },
   {
+    "id": "quote",
+    "fields": [
+      {
+        "component": "text",
+        "name": "col_quotation",
+        "label": "Quotation Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "col_attribution",
+        "label": "Attribution / Author",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "table",
     "fields": [
       {

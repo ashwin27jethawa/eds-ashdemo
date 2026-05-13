@@ -12,6 +12,8 @@ import {
   loadCSS,
 } from "./aem.js";
 
+import { loadFragment } from "../blocks/fragment/fragment.js";
+
 /**
  * Moves all the attributes from a given elmenet to another given element.
  * @param {Element} from the element to copy attributes from
@@ -75,20 +77,25 @@ function buildAutoBlocks() {
   }
 }
 
-
 function decorateEmbeds(main) {
-  const anchors = main.querySelectorAll('a');
+  const anchors = main.querySelectorAll("a");
   anchors.forEach((a) => {
     const parent = a.parentElement;
-    const isOnlyChild = parent.children.length === 1 && parent.tagName === 'P';
-    const isLinkItself = a.href === a.textContent || a.href === decodeURIComponent(a.textContent);
-    
+    const isOnlyChild = parent.children.length === 1 && parent.tagName === "P";
+    const isLinkItself =
+      a.href === a.textContent || a.href === decodeURIComponent(a.textContent);
+
     // Check if the link is from a supported service
-    const isEmbeddable = ['youtube.com', 'youtu.be', 'vimeo.com', 'twitter.com'].some((s) => a.href.includes(s));
+    const isEmbeddable = [
+      "youtube.com",
+      "youtu.be",
+      "vimeo.com",
+      "twitter.com",
+    ].some((s) => a.href.includes(s));
 
     if (isOnlyChild && isLinkItself && isEmbeddable) {
-      const wrapper = document.createElement('div');
-      wrapper.classList.add('embed'); // This tells EDS to load blocks/embed/embed.js
+      const wrapper = document.createElement("div");
+      wrapper.classList.add("embed"); // This tells EDS to load blocks/embed/embed.js
       a.parentElement.replaceWith(wrapper);
       wrapper.append(a);
     }
@@ -117,6 +124,7 @@ export function decorateMain(main) {
 async function loadEager(doc) {
   document.documentElement.lang = "en";
   decorateTemplateAndTheme();
+  decorateAutoBlock(doc);
   const main = doc.querySelector("main");
   if (main) {
     decorateMain(main);
@@ -184,4 +192,44 @@ function autolinkModals(element) {
       openModal(origin.href);
     }
   });
+}
+
+async function decorateAutoBlock(element) {
+  
+  
+  const anchors = element.querySelectorAll("a");
+  console.log("anchors", anchors);
+  const promises = Array.from(anchors).map(async (origin) => {
+    if (origin && origin.href && origin.href.includes("/fragment/")) {
+      const parent = origin.parentElement;
+      const divblock = document.createElement("div");
+      divblock.append(origin);
+      parent.append(divblock);
+      decorateFragment(divblock);
+    } else if (
+      origin &&
+      origin.href &&
+      origin.href.includes("/www.youtube.com/")
+    ) {
+      const { loadEmbed } = await import("../blocks/embed/embed.js");
+      loadEmbed(origin, origin.href);
+    }
+  });
+  await Promise.all(promises);
+}
+
+export default async function decorateFragment(block) {
+  const link = block.querySelector("a");
+  const path = link ? link.getAttribute("href") : block.textContent.trim();
+  const fragment = await loadFragment(path);
+  console.log("fragment", fragment);
+  
+  if (fragment) {
+    const fragmentSection = fragment.querySelector(":scope .section");
+    if (fragmentSection) {
+      block.classList.add(...fragmentSection.classList);
+      block.classList.remove("section");
+      block.replaceChildren(...fragmentSection.childNodes);
+    }
+  }
 }

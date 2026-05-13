@@ -1,36 +1,66 @@
+.banners-wrapper {
+  padding: 0;
+  max-width: none;
+}
+
 .banners.block {
-    position: relative;
-    width: 100%;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
 }
 
 .banners .slider-wrapper {
-    position: relative;
-    overflow: hidden;
-    height: 700px; 
+  position: relative;
+  width: 100%;
+  min-height: 550px;
+  background-color: red;
+  overflow: hidden;
+  cursor: grab;
+  user-select: none;
+}
+
+.banners .slider-wrapper:active {
+  cursor: grabbing;
 }
 
 .slider-wrapper .slide {
-    display: none;
-    width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  transition: transform 0.8s ease-in-out;
 }
 
-.slider-wrapper .slide.active {
-    display: block;
+.slider-wrapper .slide picture,
+.slider-wrapper .slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
-
-.slider-wrapper .slide picture img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.banners .slider-wrapper {
-    cursor: grab;
-    user-select: none; 
-}
-
 
 .banners img {
-    pointer-events: none;
-    -webkit-user-drag: none;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+
+@media (max-width: 1024px) {
+  .banners .slider-wrapper {
+    min-height: 400px;
+    max-height: 300px;
+  }
+}
+@media (max-width: 800px) {
+  .banners .slider-wrapper {
+    min-height: 300px;
+  }
+}
+@media (max-width: 500px) {
+  .banners .slider-wrapper {
+    min-height: 190px;
+  }
 }
