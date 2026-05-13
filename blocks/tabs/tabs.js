@@ -2,9 +2,9 @@
 import { toClassName } from "../../scripts/aem.js";
 
 export default async function decorate(block) {
-  if (window.location.origin.includes("author-p")) {
-    return false;
-  }
+  // if (window.location.origin.includes("author-p")) {
+  //   return false;
+  // }
   console.log("block from the tabs", block);
 
   // build tablist
