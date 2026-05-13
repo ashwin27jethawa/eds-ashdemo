@@ -22,13 +22,20 @@
       "accordions",
       "search",
       "tabs",
-      "tables"
+      "tables",
+      "banners"
     ]
   },
   {
     "id": "accordions",
     "components": [
       "accordion"
+    ]
+  },
+  {
+    "id": "banners",
+    "components": [
+      "banner"
     ]
   },
   {
