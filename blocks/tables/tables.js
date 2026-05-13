@@ -3,6 +3,8 @@ export default async function decorate(block) {
     return false;
   }
 
+ 
+
   const tableWrapper = document.createElement("div");
   tableWrapper.classList.add("table-scroll-container");
 
@@ -37,7 +39,7 @@ export default async function decorate(block) {
 
   thead.appendChild(headerRow);
   bodyRows.forEach((row) => tbody.appendChild(row));
-  
+
   table.append(thead, tbody);
   tableWrapper.append(table);
 

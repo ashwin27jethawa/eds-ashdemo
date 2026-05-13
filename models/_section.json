@@ -59,7 +59,8 @@
         "tabs",
         "tables",
         "banners",
-        "quote"
+        "quote",
+        "profile-card"
       ]
     }
   ]
