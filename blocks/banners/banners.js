@@ -1,4 +1,7 @@
 export default function decorate(block) {
+  if (window.location.origin.includes("author-p")) {
+    return false;
+  }
   const banners = [...block.children];
   block.textContent = "";
 
@@ -6,12 +9,11 @@ export default function decorate(block) {
   sliderWrapper.classList.add("slider-wrapper");
 
   banners.forEach((row, i) => {
-    
     const slide = document.createElement("div");
     slide.classList.add("slide");
     if (i === 0) slide.classList.add("active");
     slide.append(...row.children);
-    
+
     sliderWrapper.append(slide);
   });
 
@@ -22,10 +24,7 @@ export default function decorate(block) {
     active.classList.remove("active");
     let target;
     if (direction === "next") {
-        
       target = active.nextElementSibling || sliderWrapper.firstElementChild;
-     
-      
     } else {
       target = active.previousElementSibling || sliderWrapper.lastElementChild;
     }
