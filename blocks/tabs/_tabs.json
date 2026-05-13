@@ -43,7 +43,13 @@
         {
           "component": "richtext",
           "name": "tabContent",
-          "label": "Tab Content"
+          "label": "Tab Content",
+          "plugins": {
+            "rte": {
+              "links": true,
+              "blocks": ["section", "image", "button"] 
+            }
+          }
         }
       ]
     }
