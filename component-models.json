@@ -318,7 +318,7 @@
         "label": "Tab Title"
       },
       {
-        "component": "section",
+        "component": "richtext",
         "name": "tabContent",
         "label": "Tab Content"
       }
