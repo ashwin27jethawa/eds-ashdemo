@@ -41,15 +41,10 @@
           "label": "Tab Title"
         },
         {
-          "component": "richtext",
+          "blocks": ["section", "image", "button"],
+          "component": "block",
           "name": "tabContent",
-          "label": "Tab Content",
-          "plugins": {
-            "rte": {
-              "links": true,
-              "blocks": ["section", "image", "button"] 
-            }
-          }
+          "label": "Tab Content"
         }
       ]
     }
