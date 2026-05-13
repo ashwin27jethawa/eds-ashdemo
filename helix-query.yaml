@@ -14,3 +14,9 @@ indices:
       robots:
         select: head > meta[name="robots"]
         value: attribute(el, "content")
+      personname:
+        select: body > h1
+        value: textContent(el)
+      personimg:
+        select: body > img
+        value: attribute(el, "src")
