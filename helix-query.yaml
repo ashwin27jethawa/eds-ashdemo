@@ -14,3 +14,16 @@ indices:
       robots:
         select: head > meta[name="robots"]
         value: attribute(el, "content")
+  lisiting:
+    include:
+      - '/employees-page/**'
+    exclude:
+      - '/**.json'
+    target: /query-index-lisitng.json
+    properties:
+      lastModified:
+        select: none
+        value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
+      robots:
+        select: head > meta[name="robots"]
+        value: attribute(el, "content")      
