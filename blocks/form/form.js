@@ -643,7 +643,12 @@ function buildForm(fields, submit) {
  * @param {HTMLElement} block - Form block element
  */
 export default function decorate(block) {
-  block.style.visibility = 'hidden';
+    if (window.location.origin.includes("author-p")) {
+    return false;
+  }
+  console.log(block);
+  
+  // block.style.visibility = 'hidden';
   const [source, submit] = [...block.querySelectorAll('a[href]')].map((a) => a.href);
   if (source) {
     const observer = new IntersectionObserver((entries) => {
