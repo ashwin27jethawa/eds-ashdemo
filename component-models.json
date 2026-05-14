@@ -206,10 +206,6 @@
     ]
   },
   {
-    "id": "form",
-    "fields": []
-  },
-  {
     "id": "fragment",
     "fields": [
       {
@@ -310,16 +306,18 @@
     "id": "quote",
     "fields": [
       {
-        "component": "text",
-        "name": "col_quotation",
-        "label": "Quotation Text",
+        "component": "richtext",
+        "name": "quote",
+        "value": "",
+        "label": "Quote",
         "valueType": "string"
       },
       {
         "component": "text",
-        "name": "col_attribution",
-        "label": "Attribution / Author",
-        "valueType": "string"
+        "valueType": "string",
+        "name": "author",
+        "label": "Author",
+        "value": ""
       }
     ]
   },

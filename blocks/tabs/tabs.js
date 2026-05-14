@@ -1,11 +1,11 @@
 // eslint-disable-next-line import/no-unresolved
 import { toClassName } from "../../scripts/aem.js";
+import formblock from '../form/form.js';
 
 export default async function decorate(block) {
   // if (window.location.origin.includes("author-p")) {
   //   return false;
   // }
-  console.log("block from the tabs", block);
 
   // build tablist
   const tablist = document.createElement("div");
@@ -19,6 +19,9 @@ export default async function decorate(block) {
 
     // decorate tabpanel
     const tabpanel = block.children[i];
+    if (tabpanel.querySelector("a") && tabpanel.querySelector("a").getAttribute("href").includes(".json")) {
+      formblock(tabpanel);
+    }
     tabpanel.className = "tabs-panel";
     tabpanel.id = `tabpanel-${id}`;
     tabpanel.setAttribute("aria-hidden", !!i);

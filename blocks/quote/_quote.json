@@ -18,22 +18,25 @@
   ],
   "models": [
     {
-      "id": "quote",
-      "fields": [
-        {
-          "component": "text",
-          "name": "col_quotation",
-          "label": "Quotation Text",
-          "valueType": "string"
-        },
-        {
-          "component": "text",
-          "name": "col_attribution",
-          "label": "Attribution / Author",
-          "valueType": "string"
-        }
-      ]
-    }
+  "id": "quote",
+  "fields": [
+     {
+       "component": "richtext",
+       "name": "quote",
+       "value": "",
+       "label": "Quote",
+       "valueType": "string"
+     },
+     {
+       "component": "text",
+       "valueType": "string",
+       "name": "author",
+       "label": "Author",
+       "value": ""
+     }
+   ]
+}
+
   ],
   "filters": []
 }
