@@ -61,7 +61,8 @@
         "banners",
         "quote",
         "profile-card",
-        "form"
+        "form",
+        "searchable-dropdown"
       ]
     }
   ]

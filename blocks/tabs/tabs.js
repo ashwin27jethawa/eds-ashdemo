@@ -1,6 +1,20 @@
 // eslint-disable-next-line import/no-unresolved
 import { toClassName } from "../../scripts/aem.js";
-import formblock from '../form/form.js';
+import formblock from "../form/form.js";
+
+function loadCSS(url) {
+  // 1. Create the link element
+  const link = document.createElement("link");
+
+  // 2. Set the necessary attributes
+  link.rel = "stylesheet";
+  link.type = "text/css";
+  link.href = url;
+  link.media = "all";
+
+  // 3. Append it to the head
+  document.getElementsByTagName("head")[0].appendChild(link);
+}
 
 export default async function decorate(block) {
   // if (window.location.origin.includes("author-p")) {
@@ -19,8 +33,12 @@ export default async function decorate(block) {
 
     // decorate tabpanel
     const tabpanel = block.children[i];
-    if (tabpanel.querySelector("a") && tabpanel.querySelector("a").getAttribute("href").includes(".json")) {
+    if (
+      tabpanel.querySelector("a") &&
+      tabpanel.querySelector("a").getAttribute("href").includes(".json")
+    ) {
       formblock(tabpanel);
+      loadCSS("/blocks/form/form.css");
     }
     tabpanel.className = "tabs-panel";
     tabpanel.id = `tabpanel-${id}`;
