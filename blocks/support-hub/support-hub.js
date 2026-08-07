@@ -8,6 +8,10 @@ export default function decorate(block) {
     row.dataset.aueType = 'component';
     row.dataset.aueLabel = `FAQ Item ${index + 1}`;
 
+    block.dataset.aueType = 'container';
+  block.dataset.aueFilter = 'support-hub'; // This strictly matches the filter ID in your JSON!
+  block.dataset.aueBehavior = 'component';
+
     const cells = row.children;
     // Ensure the row has the 4 expected columns from the JSON model
     if (cells.length < 4) return;
