@@ -65,41 +65,15 @@
     ]
   },
   {
-    "id": "support-hub-filter",
-    "components": [
-      "page",
-      "section",
-      "container"
-    ],
-    "allowedComponents": [
-      "support-hub"
-    ]
-  },
-  {
-    "id": "tab-filter",
+    "id": "page",
     "components": [
       "support-hub"
-    ],
-    "allowedComponents": [
-      "support-hub-tab"
     ]
   },
   {
-    "id": "category-filter",
+    "id": "support-hub",
     "components": [
-      "support-hub-tab"
-    ],
-    "allowedComponents": [
-      "support-hub-category"
-    ]
-  },
-  {
-    "id": "faq-filter",
-    "components": [
-      "support-hub-category"
-    ],
-    "allowedComponents": [
-      "support-hub-faq"
+      "support-hub-item"
     ]
   },
   {

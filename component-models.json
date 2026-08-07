@@ -322,47 +322,35 @@
     ]
   },
   {
-    "id": "tab-model",
-    "properties": [
-      {
-        "name": "tabTitle",
-        "label": "Tab Title",
-        "type": "string",
-        "component": "text"
-      }
-    ]
+    "id": "support-hub",
+    "fields": []
   },
   {
-    "id": "category-model",
-    "properties": [
+    "id": "support-hub-item",
+    "fields": [
       {
-        "name": "categoryTitle",
-        "label": "Category Title",
-        "type": "string",
-        "component": "text"
+        "component": "text",
+        "name": "col1_type",
+        "label": "Tab Name (e.g., My Account)",
+        "valueType": "string"
       },
       {
-        "name": "categoryIcon",
-        "label": "Category Icon",
-        "type": "string",
-        "component": "image"
-      }
-    ]
-  },
-  {
-    "id": "faq-model",
-    "properties": [
-      {
-        "name": "question",
-        "label": "Question",
-        "type": "string",
-        "component": "text"
+        "component": "text",
+        "name": "col1_sub-type",
+        "label": "Sidebar Menu (e.g., KYC, Bank Accounts)",
+        "valueType": "string"
       },
       {
-        "name": "answer",
-        "label": "Answer",
-        "type": "string",
-        "component": "richtext"
+        "component": "text",
+        "name": "col1_heading",
+        "label": "Question / Accordion Heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "col2_body",
+        "label": "Answer / Description",
+        "valueType": "string"
       }
     ]
   },
