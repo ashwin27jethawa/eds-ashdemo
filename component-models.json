@@ -356,7 +356,7 @@
                     "name": "categoryIcon",
                     "label": "Category Icon",
                     "type": "string",
-                    "component": "text"
+                    "component": "image"
                   },
                   {
                     "name": "questionCount",

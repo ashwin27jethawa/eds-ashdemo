@@ -10,7 +10,8 @@
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "name": "support-hub-filter",
+              "name": "support-hub",
+              "model": "support-hub-model",
               "filter": "support-hub-filter"
             }
           }
@@ -67,7 +68,7 @@
                       "name": "categoryIcon",
                       "label": "Category Icon",
                       "type": "string",
-                      "component": "text"
+                      "component": "image"
                     },
                     {
                       "name": "questionCount",
