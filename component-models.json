@@ -322,6 +322,85 @@
     ]
   },
   {
+    "id": "support-hub-model",
+    "properties": [
+      {
+        "name": "tabs",
+        "label": "Navigation Tabs",
+        "description": "Add top-level tabs (e.g., My Account, About Folios).",
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": [
+            {
+              "name": "tabTitle",
+              "label": "Tab Title",
+              "type": "string",
+              "component": "text",
+              "required": true
+            },
+            {
+              "name": "categories",
+              "label": "Sidebar Categories",
+              "description": "Add categories under this tab (e.g., KYC, Bank Accounts).",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": [
+                  {
+                    "name": "categoryTitle",
+                    "label": "Category Title",
+                    "type": "string",
+                    "component": "text",
+                    "required": true
+                  },
+                  {
+                    "name": "categoryIcon",
+                    "label": "Category Icon",
+                    "type": "string",
+                    "component": "image"
+                  },
+                  {
+                    "name": "questionCount",
+                    "label": "Question Count Subtitle",
+                    "description": "E.g., '24 Questions'",
+                    "type": "string",
+                    "component": "text"
+                  },
+                  {
+                    "name": "faqs",
+                    "label": "FAQs",
+                    "description": "Add the actual questions and answers for this category.",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": [
+                        {
+                          "name": "question",
+                          "label": "Question",
+                          "type": "string",
+                          "component": "text",
+                          "required": true
+                        },
+                        {
+                          "name": "answer",
+                          "label": "Answer",
+                          "type": "string",
+                          "component": "richtext",
+                          "required": true
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
     "id": "table",
     "fields": [
       {
