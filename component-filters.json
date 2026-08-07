@@ -76,6 +76,33 @@
     ]
   },
   {
+    "id": "tab-filter",
+    "components": [
+      "support-hub"
+    ],
+    "allowedComponents": [
+      "support-hub-tab"
+    ]
+  },
+  {
+    "id": "category-filter",
+    "components": [
+      "support-hub-tab"
+    ],
+    "allowedComponents": [
+      "support-hub-category"
+    ]
+  },
+  {
+    "id": "faq-filter",
+    "components": [
+      "support-hub-category"
+    ],
+    "allowedComponents": [
+      "support-hub-faq"
+    ]
+  },
+  {
     "id": "tables",
     "components": [
       "table"
