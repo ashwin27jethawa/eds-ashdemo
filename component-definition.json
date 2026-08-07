@@ -316,9 +316,10 @@
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
-                "models": [
-                  "support-hub-model"
-                ]
+                "template": {
+                  "name": "support-hub-filter",
+                  "filter": "support-hub-filter"
+                }
               }
             }
           }
