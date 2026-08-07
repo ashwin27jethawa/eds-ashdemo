@@ -326,8 +326,7 @@
     "properties": [
       {
         "name": "tabs",
-        "label": "Navigation Tabs",
-        "description": "Add top-level tabs (e.g., My Account, About Folios).",
+        "label": "Tabs",
         "type": "array",
         "items": {
           "type": "object",
@@ -341,8 +340,7 @@
             },
             {
               "name": "categories",
-              "label": "Sidebar Categories",
-              "description": "Add categories under this tab (e.g., KYC, Bank Accounts).",
+              "label": "Categories",
               "type": "array",
               "items": {
                 "type": "object",
@@ -358,19 +356,17 @@
                     "name": "categoryIcon",
                     "label": "Category Icon",
                     "type": "string",
-                    "component": "image"
+                    "component": "text"
                   },
                   {
                     "name": "questionCount",
-                    "label": "Question Count Subtitle",
-                    "description": "E.g., '24 Questions'",
+                    "label": "Question Count",
                     "type": "string",
                     "component": "text"
                   },
                   {
                     "name": "faqs",
                     "label": "FAQs",
-                    "description": "Add the actual questions and answers for this category.",
                     "type": "array",
                     "items": {
                       "type": "object",

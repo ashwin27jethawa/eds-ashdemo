@@ -310,8 +310,7 @@
         {
           "id": "support-hub",
           "title": "Support Hub",
-          "group": "Content",
-          "description": "A comprehensive support center containing tabs, sidebar categories, and FAQ accordions.",
+          "description": "Support hub with tabs, categories and FAQs.",
           "type": "component",
           "plugins": {
             "xwalk": {

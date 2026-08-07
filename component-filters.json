@@ -67,9 +67,9 @@
   {
     "id": "support-hub-filter",
     "components": [
-      "container",
+      "page",
       "section",
-      "page"
+      "container"
     ],
     "allowedComponents": [
       "support-hub"
