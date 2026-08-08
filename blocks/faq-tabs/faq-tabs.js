@@ -101,6 +101,14 @@ function renderFaqItems(faqListEl, subTabData) {
 }
 
 export default function decorate(block) {
+	const isAuthorHost = window.location.hostname.includes("author-");
+	const isWcmDisabled = new URLSearchParams(window.location.search).get("wcmmode") === "disabled";
+
+	// Keep the original authored DOM in Universal Editor so authors can add/remove items.
+	if (isAuthorHost && !isWcmDisabled) {
+		return;
+	}
+
 	const rows = [...block.children].filter((row) => row.children.length >= 4);
 	const faqData = buildData(rows);
 
