@@ -1,362 +1,381 @@
-
 import { decorateIcons } from "../../scripts/aem.js";
 
 function getCellContent(row, index) {
-	const cell = row.children[index];
-	return cell ? cell.innerHTML.trim() : "";
+  const cell = row.children[index];
+  return cell ? cell.innerHTML.trim() : "";
 }
 
 function getCellText(row, index) {
-	const cell = row.children[index];
-	return cell ? cell.textContent.trim() : "";
+  const cell = row.children[index];
+  return cell ? cell.textContent.trim() : "";
 }
 
 function getIconNameFromCell(row, index) {
-	const cell = row.children[index];
-	if (!cell) {
-		return "";
-	}
+  const cell = row.children[index];
+  if (!cell) {
+    return "";
+  }
 
-	const iconSpan = cell.querySelector("span.icon");
-	if (!iconSpan) {
-		return "";
-	}
+  const iconSpan = cell.querySelector("span.icon");
+  if (!iconSpan) {
+    return "";
+  }
 
-	const classWithIcon = [...iconSpan.classList].find((className) => className.startsWith("icon-"));
-	return classWithIcon ? normalizeIconName(classWithIcon.replace("icon-", "")) : "";
+  const classWithIcon = [...iconSpan.classList].find((className) =>
+    className.startsWith("icon-"),
+  );
+  return classWithIcon
+    ? normalizeIconName(classWithIcon.replace("icon-", ""))
+    : "";
 }
 
 function normalizeIconName(rawName) {
-	if (!rawName) {
-		return "";
-	}
+  if (!rawName) {
+    return "";
+  }
 
-	return rawName
-		.trim()
-		.replace(/^:+|:+$/g, "")
-		.replace(/\.svg$/i, "")
-		.trim();
+  return rawName
+    .trim()
+    .replace(/^:+|:+$/g, "")
+    .replace(/\.svg$/i, "")
+    .trim();
 }
 
 function getTextLines(cell) {
-	if (!cell) {
-		return [];
-	}
+  if (!cell) {
+    return [];
+  }
 
-	return cell.textContent
-		.split("\n")
-		.map((line) => line.trim())
-		.filter(Boolean);
+  return cell.textContent
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
 }
 
 function extractIconAndSubTab(rawSubTab) {
-	const text = (rawSubTab || "").trim();
-	const match = text.match(/^:([a-z0-9-]+):\s*(.*)$/i);
+  const text = (rawSubTab || "").trim();
+  const match = text.match(/^:([a-z0-9-]+):\s*(.*)$/i);
 
-	if (!match) {
-		return {
-			subTab: text,
-			iconName: "",
-		};
-	}
+  if (!match) {
+    return {
+      subTab: text,
+      iconName: "",
+    };
+  }
 
-	return {
-		subTab: (match[2] || "").trim(),
-		iconName: normalizeIconName(match[1]),
-	};
+  return {
+    subTab: (match[2] || "").trim(),
+    iconName: normalizeIconName(match[1]),
+  };
 }
 
 function buildData(rows) {
-	const topTabMap = new Map();
+  const topTabMap = new Map();
 
-	rows.forEach((row) => {
-		const cells = [...row.children];
-		const isCompactTwoColumnRow = cells.length === 2;
+  rows.forEach((row) => {
+    const cells = [...row.children];
+    const isCompactTwoColumnRow = cells.length === 2;
 
-		let topTab = "";
-		let subTab = "";
-		let question = "";
-		let answer = "";
-		let iconName = "";
+    let topTab = "";
+    let subTab = "";
+    let question = "";
+    let answer = "";
+    let iconName = "";
 
-		if (isCompactTwoColumnRow) {
-			const lines = getTextLines(cells[0]);
-			topTab = lines[0] || "";
-			const parsedSubTab = extractIconAndSubTab(lines[1] || "");
-			subTab = parsedSubTab.subTab;
-			question = lines[2] || "";
-			answer = getCellContent(row, 1);
-			iconName = getIconNameFromCell(row, 0) || parsedSubTab.iconName;
-		} else {
-			topTab = getCellText(row, 0);
-			const parsedSubTab = extractIconAndSubTab(getCellText(row, 1));
-			subTab = parsedSubTab.subTab;
-			const hasIconNameColumn = cells.length >= 5;
-			iconName = hasIconNameColumn ? normalizeIconName(getCellText(row, 2)) : "";
-			const iconFromSubTabCell = getIconNameFromCell(row, 1);
-			const iconFromIconColumn = hasIconNameColumn ? getIconNameFromCell(row, 2) : "";
+    if (isCompactTwoColumnRow) {
+      const lines = getTextLines(cells[0]);
+      topTab = lines[0] || "";
+      const parsedSubTab = extractIconAndSubTab(lines[1] || "");
+      subTab = parsedSubTab.subTab;
+      question = lines[2] || "";
+      answer = getCellContent(row, 1);
+      iconName = getIconNameFromCell(row, 0) || parsedSubTab.iconName;
+    } else {
+      topTab = getCellText(row, 0);
+      const parsedSubTab = extractIconAndSubTab(getCellText(row, 1));
+      subTab = parsedSubTab.subTab;
+      const hasIconNameColumn = cells.length >= 5;
+      iconName = hasIconNameColumn
+        ? normalizeIconName(getCellText(row, 2))
+        : "";
+      const iconFromSubTabCell = getIconNameFromCell(row, 1);
+      const iconFromIconColumn = hasIconNameColumn
+        ? getIconNameFromCell(row, 2)
+        : "";
 
-			if (!iconName && iconFromIconColumn) {
-				iconName = iconFromIconColumn;
-			}
+      if (!iconName && iconFromIconColumn) {
+        iconName = iconFromIconColumn;
+      }
 
-			if (!iconName && iconFromSubTabCell) {
-				iconName = iconFromSubTabCell;
-			}
+      if (!iconName && iconFromSubTabCell) {
+        iconName = iconFromSubTabCell;
+      }
 
-			if (!iconName) {
-				iconName = parsedSubTab.iconName;
-			}
+      if (!iconName) {
+        iconName = parsedSubTab.iconName;
+      }
 
-			question = getCellText(row, hasIconNameColumn ? 3 : 2);
-			answer = getCellContent(row, hasIconNameColumn ? 4 : 3);
+      question = getCellText(row, hasIconNameColumn ? 3 : 2);
+      answer = getCellContent(row, hasIconNameColumn ? 4 : 3);
 
-			// Fallback for older/mixed row structures where icon column is not emitted.
-			if (hasIconNameColumn && !question && !answer) {
-				question = getCellText(row, 2);
-				answer = getCellContent(row, 3);
-			}
-		}
+      // Fallback for older/mixed row structures where icon column is not emitted.
+      if (hasIconNameColumn && !question && !answer) {
+        question = getCellText(row, 2);
+        answer = getCellContent(row, 3);
+      }
+    }
 
-		if (!topTab || !subTab || !question) {
-			return;
-		}
+    if (!topTab || !subTab || !question) {
+      return;
+    }
 
-		if (!topTabMap.has(topTab)) {
-			topTabMap.set(topTab, new Map());
-		}
+    if (!topTabMap.has(topTab)) {
+      topTabMap.set(topTab, new Map());
+    }
 
-		const subTabMap = topTabMap.get(topTab);
-		if (!subTabMap.has(subTab)) {
-			subTabMap.set(subTab, {
-				iconName,
-				items: [],
-			});
-		}
+    const subTabMap = topTabMap.get(topTab);
+    if (!subTabMap.has(subTab)) {
+      subTabMap.set(subTab, {
+        iconName,
+        items: [],
+      });
+    }
 
-		const subTabData = subTabMap.get(subTab);
-		if (iconName && !subTabData.iconName) {
-			subTabData.iconName = iconName;
-		}
+    const subTabData = subTabMap.get(subTab);
+    if (iconName && !subTabData.iconName) {
+      subTabData.iconName = iconName;
+    }
 
-		subTabData.items.push({
-			question,
-			answer,
-		});
-	});
+    subTabData.items.push({
+      question,
+      answer,
+    });
+  });
 
-	return [...topTabMap.entries()].map(([topTab, subTabMap]) => ({
-		topTab,
-		subTabs: [...subTabMap.entries()].map(([name, subTabData]) => ({
-			name,
-			iconName: subTabData.iconName,
-			items: subTabData.items,
-		})),
-	}));
+  return [...topTabMap.entries()].map(([topTab, subTabMap]) => ({
+    topTab,
+    subTabs: [...subTabMap.entries()].map(([name, subTabData]) => ({
+      name,
+      iconName: subTabData.iconName,
+      items: subTabData.items,
+    })),
+  }));
 }
 
-function renderSubTabList(subTabListEl, topTabData, onSelectSubTab, activeSubTabIndex) {
-	subTabListEl.textContent = "";
+function renderSubTabList(
+  subTabListEl,
+  topTabData,
+  onSelectSubTab,
+  activeSubTabIndex,
+) {
+  subTabListEl.textContent = "";
 
-	topTabData.subTabs.forEach((subTab, index) => {
-		const button = document.createElement("button");
-		button.className = "faq-tabs-subtab";
-		if (index === activeSubTabIndex) {
-			button.classList.add("is-active");
-		}
-		button.type = "button";
+  topTabData.subTabs.forEach((subTab, index) => {
+    const button = document.createElement("button");
+    button.className = "faq-tabs-subtab";
+    if (index === activeSubTabIndex) {
+      button.classList.add("is-active");
+    }
+    button.type = "button";
 
-		const icon = document.createElement("span");
-		icon.className = "faq-tabs-subtab-icon";
-		icon.setAttribute("aria-hidden", "true");
-		if (subTab.iconName) {
-			const iconToken = document.createElement("span");
-			iconToken.className = `icon icon-${subTab.iconName}`;
-			icon.append(iconToken);
-		} else {
-			icon.classList.add("is-placeholder");
-		}
+    const icon = document.createElement("span");
+    icon.className = "faq-tabs-subtab-icon";
+    icon.setAttribute("aria-hidden", "true");
+    if (subTab.iconName) {
+      const iconToken = document.createElement("span");
+      iconToken.className = `icon icon-${subTab.iconName}`;
+      icon.append(iconToken);
+    } else {
+      icon.classList.add("is-placeholder");
+    }
 
-		const text = document.createElement("span");
-		text.className = "faq-tabs-subtab-text";
+    const text = document.createElement("span");
+    text.className = "faq-tabs-subtab-text";
 
-		const label = document.createElement("span");
-		label.className = "faq-tabs-subtab-label";
-		label.textContent = subTab.name;
+    const label = document.createElement("span");
+    label.className = "faq-tabs-subtab-label";
+    label.textContent = subTab.name;
 
-		const count = document.createElement("span");
-		count.className = "faq-tabs-subtab-count";
-		count.textContent = `${subTab.items.length} Questions`;
+    const count = document.createElement("span");
+    count.className = "faq-tabs-subtab-count";
+    count.textContent = `${subTab.items.length} Questions`;
 
-		const chevron = document.createElement("span");
-		chevron.className = "faq-tabs-subtab-chevron";
-		chevron.setAttribute("aria-hidden", "true");
-		chevron.textContent = ">";
+    const chevron = document.createElement("span");
+    chevron.className = "faq-tabs-subtab-chevron";
+    chevron.setAttribute("aria-hidden", "true");
+    chevron.textContent = ">";
 
-		text.append(label, count);
-		button.append(icon, text, chevron);
-		button.addEventListener("click", () => onSelectSubTab(index));
+    text.append(label, count);
+    button.append(icon, text, chevron);
+    button.addEventListener("click", () => onSelectSubTab(index));
 
-		subTabListEl.append(button);
-	});
+    subTabListEl.append(button);
+  });
 
-	decorateIcons(subTabListEl);
-	subTabListEl.querySelectorAll(".faq-tabs-subtab-icon .icon img").forEach((img) => {
-		img.addEventListener("error", () => {
-			const icon = img.closest(".faq-tabs-subtab-icon");
-			if (icon) {
-				icon.classList.add("is-placeholder");
-			}
-			img.closest(".icon")?.remove();
-		});
-	});
+  decorateIcons(subTabListEl);
+  subTabListEl
+    .querySelectorAll(".faq-tabs-subtab-icon .icon img")
+    .forEach((img) => {
+      img.addEventListener("error", () => {
+        const icon = img.closest(".faq-tabs-subtab-icon");
+        if (icon) {
+          icon.classList.add("is-placeholder");
+        }
+        img.closest(".icon")?.remove();
+      });
+    });
 }
 
 function renderFaqItems(faqListEl, subTabData) {
-	faqListEl.textContent = "";
+  faqListEl.textContent = "";
 
-	subTabData.items.forEach((item, index) => {
-		const details = document.createElement("details");
-		details.className = "faq-tabs-item";
-		if (index === 0) {
-			details.open = true;
-		}
+  subTabData.items.forEach((item, index) => {
+    const details = document.createElement("details");
+    details.className = "faq-tabs-item";
+    if (index === 0) {
+      details.open = true;
+    }
 
-		const summary = document.createElement("summary");
-		summary.className = "faq-tabs-question";
-		summary.textContent = item.question;
+    const summary = document.createElement("summary");
+    summary.className = "faq-tabs-question";
+    summary.textContent = item.question;
 
-		const answer = document.createElement("div");
-		answer.className = "faq-tabs-answer";
-		answer.innerHTML = item.answer || "";
+    const answer = document.createElement("div");
+    answer.className = "faq-tabs-answer";
+    answer.innerHTML = item.answer || "";
 
-		details.append(summary, answer);
-		faqListEl.append(details);
-	});
+    details.append(summary, answer);
+    faqListEl.append(details);
+  });
 }
 
 export default function decorate(block) {
-	const isAuthorHost = window.location.hostname.includes("author-");
-	const isWcmDisabled = new URLSearchParams(window.location.search).get("wcmmode") === "disabled";
-	const isAuthoringMode = isAuthorHost && !isWcmDisabled;
-	const initialRows = [...block.children].filter((row) => row.children.length >= 4);
-	const staticFaqData = buildData(initialRows);
+  const isAuthorHost = window.location.hostname.includes("author-");
+  const isWcmDisabled =
+    new URLSearchParams(window.location.search).get("wcmmode") === "disabled";
+  const isAuthoringMode = isAuthorHost && !isWcmDisabled;
+  const initialRows = [...block.children].filter(
+    (row) => row.children.length >= 4,
+  );
+  const staticFaqData = buildData(initialRows);
 
-	let activeTopTabIndex = 0;
-	let activeSubTabIndex = 0;
+  let activeTopTabIndex = 0;
+  let activeSubTabIndex = 0;
 
-	const topTabList = document.createElement("div");
-	topTabList.className = "faq-tabs-top-list";
-	topTabList.setAttribute("role", "tablist");
+  const topTabList = document.createElement("div");
+  topTabList.className = "faq-tabs-top-list";
+  topTabList.setAttribute("role", "tablist");
 
-	const content = document.createElement("div");
-	content.className = "faq-tabs-content";
+  const content = document.createElement("div");
+  content.className = "faq-tabs-content";
 
-	const subTabList = document.createElement("aside");
-	subTabList.className = "faq-tabs-sub-list";
+  const subTabList = document.createElement("aside");
+  subTabList.className = "faq-tabs-sub-list";
 
-	const faqPanel = document.createElement("section");
-	faqPanel.className = "faq-tabs-faq-panel";
+  const faqPanel = document.createElement("section");
+  faqPanel.className = "faq-tabs-faq-panel";
 
-	const faqList = document.createElement("div");
-	faqList.className = "faq-tabs-faq-list";
-	faqPanel.append(faqList);
+  const faqList = document.createElement("div");
+  faqList.className = "faq-tabs-faq-list";
+  faqPanel.append(faqList);
 
-	const uiContainer = document.createElement("div");
-	uiContainer.className = "faq-tabs-rendered-ui";
-	uiContainer.append(topTabList, content);
+  const uiContainer = document.createElement("div");
+  uiContainer.className = "faq-tabs-rendered-ui";
+  uiContainer.append(topTabList, content);
 
-	function getFaqData() {
-		if (isAuthoringMode) {
-			const liveRows = [...block.children].filter((row) => row !== uiContainer && row.children.length >= 4);
-			return buildData(liveRows);
-		}
+  function getFaqData() {
+    if (isAuthoringMode) {
+      const liveRows = [...block.children].filter(
+        (row) => row !== uiContainer && row.children.length >= 4,
+      );
+      return buildData(liveRows);
+    }
 
-		return staticFaqData;
-	}
+    return staticFaqData;
+  }
 
-	function renderTopTabs() {
-		const faqData = getFaqData();
+  function renderTopTabs() {
+    const faqData = getFaqData();
 
-		if (!faqData.length) {
-			topTabList.textContent = "";
-			subTabList.textContent = "";
-			faqList.textContent = "";
-			return;
-		}
+    if (!faqData.length) {
+      topTabList.textContent = "";
+      subTabList.textContent = "";
+      faqList.textContent = "";
+      return;
+    }
 
-		if (activeTopTabIndex >= faqData.length) {
-			activeTopTabIndex = 0;
-		}
+    if (activeTopTabIndex >= faqData.length) {
+      activeTopTabIndex = 0;
+    }
 
-		const currentTopTab = faqData[activeTopTabIndex];
-		if (activeSubTabIndex >= currentTopTab.subTabs.length) {
-			activeSubTabIndex = 0;
-		}
+    const currentTopTab = faqData[activeTopTabIndex];
+    if (activeSubTabIndex >= currentTopTab.subTabs.length) {
+      activeSubTabIndex = 0;
+    }
 
-		topTabList.textContent = "";
+    topTabList.textContent = "";
 
-		faqData.forEach((entry, index) => {
-			const button = document.createElement("button");
-			button.type = "button";
-			button.className = "faq-tabs-top-tab";
-			button.setAttribute("role", "tab");
-			button.setAttribute("aria-selected", index === activeTopTabIndex);
-			button.textContent = entry.topTab;
+    faqData.forEach((entry, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "faq-tabs-top-tab";
+      button.setAttribute("role", "tab");
+      button.setAttribute("aria-selected", index === activeTopTabIndex);
+      button.textContent = entry.topTab;
 
-			button.addEventListener("click", () => {
-				activeTopTabIndex = index;
-				activeSubTabIndex = 0;
-				render();
-			});
+      button.addEventListener("click", () => {
+        activeTopTabIndex = index;
+        activeSubTabIndex = 0;
+        render();
+      });
 
-			topTabList.append(button);
-		});
+      topTabList.append(button);
+    });
 
-		const latestTopTab = faqData[activeTopTabIndex];
-		const latestSubTab = latestTopTab.subTabs[activeSubTabIndex];
+    const latestTopTab = faqData[activeTopTabIndex];
+    const latestSubTab = latestTopTab.subTabs[activeSubTabIndex];
 
-		renderSubTabList(
-			subTabList,
-			latestTopTab,
-			(subTabIndex) => {
-				activeSubTabIndex = subTabIndex;
-				render();
-			},
-			activeSubTabIndex,
-		);
-		renderFaqItems(faqList, latestSubTab);
-	}
+    renderSubTabList(
+      subTabList,
+      latestTopTab,
+      (subTabIndex) => {
+        activeSubTabIndex = subTabIndex;
+        render();
+      },
+      activeSubTabIndex,
+    );
+    renderFaqItems(faqList, latestSubTab);
+  }
 
-	function render() {
-		renderTopTabs();
-	}
+  function render() {
+    renderTopTabs();
+  }
 
-	content.append(subTabList, faqPanel);
+  content.append(subTabList, faqPanel);
 
-	if (isAuthoringMode) {
-		block.classList.add("is-authoring");
-		if (!block.contains(uiContainer)) {
-			block.append(uiContainer);
-		}
+  if (isAuthoringMode) {
+    block.classList.add("is-authoring");
+    if (!block.contains(uiContainer)) {
+      block.append(uiContainer);
+    }
 
-		const observer = new MutationObserver((mutations) => {
-			const hasRowChange = mutations.some((mutation) =>
-				[...mutation.addedNodes, ...mutation.removedNodes].some(
-					(node) => node !== uiContainer && node.nodeType === Node.ELEMENT_NODE,
-				),
-			);
+    const observer = new MutationObserver((mutations) => {
+      const hasRowChange = mutations.some((mutation) =>
+        [...mutation.addedNodes, ...mutation.removedNodes].some(
+          (node) => node !== uiContainer && node.nodeType === Node.ELEMENT_NODE,
+        ),
+      );
 
-			if (hasRowChange) {
-				render();
-			}
-		});
+      if (hasRowChange) {
+        render();
+      }
+    });
 
-		observer.observe(block, { childList: true });
-	} else {
-		block.textContent = "";
-		block.append(uiContainer);
-	}
+    observer.observe(block, { childList: true });
+  } else {
+    block.textContent = "";
+    block.append(uiContainer);
+  }
 
-	render();
+  render();
 }

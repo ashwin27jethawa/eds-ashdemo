@@ -206,6 +206,39 @@
     ]
   },
   {
+    "id": "faq-banks",
+    "fields": []
+  },
+  {
+    "id": "faq-banks-item",
+    "fields": [
+      {
+        "component": "text",
+        "name": "col1_type",
+        "label": "Tab Name (e.g., My Account)",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "col1_sub-type",
+        "label": "Sidebar Menu (e.g., KYC, Bank Accounts)",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "col1_heading",
+        "label": "Question / Accordion Heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "col2_body",
+        "label": "Answer / Description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "faq-tabs",
     "fields": []
   },

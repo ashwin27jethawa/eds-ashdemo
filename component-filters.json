@@ -65,6 +65,18 @@
     ]
   },
   {
+    "id": "page",
+    "components": [
+      "faq-banks"
+    ]
+  },
+  {
+    "id": "faq-banks",
+    "components": [
+      "faq-banks-item"
+    ]
+  },
+  {
     "id": "faq-tabs",
     "components": [
       "faq-tabs-item"
