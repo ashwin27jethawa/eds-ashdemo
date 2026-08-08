@@ -77,6 +77,10 @@
     }
   ],
   "filters": [
+     {
+      "id": "page",
+      "components": ["faq-tabs"]
+    },
     {
       "id": "faq-tabs",
       "components": [
