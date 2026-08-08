@@ -788,142 +788,518 @@ function renderFaqItems(faqListEl, subTabData) {
 /**
  * FAQ Tabs block.
  */
+// export default function decorate(block) {
+//   const isAuthorHost =
+//     window.location.hostname.includes("author-");
+
+//   const isWcmDisabled =
+//     new URLSearchParams(
+//       window.location.search,
+//     ).get("wcmmode") === "disabled";
+
+//   const isAuthoringMode =
+//     isAuthorHost && !isWcmDisabled;
+
+//   /**
+//    * IMPORTANT:
+//    *
+//    * Your block can have 2 columns in the authoring UI.
+//    * Therefore do NOT use >= 4 here.
+//    */
+//   const initialRows = [...block.children].filter(
+//     (row) => row.children.length >= 2,
+//   );
+
+//   const staticFaqData = buildData(initialRows);
+
+//   let activeTopTabIndex = 0;
+//   let activeSubTabIndex = 0;
+
+//   /**
+//    * Top tabs.
+//    */
+//   const topTabList = document.createElement("div");
+
+//   topTabList.className = "faq-tabs-top-list";
+//   topTabList.setAttribute("role", "tablist");
+
+//   /**
+//    * Content wrapper.
+//    */
+//   const content = document.createElement("div");
+
+//   content.className = "faq-tabs-content";
+
+//   /**
+//    * Sub tabs.
+//    */
+//   const subTabList = document.createElement("aside");
+
+//   subTabList.className = "faq-tabs-sub-list";
+
+//   /**
+//    * FAQ panel.
+//    */
+//   const faqPanel = document.createElement("section");
+
+//   faqPanel.className = "faq-tabs-faq-panel";
+
+//   /**
+//    * FAQ list.
+//    */
+//   const faqList = document.createElement("div");
+
+//   faqList.className = "faq-tabs-faq-list";
+
+//   faqPanel.append(faqList);
+
+//   /**
+//    * Rendered UI container.
+//    */
+//   const uiContainer = document.createElement("div");
+
+//   uiContainer.className = "faq-tabs-rendered-ui";
+
+//   uiContainer.append(
+//     topTabList,
+//     content,
+//   );
+
+//   /**
+//    * Get FAQ data.
+//    *
+//    * Authoring:
+//    * Read current rows directly from block.
+//    *
+//    * Publish:
+//    * Use the initial data captured before replacing
+//    * the block content.
+//    */
+//   function getFaqData() {
+//     if (isAuthoringMode) {
+//       const liveRows = [...block.children].filter(
+//         (row) =>
+//           row !== uiContainer &&
+//           row.nodeType === Node.ELEMENT_NODE &&
+//           row.children.length >= 2,
+//       );
+
+//       return buildData(liveRows);
+//     }
+
+//     return staticFaqData;
+//   }
+
+//   /**
+//    * Render top tabs.
+//    */
+//   function renderTopTabs() {
+//     const faqData = getFaqData();
+
+//     /**
+//      * No FAQ data.
+//      */
+//     if (!faqData.length) {
+//       topTabList.textContent = "";
+//       subTabList.textContent = "";
+//       faqList.textContent = "";
+
+//       return;
+//     }
+
+//     /**
+//      * Protect indexes.
+//      */
+//     if (activeTopTabIndex >= faqData.length) {
+//       activeTopTabIndex = 0;
+//     }
+
+//     const currentTopTab =
+//       faqData[activeTopTabIndex];
+
+//     if (
+//       !currentTopTab.subTabs.length
+//     ) {
+//       topTabList.textContent = "";
+//       subTabList.textContent = "";
+//       faqList.textContent = "";
+
+//       return;
+//     }
+
+//     if (
+//       activeSubTabIndex >=
+//       currentTopTab.subTabs.length
+//     ) {
+//       activeSubTabIndex = 0;
+//     }
+
+//     /**
+//      * Clear old top tabs.
+//      */
+//     topTabList.textContent = "";
+
+//     /**
+//      * Create top tabs.
+//      */
+//     faqData.forEach((entry, index) => {
+//       const button =
+//         document.createElement("button");
+
+//       button.type = "button";
+
+//       button.className =
+//         "faq-tabs-top-tab";
+
+//       button.setAttribute(
+//         "role",
+//         "tab",
+//       );
+
+//       button.setAttribute(
+//         "aria-selected",
+//         index === activeTopTabIndex
+//           ? "true"
+//           : "false",
+//       );
+
+//       button.textContent =
+//         entry.topTab;
+
+//       button.addEventListener(
+//         "click",
+//         () => {
+//           activeTopTabIndex = index;
+//           activeSubTabIndex = 0;
+
+//           render();
+//         },
+//       );
+
+//       topTabList.append(button);
+//     });
+
+//     /**
+//      * Current selected tab.
+//      */
+//     const latestTopTab =
+//       faqData[activeTopTabIndex];
+
+//     const latestSubTab =
+//       latestTopTab.subTabs[
+//         activeSubTabIndex
+//       ];
+
+//     /**
+//      * Render sub tabs.
+//      */
+//     renderSubTabList(
+//       subTabList,
+//       latestTopTab,
+//       (subTabIndex) => {
+//         activeSubTabIndex =
+//           subTabIndex;
+
+//         render();
+//       },
+//       activeSubTabIndex,
+//     );
+
+//     /**
+//      * Render FAQs.
+//      */
+//     renderFaqItems(
+//       faqList,
+//       latestSubTab,
+//     );
+//   }
+
+//   /**
+//    * Render everything.
+//    */
+//   function render() {
+//     renderTopTabs();
+//   }
+
+//   /**
+//    * Put sub tab and FAQ panel inside content.
+//    */
+//   content.append(
+//     subTabList,
+//     faqPanel,
+//   );
+
+//   /**
+//    * ---------------------------------------------------------
+//    * AUTHORING MODE
+//    * ---------------------------------------------------------
+//    */
+//   if (isAuthoringMode) {
+//     block.classList.add("is-authoring");
+
+//     /**
+//      * IMPORTANT:
+//      * Do NOT remove the original authoring rows.
+//      *
+//      * This allows the author to continue adding/removing
+//      * FAQ items using the AEM authoring UI.
+//      */
+//     if (!block.contains(uiContainer)) {
+//       block.append(uiContainer);
+//     }
+
+//     /**
+//      * Watch authoring changes.
+//      */
+//     const observer =
+//       new MutationObserver(
+//         (mutations) => {
+//           const hasRowChange =
+//             mutations.some(
+//               (mutation) =>
+//                 [
+//                   ...mutation.addedNodes,
+//                   ...mutation.removedNodes,
+//                 ].some(
+//                   (node) =>
+//                     node !== uiContainer &&
+//                     node.nodeType ===
+//                       Node.ELEMENT_NODE,
+//                 ),
+//             );
+
+//           if (hasRowChange) {
+//             render();
+//           }
+//         },
+//       );
+
+//     observer.observe(block, {
+//       childList: true,
+//     });
+//   } else {
+//     /**
+//      * -------------------------------------------------------
+//      * PUBLISH MODE
+//      * -------------------------------------------------------
+//      *
+//      * Remove authoring table and show only the UI.
+//      */
+//     block.textContent = "";
+
+//     block.append(uiContainer);
+//   }
+
+//   /**
+//    * Initial render.
+//    */
+//   render();
+// }
+
 export default function decorate(block) {
   const isAuthorHost =
     window.location.hostname.includes("author-");
 
   const isWcmDisabled =
-    new URLSearchParams(
-      window.location.search,
-    ).get("wcmmode") === "disabled";
+    new URLSearchParams(window.location.search).get("wcmmode") ===
+    "disabled";
 
   const isAuthoringMode =
     isAuthorHost && !isWcmDisabled;
 
-  /**
+  /*
+   * ==========================================================
+   * AUTHORING MODE
+   * ==========================================================
+   *
    * IMPORTANT:
    *
-   * Your block can have 2 columns in the authoring UI.
-   * Therefore do NOT use >= 4 here.
+   * Do NOT modify the block DOM here.
+   *
+   * AEM Universal Editor needs the original
+   * faq-tabs-item structure for:
+   *
+   * - editing
+   * - adding items
+   * - deleting items
+   * - opening the model
+   * - showing the fields
+   *
+   * The final FAQ UI is only required outside authoring.
    */
-  const initialRows = [...block.children].filter(
+  if (isAuthoringMode) {
+    block.classList.add("is-authoring");
+
+    return;
+  }
+
+  /*
+   * ==========================================================
+   * PUBLISHED / PREVIEW MODE
+   * ==========================================================
+   */
+
+  const rows = [...block.children].filter(
     (row) => row.children.length >= 2,
   );
 
-  const staticFaqData = buildData(initialRows);
+  const faqData = buildData(rows);
 
   let activeTopTabIndex = 0;
   let activeSubTabIndex = 0;
 
-  /**
-   * Top tabs.
+  /*
+   * Top tabs
    */
   const topTabList = document.createElement("div");
 
-  topTabList.className = "faq-tabs-top-list";
-  topTabList.setAttribute("role", "tablist");
+  topTabList.className =
+    "faq-tabs-top-list";
 
-  /**
-   * Content wrapper.
+  topTabList.setAttribute(
+    "role",
+    "tablist",
+  );
+
+  /*
+   * Main content
    */
   const content = document.createElement("div");
 
-  content.className = "faq-tabs-content";
+  content.className =
+    "faq-tabs-content";
 
-  /**
-   * Sub tabs.
+  /*
+   * Sub tabs
    */
-  const subTabList = document.createElement("aside");
+  const subTabList =
+    document.createElement("aside");
 
-  subTabList.className = "faq-tabs-sub-list";
+  subTabList.className =
+    "faq-tabs-sub-list";
 
-  /**
-   * FAQ panel.
+  /*
+   * FAQ panel
    */
-  const faqPanel = document.createElement("section");
+  const faqPanel =
+    document.createElement("section");
 
-  faqPanel.className = "faq-tabs-faq-panel";
+  faqPanel.className =
+    "faq-tabs-faq-panel";
 
-  /**
-   * FAQ list.
+  /*
+   * FAQ list
    */
-  const faqList = document.createElement("div");
+  const faqList =
+    document.createElement("div");
 
-  faqList.className = "faq-tabs-faq-list";
+  faqList.className =
+    "faq-tabs-faq-list";
 
   faqPanel.append(faqList);
 
-  /**
-   * Rendered UI container.
+  /*
+   * Main rendered UI
    */
-  const uiContainer = document.createElement("div");
+  const uiContainer =
+    document.createElement("div");
 
-  uiContainer.className = "faq-tabs-rendered-ui";
+  uiContainer.className =
+    "faq-tabs-rendered-ui";
+
+  content.append(
+    subTabList,
+    faqPanel,
+  );
 
   uiContainer.append(
     topTabList,
     content,
   );
 
-  /**
-   * Get FAQ data.
-   *
-   * Authoring:
-   * Read current rows directly from block.
-   *
-   * Publish:
-   * Use the initial data captured before replacing
-   * the block content.
+  /*
+   * No data
    */
-  function getFaqData() {
-    if (isAuthoringMode) {
-      const liveRows = [...block.children].filter(
-        (row) =>
-          row !== uiContainer &&
-          row.nodeType === Node.ELEMENT_NODE &&
-          row.children.length >= 2,
-      );
+  if (!faqData.length) {
+    block.textContent = "";
+    block.append(uiContainer);
 
-      return buildData(liveRows);
-    }
-
-    return staticFaqData;
+    return;
   }
 
-  /**
+  /*
+   * Make sure indexes are valid.
+   */
+  if (
+    activeTopTabIndex >= faqData.length
+  ) {
+    activeTopTabIndex = 0;
+  }
+
+  const currentTopTab =
+    faqData[activeTopTabIndex];
+
+  if (
+    activeSubTabIndex >=
+    currentTopTab.subTabs.length
+  ) {
+    activeSubTabIndex = 0;
+  }
+
+  /*
    * Render top tabs.
    */
   function renderTopTabs() {
-    const faqData = getFaqData();
+    topTabList.textContent = "";
 
-    /**
-     * No FAQ data.
-     */
-    if (!faqData.length) {
-      topTabList.textContent = "";
-      subTabList.textContent = "";
-      faqList.textContent = "";
+    faqData.forEach(
+      (entry, index) => {
+        const button =
+          document.createElement("button");
 
-      return;
-    }
+        button.type = "button";
 
-    /**
-     * Protect indexes.
-     */
-    if (activeTopTabIndex >= faqData.length) {
-      activeTopTabIndex = 0;
-    }
+        button.className =
+          "faq-tabs-top-tab";
 
+        button.setAttribute(
+          "role",
+          "tab",
+        );
+
+        button.setAttribute(
+          "aria-selected",
+          index === activeTopTabIndex
+            ? "true"
+            : "false",
+        );
+
+        button.textContent =
+          entry.topTab;
+
+        button.addEventListener(
+          "click",
+          () => {
+            activeTopTabIndex = index;
+            activeSubTabIndex = 0;
+
+            render();
+          },
+        );
+
+        topTabList.append(button);
+      },
+    );
+  }
+
+  /*
+   * Render current content.
+   */
+  function renderCurrentContent() {
     const currentTopTab =
       faqData[activeTopTabIndex];
 
-    if (
-      !currentTopTab.subTabs.length
-    ) {
-      topTabList.textContent = "";
-      subTabList.textContent = "";
-      faqList.textContent = "";
-
+    if (!currentTopTab) {
       return;
     }
 
@@ -934,68 +1310,17 @@ export default function decorate(block) {
       activeSubTabIndex = 0;
     }
 
-    /**
-     * Clear old top tabs.
-     */
-    topTabList.textContent = "";
-
-    /**
-     * Create top tabs.
-     */
-    faqData.forEach((entry, index) => {
-      const button =
-        document.createElement("button");
-
-      button.type = "button";
-
-      button.className =
-        "faq-tabs-top-tab";
-
-      button.setAttribute(
-        "role",
-        "tab",
-      );
-
-      button.setAttribute(
-        "aria-selected",
-        index === activeTopTabIndex
-          ? "true"
-          : "false",
-      );
-
-      button.textContent =
-        entry.topTab;
-
-      button.addEventListener(
-        "click",
-        () => {
-          activeTopTabIndex = index;
-          activeSubTabIndex = 0;
-
-          render();
-        },
-      );
-
-      topTabList.append(button);
-    });
-
-    /**
-     * Current selected tab.
-     */
-    const latestTopTab =
-      faqData[activeTopTabIndex];
-
-    const latestSubTab =
-      latestTopTab.subTabs[
+    const currentSubTab =
+      currentTopTab.subTabs[
         activeSubTabIndex
       ];
 
-    /**
+    /*
      * Render sub tabs.
      */
     renderSubTabList(
       subTabList,
-      latestTopTab,
+      currentTopTab,
       (subTabIndex) => {
         activeSubTabIndex =
           subTabIndex;
@@ -1005,92 +1330,32 @@ export default function decorate(block) {
       activeSubTabIndex,
     );
 
-    /**
+    /*
      * Render FAQs.
      */
     renderFaqItems(
       faqList,
-      latestSubTab,
+      currentSubTab,
     );
   }
 
-  /**
+  /*
    * Render everything.
    */
   function render() {
     renderTopTabs();
+    renderCurrentContent();
   }
 
-  /**
-   * Put sub tab and FAQ panel inside content.
+  /*
+   * Replace original AEM block content
+   * ONLY in published/preview mode.
    */
-  content.append(
-    subTabList,
-    faqPanel,
-  );
+  block.textContent = "";
 
-  /**
-   * ---------------------------------------------------------
-   * AUTHORING MODE
-   * ---------------------------------------------------------
-   */
-  if (isAuthoringMode) {
-    block.classList.add("is-authoring");
+  block.append(uiContainer);
 
-    /**
-     * IMPORTANT:
-     * Do NOT remove the original authoring rows.
-     *
-     * This allows the author to continue adding/removing
-     * FAQ items using the AEM authoring UI.
-     */
-    if (!block.contains(uiContainer)) {
-      block.append(uiContainer);
-    }
-
-    /**
-     * Watch authoring changes.
-     */
-    const observer =
-      new MutationObserver(
-        (mutations) => {
-          const hasRowChange =
-            mutations.some(
-              (mutation) =>
-                [
-                  ...mutation.addedNodes,
-                  ...mutation.removedNodes,
-                ].some(
-                  (node) =>
-                    node !== uiContainer &&
-                    node.nodeType ===
-                      Node.ELEMENT_NODE,
-                ),
-            );
-
-          if (hasRowChange) {
-            render();
-          }
-        },
-      );
-
-    observer.observe(block, {
-      childList: true,
-    });
-  } else {
-    /**
-     * -------------------------------------------------------
-     * PUBLISH MODE
-     * -------------------------------------------------------
-     *
-     * Remove authoring table and show only the UI.
-     */
-    block.textContent = "";
-
-    block.append(uiContainer);
-  }
-
-  /**
+  /*
    * Initial render.
    */
   render();
