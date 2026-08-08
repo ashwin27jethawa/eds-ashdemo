@@ -78,12 +78,6 @@
     ]
   },
   {
-    "id": "page",
-    "components": [
-      "faq-tabs"
-    ]
-  },
-  {
     "id": "faq-tabs",
     "components": [
       "faq-tabs-item"
