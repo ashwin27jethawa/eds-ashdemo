@@ -1,4 +1,6 @@
 
+import { decorateIcons } from "../../scripts/aem.js";
+
 function getCellContent(row, index) {
 	const cell = row.children[index];
 	return cell ? cell.innerHTML.trim() : "";
@@ -7,6 +9,21 @@ function getCellContent(row, index) {
 function getCellText(row, index) {
 	const cell = row.children[index];
 	return cell ? cell.textContent.trim() : "";
+}
+
+function getIconNameFromCell(row, index) {
+	const cell = row.children[index];
+	if (!cell) {
+		return "";
+	}
+
+	const iconSpan = cell.querySelector("span.icon");
+	if (!iconSpan) {
+		return "";
+	}
+
+	const classWithIcon = [...iconSpan.classList].find((className) => className.startsWith("icon-"));
+	return classWithIcon ? normalizeIconName(classWithIcon.replace("icon-", "")) : "";
 }
 
 function normalizeIconName(rawName) {
@@ -21,16 +38,85 @@ function normalizeIconName(rawName) {
 		.trim();
 }
 
+function getTextLines(cell) {
+	if (!cell) {
+		return [];
+	}
+
+	return cell.textContent
+		.split("\n")
+		.map((line) => line.trim())
+		.filter(Boolean);
+}
+
+function extractIconAndSubTab(rawSubTab) {
+	const text = (rawSubTab || "").trim();
+	const match = text.match(/^:([a-z0-9-]+):\s*(.*)$/i);
+
+	if (!match) {
+		return {
+			subTab: text,
+			iconName: "",
+		};
+	}
+
+	return {
+		subTab: (match[2] || "").trim(),
+		iconName: normalizeIconName(match[1]),
+	};
+}
+
 function buildData(rows) {
 	const topTabMap = new Map();
 
 	rows.forEach((row) => {
-		const topTab = getCellText(row, 0);
-		const subTab = getCellText(row, 1);
-		const hasIconNameColumn = row.children.length >= 5;
-		const iconName = hasIconNameColumn ? normalizeIconName(getCellText(row, 2)) : "";
-		const question = getCellText(row, hasIconNameColumn ? 3 : 2);
-		const answer = getCellContent(row, hasIconNameColumn ? 4 : 3);
+		const cells = [...row.children];
+		const isCompactTwoColumnRow = cells.length === 2;
+
+		let topTab = "";
+		let subTab = "";
+		let question = "";
+		let answer = "";
+		let iconName = "";
+
+		if (isCompactTwoColumnRow) {
+			const lines = getTextLines(cells[0]);
+			topTab = lines[0] || "";
+			const parsedSubTab = extractIconAndSubTab(lines[1] || "");
+			subTab = parsedSubTab.subTab;
+			question = lines[2] || "";
+			answer = getCellContent(row, 1);
+			iconName = getIconNameFromCell(row, 0) || parsedSubTab.iconName;
+		} else {
+			topTab = getCellText(row, 0);
+			const parsedSubTab = extractIconAndSubTab(getCellText(row, 1));
+			subTab = parsedSubTab.subTab;
+			const hasIconNameColumn = cells.length >= 5;
+			iconName = hasIconNameColumn ? normalizeIconName(getCellText(row, 2)) : "";
+			const iconFromSubTabCell = getIconNameFromCell(row, 1);
+			const iconFromIconColumn = hasIconNameColumn ? getIconNameFromCell(row, 2) : "";
+
+			if (!iconName && iconFromIconColumn) {
+				iconName = iconFromIconColumn;
+			}
+
+			if (!iconName && iconFromSubTabCell) {
+				iconName = iconFromSubTabCell;
+			}
+
+			if (!iconName) {
+				iconName = parsedSubTab.iconName;
+			}
+
+			question = getCellText(row, hasIconNameColumn ? 3 : 2);
+			answer = getCellContent(row, hasIconNameColumn ? 4 : 3);
+
+			// Fallback for older/mixed row structures where icon column is not emitted.
+			if (hasIconNameColumn && !question && !answer) {
+				question = getCellText(row, 2);
+				answer = getCellContent(row, 3);
+			}
+		}
 
 		if (!topTab || !subTab || !question) {
 			return;
@@ -84,15 +170,9 @@ function renderSubTabList(subTabListEl, topTabData, onSelectSubTab, activeSubTab
 		icon.className = "faq-tabs-subtab-icon";
 		icon.setAttribute("aria-hidden", "true");
 		if (subTab.iconName) {
-			const img = document.createElement("img");
-			img.src = `/icons/${encodeURIComponent(subTab.iconName)}.svg`;
-			img.alt = "";
-			img.loading = "lazy";
-			img.addEventListener("error", () => {
-				icon.classList.add("is-placeholder");
-				img.remove();
-			});
-			icon.append(img);
+			const iconToken = document.createElement("span");
+			iconToken.className = `icon icon-${subTab.iconName}`;
+			icon.append(iconToken);
 		} else {
 			icon.classList.add("is-placeholder");
 		}
@@ -118,6 +198,17 @@ function renderSubTabList(subTabListEl, topTabData, onSelectSubTab, activeSubTab
 		button.addEventListener("click", () => onSelectSubTab(index));
 
 		subTabListEl.append(button);
+	});
+
+	decorateIcons(subTabListEl);
+	subTabListEl.querySelectorAll(".faq-tabs-subtab-icon .icon img").forEach((img) => {
+		img.addEventListener("error", () => {
+			const icon = img.closest(".faq-tabs-subtab-icon");
+			if (icon) {
+				icon.classList.add("is-placeholder");
+			}
+			img.closest(".icon")?.remove();
+		});
 	});
 }
 
