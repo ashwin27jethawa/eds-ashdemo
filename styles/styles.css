@@ -40,6 +40,427 @@
   --nav-height: 64px;
 }
 
+
+
+:root {
+    --font-family-regular: 'Geist', sans-serif;
+    --font-family-light: 'Geist-Light', sans-serif;
+    --font-family-extralight: 'Geist-ExtraLight', sans-serif;
+    --font-family-medium: 'Geist-Medium', sans-serif;
+    --font-family-bold: 'Geist-Bold', sans-serif;
+    --font-family-semibold: 'Geist-SemiBold', sans-serif;
+    --font-family-extrabold: 'Geist-ExtraBold', sans-serif;
+
+    /* Border Radius */
+    --border-radius-sm: 8px;
+    --border-radius-md: 12px;
+    --border-radius-lg: 16px;
+
+    /* Spacing Scale */
+    --spacing-xxl: 32px;
+    --spacing-xl: 24px;
+    --spacing-lg: 16px;
+    --spacing-md: 12px;
+    --spacing-sm: 8px;
+    --spacing-xs: 4px;
+
+    /* Font Weights */
+    --fw-extralight: 200;
+    --fw-light: 300;
+    --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-semibold: 600;
+    --fw-bold: 700;
+
+    /* Letter Spacing */
+    --ls-tight: -1.5px;
+    --ls-display: -2px;
+    --ls-label: 0.03rem; /* 0.48px */
+
+    /* colors */
+    --background-color: var(--clr-bg-default);
+    --text-color: var(--clr-neutral-700);
+    --text-bold-color: var(--clr-neutral-900);
+    --link-color: var(--brand);
+    --link-hover-color: var(--clr-primary-400);
+
+    /* nav-height */
+    --nav-height: 64px;
+
+    /* Breakpoints */
+
+    /* Display */
+    --fs-display-1: 2.25rem; /* 36px */
+    --lh-display-1: 1.2;
+    --fs-display-2: 1.5rem; /* 24px */
+    --lh-display-2: 1.2;
+
+    /* Heading */
+    --fs-heading-1: 2rem; /* 32px */
+    --lh-heading-1: 1.2;
+    --fs-heading-2: 1.5rem; /* 24px */
+    --lh-heading-2: 1.35;
+    --fs-heading-3: 1.25rem; /* 20px */
+    --lh-heading-3: 1.4;
+
+    /* Title */
+    --fs-title-1: 1.375rem; /* 22px */
+    --lh-title-1: 1.4;
+    --fs-title-2: 1.125rem; /* 18px */
+    --lh-title-2: 1.3;
+
+    /* Subtitle */
+    --fs-subtitle-1: 1rem; /* 16px */
+    --lh-subtitle-1: 1.5;
+    --fs-subtitle-2: 0.875rem; /* 14px */
+    --lh-subtitle-2: 1.5;
+
+    /* Body */
+    --fs-body-1: 1.25rem; /* 20px */
+    --lh-body-1: 1.4;
+    --fs-body-2: 1rem; /* 16px */
+    --lh-body-2: 1.5;
+    --fs-body-3: 0.875rem; /* 14px */
+    --lh-body-3: 1.5;
+    --fs-body-4: 0.75rem; /* 12px */
+    --lh-body-4: 1.5;
+
+    /* Button and Links */
+    --fs-btn-sm: 0.875rem; /* 14px */
+    --lh-btn-sm: 1.4;
+    --spacing-btn-sm: 0.625rem 1rem; /* 10px 16px */
+    --fs-btn-md: 1rem; /* 16px */
+    --lh-btn-md: 1.25;
+    --spacing-btn-md: 0.625rem 1.25rem; /* 10px 20px */
+    --fs-btn-lg: 1rem; /* 16px */
+    --lh-btn-lg: 1.25;
+    --spacing-btn-lg: 1rem 1.5rem; /* 16px 24px */
+
+    /* Label */
+    --fs-label-lg: 0.875rem; /* 14px */
+    --lh-label-lg: 1.5;
+    --fs-label-sm: 0.75rem; /* 12px */
+    --lh-label-sm: 1.3;
+    --fs-textlink-lg: 1rem; /* 16px */
+    --lh-textlink-lg: 1.25;
+
+    /* spacing */
+    --spacing-section: 64px;
+
+    /* heading */
+    --fs-heading-0: 3.25rem; /* 52px */
+    --lh-heading-0: 1.5;
+
+    /* heading */
+    --fs-heading-4: 1.125rem; /* 18px */
+    --lh-heading-4: 1.5;
+}
+
+
+@media (width >= 900px) {
+    :root {
+        /* Display */
+        --fs-display-1: 4rem; /* 64px */
+        --lh-display-1: 1.1;
+        --fs-display-2: 2rem; /* 32px */
+        --lh-display-2: 1.4;
+
+        /* Heading */
+        --fs-heading-1: 3.25rem; /* 52px */
+        --lh-heading-1: 1.15;
+        --fs-heading-2: 2.25rem; /* 36px */
+        --lh-heading-2: 1.2;
+        --fs-heading-3: 1.75rem; /* 28px */
+
+        /* --lh-heading-3: 1.4; */
+
+        /* Title */
+        --fs-title-1: 1.625rem; /* 26px */
+        --lh-title-1: 1.3;
+        --fs-title-2: 1.25rem; /* 20px */
+
+        /* --lh-title-2: 1.3; */
+
+        /* Subtitle */
+        --fs-subtitle-1: 1.25rem; /* 20px */
+
+        /* --lh-subtitle-1: 1.5; */
+        --fs-subtitle-2: 1.125rem; /* 18px */
+
+        /* --lh-subtitle-2: 1.5; */
+
+        /* Body */
+        --fs-body-1: 1.5rem; /* 24px */
+
+        /* --lh-body-1: 1.4; */
+        --fs-body-2: 1.125rem; /* 18px */
+
+        /* --lh-body-2: 1.5; */
+        --fs-body-3: 1rem; /* 16px */
+
+        /* --lh-body-3: 1.5; */
+        --fs-body-4: 0.875rem; /* 14px */
+        --lh-body-4: 1.5;
+
+        /* Caption */
+        --fs-caption: 0.75rem; /* 12px */
+        --lh-caption: 1.5;
+
+        /* Chip */
+        --fs-chip: 0.75rem; /* 12px */
+        --lh-chip: 1.5;
+
+        /* Text Link */
+        --fs-textlink-lg: 1rem; /* 16px */
+        --lh-textlink-lg: 1.25;
+        --fs-textlink-sm: 0.875rem; /* 14px */
+        --lh-textlink-sm: 1.15;
+
+        /* Input */
+        --fs-input: 0.875rem; /* 14px */
+        --lh-input: 1.4;
+
+        /* spacing */
+        --spacing-section: 80px;
+    }
+
+    main > .section {
+        padding-block: var(--spacing-section);
+    }
+
+    .section.carousel-container {
+        padding-block: 0;
+
+        /* Button */
+        --fs-btn-md: 0.875rem; /* 14px */
+        --lh-btn-md: 1.4;
+    }
+
+    /* main > .section > div {
+        padding: 0 32px;
+    } */
+
+    p {
+        color: var(--clr-text-primary);
+        font-family: var(--font-family-regular);
+        font-size: var(--fs-body-2);
+        font-style: normal;
+        font-weight: var(--fw-regular);
+        line-height: var(--lh-body-2);
+    }
+
+    button.button,
+    a.button:not(.link) {
+        width: unset;
+    }
+
+    a.button.icon-only,
+    button.button.icon-only {
+        width: 60px;
+    }
+}
+
+
+/* ============================================================
+   Color Design Tokens — Nippon EDS Design System
+   Source: tokens/colors.json
+   Figma:  DS - Web Responsive (nodes 3228:4173 & 3406:6628)
+
+   Usage:
+     Primitive: var(--clr-{palette}-{shade})
+     Semantic:  var(--clr-text-primary), var(--clr-brand-primary) …
+   ============================================================ */
+
+:root {
+    /* ────────────────────────────────────────────────────────
+     Primitive tokens
+     ──────────────────────────────────────────────────────── */
+
+    /* Primary — Nippon brand red (N) */
+    --clr-primary-50: #fde7e8;
+    --clr-primary-100: #f9c0c1;
+    --clr-primary-200: #f6979a;
+    --clr-primary-300: #f36e73;
+    --clr-primary-400: #f0454c;
+    --clr-primary-500: #ed1c25; /* brand red — base */
+    --clr-primary-600: #c4161f;
+    --clr-primary-700: #991118;
+    --clr-primary-800: #6e0c11;
+    --clr-primary-900: #43070a;
+
+    /* Yellow — Secondary (Y) */
+    --clr-sec1-50: #fff8e5;
+    --clr-sec1-100: #ffeec1;
+    --clr-sec1-200: #ffe39b;
+    --clr-sec1-300: #ffd875;
+    --clr-sec1-400: #ffcd4f;
+    --clr-sec1-500: #ffc229; /* base */
+    --clr-sec1-600: #d29e20;
+    --clr-sec1-700: #a47b18;
+    --clr-sec1-800: #765810;
+    --clr-sec1-900: #483508;
+
+    /* Peach — Secondary orange (O) */
+    --clr-sec2-50: #ffebe5;
+    --clr-sec2-100: #ffd7ca;
+    --clr-sec2-200: #ffc1ae;
+    --clr-sec2-300: #ffab92;
+    --clr-sec2-400: #ff9576;
+    --clr-sec2-500: #ff7f5a; /* base */
+    --clr-sec2-600: #d26648;
+    --clr-sec2-700: #a44e36;
+    --clr-sec2-800: #763624;
+    --clr-sec2-900: #481e12;
+
+    /* Green — Secondary (G) */
+    --clr-sec3-50: #e7fdfc;
+    --clr-sec3-100: #bbe4e3;
+    --clr-sec3-200: #8fccc9;
+    --clr-sec3-300: #63b4af;
+    --clr-sec3-400: #379c95;
+    --clr-sec3-500: #0b847b; /* base */
+    --clr-sec3-600: #0a7066;
+    --clr-sec3-700: #085a52;
+    --clr-sec3-800: #06443e;
+    --clr-sec3-900: #042e2a;
+
+    /* Purple — Secondary (P) */
+    --clr-sec4-50: #ebebfa;
+    --clr-sec4-100: #cccdf3;
+    --clr-sec4-200: #afb1eb;
+    --clr-sec4-300: #9295e3;
+    --clr-sec4-400: #7579db;
+    --clr-sec4-500: #585dd3; /* base */
+    --clr-sec4-600: #494aac;
+    --clr-sec4-700: #383986;
+    --clr-sec4-800: #272860;
+    --clr-sec4-900: #16173a;
+
+    /* Neutral — Greys (N) */
+    --clr-neutral-50: #fafafa;
+    --clr-neutral-100: #e8e8e8;
+    --clr-neutral-200: #d2d2d2;
+    --clr-neutral-300: #bbb;
+    --clr-neutral-400: #a4a4a4;
+    --clr-neutral-500: #8d8d8d;
+    --clr-neutral-600: #777;
+    --clr-neutral-700: #606060;
+    --clr-neutral-800: #494949;
+    --clr-neutral-900: #1c1c1c;
+
+    /* Success — Semantic green (G) */
+    --clr-success-50: #e6f1ef;
+    --clr-success-100: #b0d4cd;
+    --clr-success-200: #8abfb4;
+    --clr-success-300: #54a292;
+    --clr-success-400: #33907d;
+    --clr-success-500: #00745d; /* base */
+    --clr-success-600: #006a55;
+    --clr-success-700: #005242;
+    --clr-success-800: #004033;
+    --clr-success-900: #003127;
+
+    /* Warning — Semantic orange (O) */
+    --clr-warning-50: #f7efe8;
+    --clr-warning-100: #e7cdb8;
+    --clr-warning-200: #dcb596;
+    --clr-warning-300: #cc9466;
+    --clr-warning-400: #c27f48;
+    --clr-warning-500: #b35f1a; /* base */
+    --clr-warning-600: #a35618;
+    --clr-warning-700: #7f4312;
+    --clr-warning-800: #62340e;
+    --clr-warning-900: #4b280b;
+
+    /* Destructive — Semantic error red (R) */
+    --clr-destructive-50: #f7e8e8;
+    --clr-destructive-100: #e7b8b8;
+    --clr-destructive-200: #dc9596;
+    --clr-destructive-300: #cb6566;
+    --clr-destructive-400: #c14748;
+    --clr-destructive-500: #b2191a; /* base */
+    --clr-destructive-600: #a21718;
+    --clr-destructive-700: #7e1212;
+    --clr-destructive-800: #620e0e;
+    --clr-destructive-900: #4b0b0b;
+
+    /* Info — Semantic blue (IB) */
+    --clr-info-50: #ebeefb;
+    --clr-info-100: #c0cbf2;
+    --clr-info-200: #a2b2eb;
+    --clr-info-300: #788fe2;
+    --clr-info-400: #5d79dd;
+    --clr-info-500: #3558d4; /* base */
+    --clr-info-600: #3050c1;
+    --clr-info-700: #263e97;
+    --clr-info-800: #1d3075;
+    --clr-info-900: #162559;
+
+    /* short-hand */
+    --brand: var(--clr-primary-500, red);
+    --on-brand: var(--clr-white, white);
+
+    /* Shades — Background */
+    --clr-white: #fff;
+    --clr-black: #1c1c1c;
+    --clr-black-000: #000;
+    --clr-border-ctn: #ddd; /* #DDDDDD — container border */
+    --clr-text-ctn: #222; /* #DDDDDD — container border */
+    --clr-prog-ctn: #ddd9; /* #dddddd99 — progressive bar */
+
+    /* ────────────────────────────────────────────────────────
+     Semantic tokens
+     Source: Figma node 3406:6628 (token mapping table)
+     ──────────────────────────────────────────────────────── */
+
+    /* Text / Foreground */
+    --clr-text-primary: var(
+        --clr-neutral-900
+    ); /* #1C1C1C — main body text     */
+
+    --clr-text-secondary: var(
+        --clr-neutral-600
+    ); /* #777777 — supporting text    */
+
+    --clr-text-tertiary: var(
+        --clr-neutral-400
+    ); /* #A4A4A4 — placeholder / meta */
+
+    --clr-text-disabled: var(
+        --clr-neutral-200
+    ); /* #D2D2D2 — disabled state     */
+
+    --clr-text-inverse: var(--clr-white); /* #FFFFFF — text on dark bg    */
+    --clr-text-brand: var(--clr-primary-500); /* #ED1C25 — brand / link text  */
+
+    /* Brand / Interactive */
+    --clr-brand-primary: var(--clr-primary-500); /* #ED1C25 */
+    --clr-brand-primary-hover: var(--clr-primary-600); /* #C4161F */
+    --clr-brand-primary-active: var(--clr-primary-700); /* #991118 */
+    --clr-brand-secondary: var(--clr-yellow-500); /* #FFC229 */
+
+    /* Background / Surface */
+    --clr-bg-default: var(--clr-white); /* #FFFFFF — page background  */
+    --clr-bg-surface: var(--clr-neutral-50); /* #FAFAFA — card / panel bg  */
+    --clr-bg-overlay: var(--clr-black); /* #1C1C1C — overlay / scrim  */
+
+    /* Status */
+    --clr-status-success: var(--clr-success-500); /* #00745D */
+    --clr-status-success-light: var(--clr-success-50); /* #E6F1EF */
+    --clr-status-warning: var(--clr-warning-500); /* #B35F1A */
+    --clr-status-warning-light: var(--clr-warning-50); /* #F7EFE8 */
+    --clr-status-destructive: var(--clr-destructive-500); /* #B2191A */
+    --clr-status-destructive-light: var(--clr-destructive-50); /* #F7E8E8 */
+    --clr-status-info: var(--clr-info-500); /* #3558D4 */
+    --clr-status-info-light: var(--clr-info-50); /* #EBEEFB */
+
+    /* Border / Divider */
+    --clr-border-subtle: var(--clr-neutral-100); /* #E8E8E8 */
+    --clr-border-default: var(--clr-neutral-200); /* #D2D2D2 */
+    --clr-border-strong: var(--clr-neutral-400); /* #A4A4A4 */
+}
+
+
 /* fallback fonts */
 @font-face {
   font-family: roboto-condensed-fallback;

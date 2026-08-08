@@ -1,4 +1,11 @@
 import { decorateIcons } from "../../scripts/aem.js";
+import { button, div, domEl, img, span } from "../../scripts/dom-helpers.js";
+
+const MAX_VISIBLE_FAQS = 5;
+const PLUS_ICON_SRC = "/icons/plus-icon.svg";
+const MINUS_ICON_SRC = "/icons/minus-icon.svg";
+const VIEW_ALL_ICON_SRC = "/icons/right-arrow-red.svg";
+const SIDEBAR_ARROW_ICON_SRC = "/icons/tab-arrow-left.svg";
 
 function getCellContent(row, index) {
   const cell = row.children[index];
@@ -225,45 +232,55 @@ function renderSubTabList(
   subTabListEl.textContent = "";
 
   topTabData.subTabs.forEach((subTab, index) => {
-    const button = document.createElement("button");
-    button.className = "faq-tabs-subtab";
+    const subTabButton = button({
+      class: "faq-tabs-subtab",
+      type: "button",
+    });
     if (index === activeSubTabIndex) {
-      button.classList.add("is-active");
+      subTabButton.classList.add("active");
     }
-    button.type = "button";
 
-    const icon = document.createElement("span");
-    icon.className = "faq-tabs-subtab-icon";
-    icon.setAttribute("aria-hidden", "true");
+    const icon = span({
+      class: "faq-tabs-subtab-icon",
+      "aria-hidden": "true",
+    });
     if (subTab.iconName) {
-      const iconToken = document.createElement("span");
-      iconToken.className = `icon icon-${subTab.iconName}`;
+      const iconToken = span({ class: `icon icon-${subTab.iconName}` });
       icon.append(iconToken);
     } else {
       icon.classList.add("is-placeholder");
     }
 
-    const text = document.createElement("span");
-    text.className = "faq-tabs-subtab-text";
+    const text = span({ class: "faq-tabs-subtab-text" });
 
-    const label = document.createElement("span");
-    label.className = "faq-tabs-subtab-label";
-    label.textContent = subTab.name;
+    const label = span({ class: "faq-tabs-subtab-label" }, subTab.name);
 
-    const count = document.createElement("span");
-    count.className = "faq-tabs-subtab-count";
-    count.textContent = `${subTab.items.length} Questions`;
+    const count = span(
+      { class: "faq-tabs-subtab-count" },
+      `${subTab.items.length} Questions`,
+    );
 
-    const chevron = document.createElement("span");
-    chevron.className = "faq-tabs-subtab-chevron";
-    chevron.setAttribute("aria-hidden", "true");
-    chevron.textContent = ">";
+    const chevron = span({
+      class: "faq-tabs-subtab-chevron",
+      "aria-hidden": "true",
+    });
+    const chevronIcon = img({
+      class: "faq-tabs-subtab-arrow",
+      src:
+        index === activeSubTabIndex
+          ? VIEW_ALL_ICON_SRC
+          : SIDEBAR_ARROW_ICON_SRC,
+      alt: "",
+      width: "14",
+      height: "14",
+    });
+    chevron.append(chevronIcon);
 
     text.append(label, count);
-    button.append(icon, text, chevron);
-    button.addEventListener("click", () => onSelectSubTab(index));
+    subTabButton.append(icon, text, chevron);
+    subTabButton.addEventListener("click", () => onSelectSubTab(index));
 
-    subTabListEl.append(button);
+    subTabListEl.append(subTabButton);
   });
 
   decorateIcons(subTabListEl);
@@ -283,24 +300,65 @@ function renderSubTabList(
 function renderFaqItems(faqListEl, subTabData) {
   faqListEl.textContent = "";
 
-  subTabData.items.forEach((item, index) => {
-    const details = document.createElement("details");
-    details.className = "faq-tabs-item";
-    if (index === 0) {
-      details.open = true;
+  const canToggleMore = subTabData.items.length > MAX_VISIBLE_FAQS;
+  const visibleItems = canToggleMore
+    ? subTabData.items.slice(0, MAX_VISIBLE_FAQS)
+    : subTabData.items;
+
+  let isExpanded = false;
+
+  function drawFaqItems() {
+    faqListEl.textContent = "";
+
+    const itemsToRender = isExpanded ? subTabData.items : visibleItems;
+    itemsToRender.forEach((item, index) => {
+      const details = domEl("details", { class: "faq-tabs-item" });
+      if (index === 0) {
+        details.open = true;
+      }
+
+      const summary = domEl(
+        "summary",
+        { class: "faq-tabs-question" },
+        item.question,
+      );
+
+      const answer = div({ class: "faq-tabs-answer" });
+      answer.innerHTML = item.answer || "";
+
+      details.append(summary, answer);
+      faqListEl.append(details);
+    });
+
+    if (!canToggleMore) {
+      return;
     }
 
-    const summary = document.createElement("summary");
-    summary.className = "faq-tabs-question";
-    summary.textContent = item.question;
+    const toggleLabel = isExpanded ? "Show Less" : "Show More";
+    const toggleButton = button(
+      {
+        class: `faq-tabs-show-more-btn${isExpanded ? " is-expanded" : ""}`,
+        type: "button",
+      },
+      span({ class: "faq-tabs-show-more-text" }, toggleLabel),
+      img({
+        class: "faq-tabs-show-more-icon",
+        src: VIEW_ALL_ICON_SRC,
+        alt: "",
+        width: "14",
+        height: "14",
+      }),
+    );
 
-    const answer = document.createElement("div");
-    answer.className = "faq-tabs-answer";
-    answer.innerHTML = item.answer || "";
+    toggleButton.addEventListener("click", () => {
+      isExpanded = !isExpanded;
+      drawFaqItems();
+    });
 
-    details.append(summary, answer);
-    faqListEl.append(details);
-  });
+    faqListEl.append(toggleButton);
+  }
+
+  drawFaqItems();
 }
 
 export default function decorate(block) {
@@ -316,26 +374,69 @@ export default function decorate(block) {
   let activeTopTabIndex = 0;
   let activeSubTabIndex = 0;
 
-  const topTabList = document.createElement("div");
-  topTabList.className = "faq-tabs-top-list";
-  topTabList.setAttribute("role", "tablist");
+  const topTabList = div({ class: "faq-tabs-top-list", role: "tablist" });
 
-  const content = document.createElement("div");
-  content.className = "faq-tabs-content";
+  const topTabNavWrap = div({ class: "faq-tabs-top-nav-wrap" });
+  const prevArrow = button(
+    {
+      class: "faq-tabs-top-nav-arrow faq-tabs-top-nav-arrow-prev",
+      type: "button",
+      "aria-label": "Scroll tabs left",
+    },
+    img({
+      src: SIDEBAR_ARROW_ICON_SRC,
+      alt: "",
+      width: "20",
+      height: "20",
+    }),
+  );
+  const divider = span({ class: "faq-tabs-top-nav-divider" });
+  const nextArrow = button(
+    {
+      class: "faq-tabs-top-nav-arrow faq-tabs-top-nav-arrow-next",
+      type: "button",
+      "aria-label": "Scroll tabs right",
+    },
+    img({
+      src: SIDEBAR_ARROW_ICON_SRC,
+      alt: "",
+      width: "20",
+      height: "20",
+    }),
+  );
+  topTabNavWrap.append(prevArrow, topTabList, divider, nextArrow);
 
-  const subTabList = document.createElement("aside");
-  subTabList.className = "faq-tabs-sub-list";
+  const content = div({ class: "faq-tabs-content" });
 
-  const faqPanel = document.createElement("section");
-  faqPanel.className = "faq-tabs-faq-panel";
+  const subTabList = domEl("aside", { class: "faq-tabs-sub-list" });
 
-  const faqList = document.createElement("div");
-  faqList.className = "faq-tabs-faq-list";
+  const faqPanel = domEl("section", { class: "faq-tabs-faq-panel" });
+
+  const faqList = div({ class: "faq-tabs-faq-list" });
   faqPanel.append(faqList);
 
-  const uiContainer = document.createElement("div");
-  uiContainer.className = "faq-tabs-rendered-ui";
-  uiContainer.append(topTabList, content);
+  const uiContainer = div({ class: "faq-tabs-rendered-ui" });
+  uiContainer.append(topTabNavWrap, content);
+
+  function updateTopNavArrowState() {
+    const atStart = topTabList.scrollLeft <= 2;
+    const atEnd =
+      topTabList.scrollLeft + topTabList.clientWidth >=
+      topTabList.scrollWidth - 2;
+    prevArrow.disabled = atStart;
+    nextArrow.disabled = atEnd;
+  }
+
+  prevArrow.addEventListener("click", () => {
+    topTabList.scrollBy({ left: -180, behavior: "smooth" });
+  });
+
+  nextArrow.addEventListener("click", () => {
+    topTabList.scrollBy({ left: 180, behavior: "smooth" });
+  });
+
+  topTabList.addEventListener("scroll", updateTopNavArrowState);
+  window.addEventListener("resize", updateTopNavArrowState);
 
   function getFaqData() {
     if (isAuthoringMode) {
@@ -357,6 +458,7 @@ export default function decorate(block) {
       topTabList.textContent = "";
       subTabList.textContent = "";
       faqList.textContent = "";
+      updateTopNavArrowState();
       return;
     }
 
@@ -372,21 +474,27 @@ export default function decorate(block) {
     topTabList.textContent = "";
 
     faqData.forEach((entry, index) => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "faq-tabs-top-tab";
-      button.setAttribute("role", "tab");
-      button.setAttribute("aria-selected", index === activeTopTabIndex);
-      button.textContent = entry.topTab;
+      const isActive = index === activeTopTabIndex;
+      const topTabButton = button(
+        {
+          type: "button",
+          class: `faq-tabs-top-tab${isActive ? " active" : ""}`,
+          role: "tab",
+          "aria-selected": String(isActive),
+        },
+        entry.topTab,
+      );
 
-      button.addEventListener("click", () => {
+      topTabButton.addEventListener("click", () => {
         activeTopTabIndex = index;
         activeSubTabIndex = 0;
         render();
       });
 
-      topTabList.append(button);
+      topTabList.append(topTabButton);
     });
+
+    requestAnimationFrame(updateTopNavArrowState);
 
     const latestTopTab = faqData[activeTopTabIndex];
     const latestSubTab = latestTopTab.subTabs[activeSubTabIndex];
