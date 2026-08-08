@@ -42,14 +42,14 @@
       "fields": [
         {
           "component": "text",
-          "name": "topTab",
+          "name": "col1_type",
           "label": "Top Level Tab",
           "valueType": "string",
           "required": true
         },
         {
           "component": "text",
-          "name": "subTab",
+          "name": "col1_sub-type",
           "label": "Sub Tab",
           "valueType": "string",
           "required": true
@@ -62,14 +62,14 @@
         },
         {
           "component": "text",
-          "name": "question",
+          "name": "col1_heading",
           "label": "Question",
           "valueType": "string",
           "required": true
         },
         {
           "component": "richtext",
-          "name": "answer",
+          "name": "col2_body",
           "label": "Answer",
           "valueType": "string"
         }
