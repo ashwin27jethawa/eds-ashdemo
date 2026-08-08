@@ -31,6 +31,15 @@ function formatViewAllLabel(subType) {
   return `${singular} FAQs`;
 }
 
+function getItemScopedRows(rows) {
+  const itemRows = rows.filter((row) => {
+    const resource = (row.dataset.aueResource || '').toLowerCase();
+    return resource.includes('faq-banks-item');
+  });
+
+  return itemRows.length ? itemRows : rows;
+}
+
 export default function decorate(block) {
   const isAuthorHost = window.location.hostname.includes('author-');
   const isWcmDisabled = new URLSearchParams(window.location.search).get('wcmmode') === 'disabled';
@@ -52,12 +61,14 @@ export default function decorate(block) {
 
   function getRows() {
     if (isAuthoring) {
-      return Array.from(block.children).filter(
+      const authoredRows = Array.from(block.children).filter(
         row => row !== uiContainer && row.children && row.children.length,
       );
+
+      return getItemScopedRows(authoredRows);
     }
 
-    return initialRows;
+    return getItemScopedRows(initialRows);
   }
 
   function render() {
