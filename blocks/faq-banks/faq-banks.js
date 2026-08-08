@@ -1,5 +1,5 @@
 import { button, div, h3, img, p, span } from '../../../scripts/dom-helper.js';
-import { moveInstrumentation } from '../../../scripts/scripts.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
 
 const MAX_VISIBLE_FAQS = 5;
 const PLUS_ICON_SRC = '/icons/plus-icon.svg';
