@@ -2,6 +2,10 @@
   margin: 2rem 0;
 }
 
+.faq-tabs.is-authoring > div:not(.faq-tabs-rendered-ui) {
+  display: none;
+}
+
 .faq-tabs .faq-tabs-top-list {
   display: flex;
   gap: 1.75rem;

@@ -103,23 +103,10 @@ function renderFaqItems(faqListEl, subTabData) {
 export default function decorate(block) {
 	const isAuthorHost = window.location.hostname.includes("author-");
 	const isWcmDisabled = new URLSearchParams(window.location.search).get("wcmmode") === "disabled";
-
-	// Keep the original authored DOM in Universal Editor so authors can add/remove items.
-	if (isAuthorHost && !isWcmDisabled) {
-		return;
-	}
-
-	const rows = [...block.children].filter((row) => row.children.length >= 4);
-	const faqData = buildData(rows);
-
-	if (!faqData.length) {
-		return;
-	}
+	const isAuthoringMode = isAuthorHost && !isWcmDisabled;
 
 	let activeTopTabIndex = 0;
 	let activeSubTabIndex = 0;
-
-	block.textContent = "";
 
 	const topTabList = document.createElement("div");
 	topTabList.className = "faq-tabs-top-list";
@@ -138,7 +125,30 @@ export default function decorate(block) {
 	faqList.className = "faq-tabs-faq-list";
 	faqPanel.append(faqList);
 
+	const uiContainer = document.createElement("div");
+	uiContainer.className = "faq-tabs-rendered-ui";
+	uiContainer.append(topTabList, content);
+
 	function renderTopTabs() {
+		const rows = [...block.children].filter((row) => row !== uiContainer && row.children.length >= 4);
+		const faqData = buildData(rows);
+
+		if (!faqData.length) {
+			topTabList.textContent = "";
+			subTabList.textContent = "";
+			faqList.textContent = "";
+			return;
+		}
+
+		if (activeTopTabIndex >= faqData.length) {
+			activeTopTabIndex = 0;
+		}
+
+		const currentTopTab = faqData[activeTopTabIndex];
+		if (activeSubTabIndex >= currentTopTab.subTabs.length) {
+			activeSubTabIndex = 0;
+		}
+
 		topTabList.textContent = "";
 
 		faqData.forEach((entry, index) => {
@@ -157,27 +167,51 @@ export default function decorate(block) {
 
 			topTabList.append(button);
 		});
-	}
 
-	function render() {
-		const currentTopTab = faqData[activeTopTabIndex];
-		const currentSubTab = currentTopTab.subTabs[activeSubTabIndex];
+		const latestTopTab = faqData[activeTopTabIndex];
+		const latestSubTab = latestTopTab.subTabs[activeSubTabIndex];
 
-		renderTopTabs();
 		renderSubTabList(
 			subTabList,
-			currentTopTab,
+			latestTopTab,
 			(subTabIndex) => {
 				activeSubTabIndex = subTabIndex;
 				render();
 			},
 			activeSubTabIndex,
 		);
-		renderFaqItems(faqList, currentSubTab);
+		renderFaqItems(faqList, latestSubTab);
+	}
+
+	function render() {
+		renderTopTabs();
 	}
 
 	content.append(subTabList, faqPanel);
-	block.append(topTabList, content);
+
+	if (isAuthoringMode) {
+		block.classList.add("is-authoring");
+		if (!block.contains(uiContainer)) {
+			block.append(uiContainer);
+		}
+
+		const observer = new MutationObserver((mutations) => {
+			const hasRowChange = mutations.some((mutation) =>
+				[...mutation.addedNodes, ...mutation.removedNodes].some(
+					(node) => node !== uiContainer && node.nodeType === Node.ELEMENT_NODE,
+				),
+			);
+
+			if (hasRowChange) {
+				render();
+			}
+		});
+
+		observer.observe(block, { childList: true });
+	} else {
+		block.textContent = "";
+		block.append(uiContainer);
+	}
 
 	render();
 }
