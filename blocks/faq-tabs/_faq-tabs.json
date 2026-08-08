@@ -42,14 +42,14 @@
       "fields": [
         {
           "component": "text",
-          "name": "col1_type",
+          "name": "topTab",
           "label": "Top Level Tab",
           "valueType": "string",
           "required": true
         },
         {
           "component": "text",
-          "name": "col1_sub-type",
+          "name": "subTab",
           "label": "Sub Tab",
           "valueType": "string",
           "required": true
@@ -57,19 +57,19 @@
         {
           "component": "text",
           "valueType": "string",
-          "name": "col1_icon",
+          "name": "iconName",
           "label": "Icon Name (e.g. edit or :edit:)"
         },
         {
           "component": "text",
-          "name": "col1_heading",
+          "name": "question",
           "label": "Question",
           "valueType": "string",
           "required": true
         },
         {
           "component": "richtext",
-          "name": "col2_body",
+          "name": "answer",
           "label": "Answer",
           "valueType": "string"
         }
