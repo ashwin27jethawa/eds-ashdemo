@@ -32,367 +32,395 @@ function formatViewAllLabel(subType) {
 }
 
 export default function decorate(block) {
-  const isAuthoring = window.location.hostname.includes('author-p');
+  const isAuthorHost = window.location.hostname.includes('author-');
+  const isWcmDisabled = new URLSearchParams(window.location.search).get('wcmmode') === 'disabled';
+  const isAuthoring = isAuthorHost && !isWcmDisabled;
   const isLocalHost = ['localhost'].includes(window.location.hostname);
   const isAuthoringOrLocal = isAuthoring || isLocalHost;
-  let topNav = null;
+  const initialRows = Array.from(block.children);
+  const uiContainer = div({ class: 'faq-banks-rendered-ui' });
 
-  const rows = Array.from(block.children);
-  const faqData = [];
+  if (isAuthoring) {
+    block.classList.add('is-authoring');
+    if (!block.contains(uiContainer)) {
+      block.append(uiContainer);
+    }
+  } else {
+    block.textContent = '';
+    block.append(uiContainer);
+  }
 
-  rows.forEach(row => {
-    const cols = Array.from(row.children);
-    let type = '';
-    let subType = '';
-    let heading = '';
-    let bodyNodes = [];
-    let bodySource = null;
+  function getRows() {
+    if (isAuthoring) {
+      return Array.from(block.children).filter(
+        row => row !== uiContainer && row.children && row.children.length,
+      );
+    }
 
-    if (cols.length === 4) {
-      const [typeCol, subTypeCol, headingCol, bodyCol] = cols;
-      type = typeCol.textContent.trim();
-      subType = subTypeCol.textContent.trim();
-      heading = headingCol.textContent.trim();
-      bodyNodes = cloneNodes(bodyCol);
-      bodySource = bodyCol;
-    } else if (cols.length >= 2) {
-      const [contentCol, bodyCol] = cols;
-      const elements = Array.from(contentCol.children);
+    return initialRows;
+  }
 
-      if (elements.length >= 3) {
-        [type, subType, heading] = elements
-          .slice(0, 3)
-          .map(element => element.textContent.trim());
+  function render() {
+    let topNav = null;
+    const rows = getRows();
+    const faqData = [];
+
+    rows.forEach(row => {
+      const cols = Array.from(row.children);
+      let type = '';
+      let subType = '';
+      let heading = '';
+      let bodyNodes = [];
+      let bodySource = null;
+
+      if (cols.length === 4) {
+        const [typeCol, subTypeCol, headingCol, bodyCol] = cols;
+        type = typeCol.textContent.trim();
+        subType = subTypeCol.textContent.trim();
+        heading = headingCol.textContent.trim();
+        bodyNodes = cloneNodes(bodyCol);
+        bodySource = bodyCol;
+      } else if (cols.length >= 2) {
+        const [contentCol, bodyCol] = cols;
+        const elements = Array.from(contentCol.children);
+
+        if (elements.length >= 3) {
+          [type, subType, heading] = elements
+            .slice(0, 3)
+            .map(element => element.textContent.trim());
+        } else {
+          const rawText = contentCol.textContent
+            .split('\n')
+            .map(t => t.trim())
+            .filter(t => t.length > 0);
+          [type, subType, heading] = rawText;
+        }
+        bodyNodes = cloneNodes(bodyCol);
+        bodySource = bodyCol;
       } else {
-        const rawText = contentCol.textContent
-          .split('\n')
-          .map(t => t.trim())
-          .filter(t => t.length > 0);
-        [type, subType, heading] = rawText;
+        return;
       }
-      bodyNodes = cloneNodes(bodyCol);
-      bodySource = bodyCol;
-    } else {
+
+      const normalizedType = (type || '').trim();
+      const normalizedSubType = (subType || '').trim();
+      const normalizedHeading = (heading || '').trim();
+      const isRenderable = !!normalizedType && !!normalizedSubType && !!normalizedHeading;
+
+      faqData.push({
+        type: normalizedType,
+        subType: normalizedSubType,
+        heading: normalizedHeading,
+        bodyNodes,
+        rowSource: row,
+        bodySource,
+        isRenderable,
+      });
+    });
+
+    uiContainer.textContent = '';
+
+    if (faqData.length === 0) {
+      if (isAuthoringOrLocal) {
+        uiContainer.append(
+          p('No FAQ data found or block structure is incorrect.'),
+        );
+      }
       return;
     }
 
-    const normalizedType = (type || '').trim();
-    const normalizedSubType = (subType || '').trim();
-    const normalizedHeading = (heading || '').trim();
-    const hasAuthoredType = !!type;
-    const hasAuthoredSubType = !!subType;
-    const hasAuthoredHeading = !!heading;
-    const hasAuthoredBody = !!bodySource?.textContent.trim();
-    const isRenderable =
-      hasAuthoredType &&
-      hasAuthoredSubType &&
-      hasAuthoredHeading;
+    const faqDataForRender = faqData.filter(item => item.isRenderable);
+    const groupedData = {};
 
-    faqData.push({
-      type: normalizedType,
-      subType: normalizedSubType,
-      heading: normalizedHeading,
-      bodyNodes,
-      rowSource: row,
-      bodySource,
-      hasAuthoredType,
-      hasAuthoredSubType,
-      hasAuthoredHeading,
-      hasAuthoredBody,
-      isRenderable,
+    faqDataForRender.forEach(item => {
+      if (!groupedData[item.type]) groupedData[item.type] = {};
+      if (!groupedData[item.type][item.subType]) {
+        groupedData[item.type][item.subType] = [];
+      }
+      groupedData[item.type][item.subType].push(item);
     });
-  });
 
-  if (faqData.length === 0) {
-    block.replaceChildren(
-      p('No FAQ data found or block structure is incorrect.'),
+    topNav = document.createElement('div');
+    topNav.className = 'faq-top-nav';
+    const tabNames = Object.keys(groupedData);
+
+    const topNavWrap = div({ class: 'faq-top-nav-wrap' });
+    const prevArrow = button(
+      {
+        class: 'faq-top-nav-arrow faq-top-nav-arrow-prev',
+        type: 'button',
+        'aria-label': 'Scroll tabs left',
+      },
+      img({
+        src: '/icons/tab-arrow-left.svg',
+        alt: '',
+        width: '24',
+        height: '24',
+      }),
     );
-    return;
-  }
+    const divider = span({ class: 'faq-top-nav-divider' });
+    const nextArrow = button(
+      {
+        class: 'faq-top-nav-arrow faq-top-nav-arrow-next',
+        type: 'button',
+        'aria-label': 'Scroll tabs right',
+      },
+      img({
+        src: '/icons/tab-arrow-left.svg',
+        alt: '',
+        width: '24',
+        height: '24',
+      }),
+    );
 
-  block.innerHTML = '';
+    topNavWrap.append(prevArrow, topNav, divider, nextArrow);
 
-  const faqDataForRender = faqData.filter(item => item.isRenderable);
+    const mainContent = document.createElement('div');
+    mainContent.className = 'faq-main-content';
+    uiContainer.append(topNavWrap, mainContent);
 
-  const groupedData = {};
-  const groupMeta = {};
-  faqDataForRender.forEach(item => {
-    if (!groupedData[item.type]) groupedData[item.type] = {};
-    if (!groupedData[item.type][item.subType])
-      groupedData[item.type][item.subType] = [];
-    groupedData[item.type][item.subType].push(item);
+    function renderSidebarAndContent(tabData) {
+      mainContent.replaceChildren();
 
-    if (!groupMeta[item.type]) {
-      groupMeta[item.type] = {
-        hasAuthoredType: false,
-      };
-    }
-    groupMeta[item.type].hasAuthoredType =
-      groupMeta[item.type].hasAuthoredType || item.hasAuthoredType;
-  });
+      const sidebar = document.createElement('div');
+      sidebar.className = 'faq-sidebar';
+      const subTypes = Object.keys(tabData);
 
-  topNav = document.createElement('div');
-  topNav.className = 'faq-top-nav';
-  const tabNames = Object.keys(groupedData);
+      const accordionContainer = document.createElement('div');
+      accordionContainer.className = 'faq-accordions';
 
-  const topNavWrap = div({ class: 'faq-top-nav-wrap' });
-  const prevArrow = button(
-    {
-      class: 'faq-top-nav-arrow faq-top-nav-arrow-prev',
-      type: 'button',
-      'aria-label': 'Scroll tabs left',
-    },
-    img({
-      src: '/icons/tab-arrow-left.svg',
-      alt: '',
-      width: '24',
-      height: '24',
-    }),
-  );
-  const divider = span({ class: 'faq-top-nav-divider' });
-  const nextArrow = button(
-    {
-      class: 'faq-top-nav-arrow faq-top-nav-arrow-next',
-      type: 'button',
-      'aria-label': 'Scroll tabs right',
-    },
-    img({
-      src: '/icons/tab-arrow-left.svg',
-      alt: '',
-      width: '24',
-      height: '24',
-    }),
-  );
-
-  topNavWrap.append(prevArrow, topNav, divider, nextArrow);
-
-  const mainContent = document.createElement('div');
-  mainContent.className = 'faq-main-content';
-  block.appendChild(topNavWrap);
-  block.appendChild(mainContent);
-
-  function renderSidebarAndContent(tabData) {
-    mainContent.replaceChildren();
-
-    const sidebar = document.createElement('div');
-    sidebar.className = 'faq-sidebar';
-    const subTypes = Object.keys(tabData);
-
-    const accordionContainer = document.createElement('div');
-    accordionContainer.className = 'faq-accordions';
-
-    subTypes.forEach((subType, index) => {
-      const sidebarItem = button(
-        {
-          class: `faq-sidebar-btn ${index === 0 ? 'active' : ''}`,
-          type: 'button',
-        },
-        div(
-          { class: 'faq-sidebar-content' },
-          span({ class: 'faq-sidebar-title' }, subType),
-          span(
-            { class: 'faq-sidebar-count' },
-            `${tabData[subType].length} Questions`,
+      subTypes.forEach((subType, index) => {
+        const sidebarItem = button(
+          {
+            class: `faq-sidebar-btn ${index === 0 ? 'active' : ''}`,
+            type: 'button',
+          },
+          div(
+            { class: 'faq-sidebar-content' },
+            span({ class: 'faq-sidebar-title' }, subType),
+            span(
+              { class: 'faq-sidebar-count' },
+              `${tabData[subType].length} Questions`,
+            ),
           ),
-        ),
-        img({
-          class: 'faq-sidebar-arrow',
-          src:
-            index === 0
-              ? SIDEBAR_ARROW_ACTIVE_ICON_SRC
-              : SIDEBAR_ARROW_ICON_SRC,
-          alt: '',
-          width: '14',
-          height: '14',
-          'aria-hidden': 'true',
-        }),
-      );
-
-      const accordionGroup = document.createElement('div');
-      accordionGroup.className = `faq-accordion-group ${index === 0 ? 'active' : 'hidden'}`;
-
-      tabData[subType].forEach((faq, faqIndex) => {
-        const isFirstItem = faqIndex === 0;
-        const isOverflowItem = faqIndex >= MAX_VISIBLE_FAQS;
-
-        const body = div({
-          class: `faq-accordion-body ${isFirstItem ? '' : 'hidden'}`.trim(),
-        });
-        moveInstrumentation(faq.bodySource, body);
-        faq.bodyNodes.forEach(node => {
-          body.append(node.cloneNode(true));
-        });
-
-        const header = button(
-          { class: 'faq-accordion-header', type: 'button' },
-          h3(faq.heading),
           img({
-            class: 'faq-icon',
-            src: isFirstItem ? MINUS_ICON_SRC : PLUS_ICON_SRC,
+            class: 'faq-sidebar-arrow',
+            src:
+              index === 0
+                ? SIDEBAR_ARROW_ACTIVE_ICON_SRC
+                : SIDEBAR_ARROW_ICON_SRC,
             alt: '',
-            width: '20',
-            height: '20',
+            width: '14',
+            height: '14',
             'aria-hidden': 'true',
           }),
         );
 
-        const accItem = div(
-          {
-            class:
-              `faq-accordion-item ${isOverflowItem ? 'faq-overflow-item hidden' : ''}`.trim(),
-          },
-          header,
-          body,
-        );
-        moveInstrumentation(faq.rowSource, accItem);
+        const accordionGroup = document.createElement('div');
+        accordionGroup.className = `faq-accordion-group ${index === 0 ? 'active' : 'hidden'}`;
 
-        header.addEventListener('click', () => {
-          const icon = accItem.querySelector('.faq-icon');
-          const isOpen = !body.classList.contains('hidden');
+        tabData[subType].forEach((faq, faqIndex) => {
+          const isFirstItem = faqIndex === 0;
+          const isOverflowItem = faqIndex >= MAX_VISIBLE_FAQS;
 
-          accordionGroup
-            .querySelectorAll('.faq-accordion-body')
-            .forEach(accordionBody => accordionBody.classList.add('hidden'));
-          accordionGroup.querySelectorAll('.faq-icon').forEach(iconEl => {
-            iconEl.setAttribute('src', PLUS_ICON_SRC);
+          const body = div({
+            class: `faq-accordion-body ${isFirstItem ? '' : 'hidden'}`.trim(),
+          });
+          moveInstrumentation(faq.bodySource, body);
+          faq.bodyNodes.forEach(node => {
+            body.append(node.cloneNode(true));
           });
 
-          if (!isOpen) {
-            body.classList.remove('hidden');
-            icon.setAttribute('src', MINUS_ICON_SRC);
-          }
-        });
-        accordionGroup.appendChild(accItem);
-      });
+          const header = button(
+            { class: 'faq-accordion-header', type: 'button' },
+            h3(faq.heading),
+            img({
+              class: 'faq-icon',
+              src: isFirstItem ? MINUS_ICON_SRC : PLUS_ICON_SRC,
+              alt: '',
+              width: '20',
+              height: '20',
+              'aria-hidden': 'true',
+            }),
+          );
 
-      if (tabData[subType].length > MAX_VISIBLE_FAQS) {
-        const viewAllWrap = div({ class: 'faq-view-all-wrap' });
-        const defaultViewAllLabel = `View All ${formatViewAllLabel(subType)}`;
-        const viewAllLabel = span(
-          { class: 'faq-view-all-label' },
-          defaultViewAllLabel,
-        );
-        const viewAllIcon = img({
-          class: 'faq-view-all-icon',
-          src: VIEW_ALL_ICON_SRC,
-          alt: '',
-          width: '14',
-          height: '14',
-          'aria-hidden': 'true',
-        });
-        const viewAllBtn = button(
-          { class: 'faq-view-all-btn', type: 'button' },
-          viewAllLabel,
-          viewAllIcon,
-        );
-        let isExpanded = false;
-        viewAllBtn.setAttribute('aria-expanded', 'false');
+          const accItem = div(
+            {
+              class:
+                `faq-accordion-item ${isOverflowItem ? 'faq-overflow-item hidden' : ''}`.trim(),
+            },
+            header,
+            body,
+          );
+          moveInstrumentation(faq.rowSource, accItem);
 
-        viewAllBtn.addEventListener('click', () => {
-          isExpanded = !isExpanded;
+          header.addEventListener('click', () => {
+            const icon = accItem.querySelector('.faq-icon');
+            const isOpen = !body.classList.contains('hidden');
 
-          accordionGroup
-            .querySelectorAll('.faq-overflow-item')
-            .forEach(item => {
-              item.classList.toggle('hidden', !isExpanded);
-
-              if (!isExpanded) {
-                item
-                  .querySelectorAll('.faq-accordion-body')
-                  .forEach(accordionBody =>
-                    accordionBody.classList.add('hidden'),
-                  );
-                item.querySelectorAll('.faq-icon').forEach(iconEl => {
-                  iconEl.setAttribute('src', PLUS_ICON_SRC);
-                });
-              }
+            accordionGroup
+              .querySelectorAll('.faq-accordion-body')
+              .forEach(accordionBody => accordionBody.classList.add('hidden'));
+            accordionGroup.querySelectorAll('.faq-icon').forEach(iconEl => {
+              iconEl.setAttribute('src', PLUS_ICON_SRC);
             });
 
-          viewAllLabel.textContent = isExpanded
-            ? 'View Less'
-            : defaultViewAllLabel;
-          viewAllBtn.setAttribute('aria-expanded', String(isExpanded));
+            if (!isOpen) {
+              body.classList.remove('hidden');
+              icon.setAttribute('src', MINUS_ICON_SRC);
+            }
+          });
+          accordionGroup.appendChild(accItem);
         });
 
-        viewAllWrap.appendChild(viewAllBtn);
-        accordionGroup.appendChild(viewAllWrap);
-      }
+        if (tabData[subType].length > MAX_VISIBLE_FAQS) {
+          const viewAllWrap = div({ class: 'faq-view-all-wrap' });
+          const defaultViewAllLabel = `View All ${formatViewAllLabel(subType)}`;
+          const viewAllLabel = span(
+            { class: 'faq-view-all-label' },
+            defaultViewAllLabel,
+          );
+          const viewAllIcon = img({
+            class: 'faq-view-all-icon',
+            src: VIEW_ALL_ICON_SRC,
+            alt: '',
+            width: '14',
+            height: '14',
+            'aria-hidden': 'true',
+          });
+          const viewAllBtn = button(
+            { class: 'faq-view-all-btn', type: 'button' },
+            viewAllLabel,
+            viewAllIcon,
+          );
+          let isExpanded = false;
+          viewAllBtn.setAttribute('aria-expanded', 'false');
 
-      accordionContainer.appendChild(accordionGroup);
+          viewAllBtn.addEventListener('click', () => {
+            isExpanded = !isExpanded;
 
-      sidebarItem.addEventListener('click', () => {
-        sidebar
-          .querySelectorAll('.faq-sidebar-btn')
-          .forEach(btn => btn.classList.remove('active'));
-        sidebar.querySelectorAll('.faq-sidebar-arrow').forEach(arrow => {
-          arrow.setAttribute('src', SIDEBAR_ARROW_ICON_SRC);
-        });
-        sidebarItem.classList.add('active');
-        const activeArrow = sidebarItem.querySelector('.faq-sidebar-arrow');
-        if (activeArrow) {
-          activeArrow.setAttribute('src', SIDEBAR_ARROW_ACTIVE_ICON_SRC);
+            accordionGroup
+              .querySelectorAll('.faq-overflow-item')
+              .forEach(item => {
+                item.classList.toggle('hidden', !isExpanded);
+
+                if (!isExpanded) {
+                  item
+                    .querySelectorAll('.faq-accordion-body')
+                    .forEach(accordionBody =>
+                      accordionBody.classList.add('hidden'),
+                    );
+                  item.querySelectorAll('.faq-icon').forEach(iconEl => {
+                    iconEl.setAttribute('src', PLUS_ICON_SRC);
+                  });
+                }
+              });
+
+            viewAllLabel.textContent = isExpanded
+              ? 'View Less'
+              : defaultViewAllLabel;
+            viewAllBtn.setAttribute('aria-expanded', String(isExpanded));
+          });
+
+          viewAllWrap.appendChild(viewAllBtn);
+          accordionGroup.appendChild(viewAllWrap);
         }
 
-        accordionContainer
-          .querySelectorAll('.faq-accordion-group')
-          .forEach(group => {
-            group.classList.add('hidden');
-            group.classList.remove('active');
+        accordionContainer.appendChild(accordionGroup);
+
+        sidebarItem.addEventListener('click', () => {
+          sidebar
+            .querySelectorAll('.faq-sidebar-btn')
+            .forEach(btn => btn.classList.remove('active'));
+          sidebar.querySelectorAll('.faq-sidebar-arrow').forEach(arrow => {
+            arrow.setAttribute('src', SIDEBAR_ARROW_ICON_SRC);
           });
-        accordionGroup.classList.remove('hidden');
-        accordionGroup.classList.add('active');
+          sidebarItem.classList.add('active');
+          const activeArrow = sidebarItem.querySelector('.faq-sidebar-arrow');
+          if (activeArrow) {
+            activeArrow.setAttribute('src', SIDEBAR_ARROW_ACTIVE_ICON_SRC);
+          }
+
+          accordionContainer
+            .querySelectorAll('.faq-accordion-group')
+            .forEach(group => {
+              group.classList.add('hidden');
+              group.classList.remove('active');
+            });
+          accordionGroup.classList.remove('hidden');
+          accordionGroup.classList.add('active');
+        });
+
+        sidebar.appendChild(sidebarItem);
       });
 
-      sidebar.appendChild(sidebarItem);
-    });
+      mainContent.appendChild(sidebar);
+      mainContent.appendChild(accordionContainer);
+    }
 
-    mainContent.appendChild(sidebar);
-    mainContent.appendChild(accordionContainer);
-  }
+    tabNames.forEach((tabName, index) => {
+      const tabBtn = document.createElement('button');
+      tabBtn.className = `faq-tab-btn ${index === 0 ? 'active' : ''}`;
+      tabBtn.textContent = tabName;
 
-  tabNames.forEach((tabName, index) => {
-    const tabBtn = document.createElement('button');
-    tabBtn.className = `faq-tab-btn ${index === 0 ? 'active' : ''}`;
-    tabBtn.textContent = tabName;
-
-    tabBtn.addEventListener('click', () => {
-      block
-        .querySelectorAll('.faq-tab-btn')
-        .forEach(btn => btn.classList.remove('active'));
-      tabBtn.classList.add('active');
-      tabBtn.scrollIntoView({
-        behavior: 'smooth',
-        inline: 'center',
-        block: 'nearest',
+      tabBtn.addEventListener('click', () => {
+        uiContainer
+          .querySelectorAll('.faq-tab-btn')
+          .forEach(btn => btn.classList.remove('active'));
+        tabBtn.classList.add('active');
+        tabBtn.scrollIntoView({
+          behavior: 'smooth',
+          inline: 'center',
+          block: 'nearest',
+        });
+        renderSidebarAndContent(groupedData[tabName]);
       });
-      renderSidebarAndContent(groupedData[tabName]);
+
+      topNav.appendChild(tabBtn);
+    });
+    if (tabNames.length > 0) {
+      renderSidebarAndContent(groupedData[tabNames[0]]);
+    } else if (isAuthoringOrLocal) {
+      uiContainer.replaceChildren(p('No tabs available for this FAQ configuration.'));
+    }
+
+    const updateArrowState = () => {
+      const atStart = topNav.scrollLeft <= 2;
+      const atEnd =
+        topNav.scrollLeft + topNav.clientWidth >= topNav.scrollWidth - 2;
+      prevArrow.disabled = atStart;
+      nextArrow.disabled = atEnd;
+    };
+
+    prevArrow.addEventListener('click', () => {
+      topNav.scrollBy({ left: -180, behavior: 'smooth' });
     });
 
-    topNav.appendChild(tabBtn);
-  });
-  if (tabNames.length > 0) {
-    renderSidebarAndContent(groupedData[tabNames[0]]);
-  } else if (isAuthoringOrLocal) {
-    block.replaceChildren(p('No tabs available for this FAQ configuration.'));
+    nextArrow.addEventListener('click', () => {
+      topNav.scrollBy({ left: 180, behavior: 'smooth' });
+    });
+
+    topNav.addEventListener('scroll', updateArrowState);
+    window.addEventListener('resize', updateArrowState);
+    requestAnimationFrame(updateArrowState);
   }
 
-  const updateArrowState = () => {
-    const atStart = topNav.scrollLeft <= 2;
-    const atEnd =
-      topNav.scrollLeft + topNav.clientWidth >= topNav.scrollWidth - 2;
-    prevArrow.disabled = atStart;
-    nextArrow.disabled = atEnd;
-  };
+  render();
 
-  prevArrow.addEventListener('click', () => {
-    topNav.scrollBy({ left: -180, behavior: 'smooth' });
-  });
+  if (isAuthoring) {
+    const observer = new MutationObserver((mutations) => {
+      const hasAuthoredChange = mutations.some(
+        (mutation) => !uiContainer.contains(mutation.target),
+      );
 
-  nextArrow.addEventListener('click', () => {
-    topNav.scrollBy({ left: 180, behavior: 'smooth' });
-  });
+      if (hasAuthoredChange) {
+        render();
+      }
+    });
 
-  topNav.addEventListener('scroll', updateArrowState);
-  window.addEventListener('resize', updateArrowState);
-  requestAnimationFrame(updateArrowState);
+    observer.observe(block, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    });
+  }
 }

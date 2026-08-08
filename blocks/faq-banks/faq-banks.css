@@ -39,6 +39,10 @@
     --tabs-mobile-separator: var(--clr-neutral-100);
 }
 
+.faq-banks.is-authoring > div:not(.faq-banks-rendered-ui) {
+    display: none;
+}
+
 .faq-banks .faq-top-nav-wrap {
     grid-template-columns: 36px 1fr 44px;
     align-items: start;
