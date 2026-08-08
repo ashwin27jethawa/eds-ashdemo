@@ -28,7 +28,7 @@
       "profile-card",
       "form",
       "searchable-dropdown",
-      "support-hub"
+      "faq-tabs"
     ]
   },
   {
@@ -62,18 +62,6 @@
       "image",
       "button",
       "title"
-    ]
-  },
-  {
-    "id": "page",
-    "components": [
-      "support-hub"
-    ]
-  },
-  {
-    "id": "support-hub",
-    "components": [
-      "support-hub-item"
     ]
   },
   {

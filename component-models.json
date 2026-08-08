@@ -206,6 +206,43 @@
     ]
   },
   {
+    "id": "faq-tabs",
+    "fields": [
+      {
+        "component": "multifield",
+        "name": "faqItems",
+        "label": "FAQ Items",
+        "valueType": "object",
+        "fields": [
+          {
+            "component": "text",
+            "name": "topTab",
+            "label": "Top Level Tab",
+            "required": true
+          },
+          {
+            "component": "text",
+            "name": "subTab",
+            "label": "Sub Tab",
+            "required": true
+          },
+          {
+            "component": "text",
+            "name": "question",
+            "label": "Question",
+            "required": true
+          },
+          {
+            "component": "richtext",
+            "name": "answer",
+            "label": "Answer",
+            "required": true
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "fragment",
     "fields": [
       {
@@ -318,39 +355,6 @@
         "name": "author",
         "label": "Author",
         "value": ""
-      }
-    ]
-  },
-  {
-    "id": "support-hub",
-    "fields": []
-  },
-  {
-    "id": "support-hub-item",
-    "fields": [
-      {
-        "component": "text",
-        "name": "col1_type",
-        "label": "Tab Name (e.g., My Account)",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "col1_sub-type",
-        "label": "Sidebar Menu (e.g., KYC, Bank Accounts)",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "col1_heading",
-        "label": "Question / Accordion Heading",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "col2_body",
-        "label": "Answer / Description",
-        "valueType": "string"
       }
     ]
   },
