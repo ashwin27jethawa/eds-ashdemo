@@ -76,16 +76,22 @@ export default function decorate(block) {
       return;
     }
 
-    const normalizedType = textOrFallback(type, 'General');
+    const normalizedType = (type || '').trim();
+    const normalizedSubType = (subType || '').trim();
+    const normalizedHeading = (heading || '').trim();
     const hasAuthoredType = !!type;
     const hasAuthoredSubType = !!subType;
     const hasAuthoredHeading = !!heading;
     const hasAuthoredBody = !!bodySource?.textContent.trim();
+    const isRenderable =
+      hasAuthoredType &&
+      hasAuthoredSubType &&
+      hasAuthoredHeading;
 
     faqData.push({
       type: normalizedType,
-      subType: textOrFallback(subType, 'General'),
-      heading: textOrFallback(heading, 'New FAQ'),
+      subType: normalizedSubType,
+      heading: normalizedHeading,
       bodyNodes,
       rowSource: row,
       bodySource,
@@ -93,6 +99,7 @@ export default function decorate(block) {
       hasAuthoredSubType,
       hasAuthoredHeading,
       hasAuthoredBody,
+      isRenderable,
     });
   });
 
@@ -105,20 +112,7 @@ export default function decorate(block) {
 
   block.innerHTML = '';
 
-  const faqDataForRender = isAuthoringOrLocal
-    ? faqData.filter(item => {
-        const isFullyEmpty =
-          !item.hasAuthoredType &&
-          !item.hasAuthoredSubType &&
-          !item.hasAuthoredHeading &&
-          !item.hasAuthoredBody;
-        const hasFaqContent = item.hasAuthoredHeading || item.hasAuthoredBody;
-
-        // Avoid creating tabs/items from rows where only tab/subtype is filled.
-        // Keep fully empty placeholder rows so authoring still has one template row.
-        return hasFaqContent || isFullyEmpty;
-      })
-    : faqData;
+  const faqDataForRender = faqData.filter(item => item.isRenderable);
 
   const groupedData = {};
   const groupMeta = {};
@@ -137,42 +131,9 @@ export default function decorate(block) {
       groupMeta[item.type].hasAuthoredType || item.hasAuthoredType;
   });
 
-  if (isAuthoringOrLocal && groupedData.General) {
-    Object.keys(groupedData.General).forEach(subType => {
-      let emptyPlaceholderSeen = false;
-
-      groupedData.General[subType] = groupedData.General[subType].filter(
-        item => {
-          const isEmptyPlaceholder =
-            !item.hasAuthoredType &&
-            !item.hasAuthoredSubType &&
-            !item.hasAuthoredHeading &&
-            !item.hasAuthoredBody;
-
-          if (!isEmptyPlaceholder) return true;
-          if (emptyPlaceholderSeen) return false;
-
-          emptyPlaceholderSeen = true;
-          return true;
-        },
-      );
-    });
-  }
-
   topNav = document.createElement('div');
   topNav.className = 'faq-top-nav';
-  let tabNames = Object.keys(groupedData).filter(tabName => {
-    if (isAuthoringOrLocal) return true;
-    if (tabName !== 'General') return true;
-    return groupMeta[tabName]?.hasAuthoredType;
-  });
-
-  if (isAuthoringOrLocal && tabNames.includes('General')) {
-    tabNames = [
-      'General',
-      ...tabNames.filter(tabName => tabName !== 'General'),
-    ];
-  }
+  const tabNames = Object.keys(groupedData);
 
   const topNavWrap = div({ class: 'faq-top-nav-wrap' });
   const prevArrow = button(
