@@ -9,14 +9,28 @@ function getCellText(row, index) {
 	return cell ? cell.textContent.trim() : "";
 }
 
+function normalizeIconName(rawName) {
+	if (!rawName) {
+		return "";
+	}
+
+	return rawName
+		.trim()
+		.replace(/^:+|:+$/g, "")
+		.replace(/\.svg$/i, "")
+		.trim();
+}
+
 function buildData(rows) {
 	const topTabMap = new Map();
 
 	rows.forEach((row) => {
 		const topTab = getCellText(row, 0);
 		const subTab = getCellText(row, 1);
-		const question = getCellText(row, 2);
-		const answer = getCellContent(row, 3);
+		const hasIconNameColumn = row.children.length >= 5;
+		const iconName = hasIconNameColumn ? normalizeIconName(getCellText(row, 2)) : "";
+		const question = getCellText(row, hasIconNameColumn ? 3 : 2);
+		const answer = getCellContent(row, hasIconNameColumn ? 4 : 3);
 
 		if (!topTab || !subTab || !question) {
 			return;
@@ -28,10 +42,18 @@ function buildData(rows) {
 
 		const subTabMap = topTabMap.get(topTab);
 		if (!subTabMap.has(subTab)) {
-			subTabMap.set(subTab, []);
+			subTabMap.set(subTab, {
+				iconName,
+				items: [],
+			});
 		}
 
-		subTabMap.get(subTab).push({
+		const subTabData = subTabMap.get(subTab);
+		if (iconName && !subTabData.iconName) {
+			subTabData.iconName = iconName;
+		}
+
+		subTabData.items.push({
 			question,
 			answer,
 		});
@@ -39,9 +61,10 @@ function buildData(rows) {
 
 	return [...topTabMap.entries()].map(([topTab, subTabMap]) => ({
 		topTab,
-		subTabs: [...subTabMap.entries()].map(([name, items]) => ({
+		subTabs: [...subTabMap.entries()].map(([name, subTabData]) => ({
 			name,
-			items,
+			iconName: subTabData.iconName,
+			items: subTabData.items,
 		})),
 	}));
 }
@@ -57,6 +80,26 @@ function renderSubTabList(subTabListEl, topTabData, onSelectSubTab, activeSubTab
 		}
 		button.type = "button";
 
+		const icon = document.createElement("span");
+		icon.className = "faq-tabs-subtab-icon";
+		icon.setAttribute("aria-hidden", "true");
+		if (subTab.iconName) {
+			const img = document.createElement("img");
+			img.src = `/icons/${encodeURIComponent(subTab.iconName)}.svg`;
+			img.alt = "";
+			img.loading = "lazy";
+			img.addEventListener("error", () => {
+				icon.classList.add("is-placeholder");
+				img.remove();
+			});
+			icon.append(img);
+		} else {
+			icon.classList.add("is-placeholder");
+		}
+
+		const text = document.createElement("span");
+		text.className = "faq-tabs-subtab-text";
+
 		const label = document.createElement("span");
 		label.className = "faq-tabs-subtab-label";
 		label.textContent = subTab.name;
@@ -70,7 +113,8 @@ function renderSubTabList(subTabListEl, topTabData, onSelectSubTab, activeSubTab
 		chevron.setAttribute("aria-hidden", "true");
 		chevron.textContent = ">";
 
-		button.append(label, count, chevron);
+		text.append(label, count);
+		button.append(icon, text, chevron);
 		button.addEventListener("click", () => onSelectSubTab(index));
 
 		subTabListEl.append(button);
@@ -104,6 +148,8 @@ export default function decorate(block) {
 	const isAuthorHost = window.location.hostname.includes("author-");
 	const isWcmDisabled = new URLSearchParams(window.location.search).get("wcmmode") === "disabled";
 	const isAuthoringMode = isAuthorHost && !isWcmDisabled;
+	const initialRows = [...block.children].filter((row) => row.children.length >= 4);
+	const staticFaqData = buildData(initialRows);
 
 	let activeTopTabIndex = 0;
 	let activeSubTabIndex = 0;
@@ -129,9 +175,17 @@ export default function decorate(block) {
 	uiContainer.className = "faq-tabs-rendered-ui";
 	uiContainer.append(topTabList, content);
 
+	function getFaqData() {
+		if (isAuthoringMode) {
+			const liveRows = [...block.children].filter((row) => row !== uiContainer && row.children.length >= 4);
+			return buildData(liveRows);
+		}
+
+		return staticFaqData;
+	}
+
 	function renderTopTabs() {
-		const rows = [...block.children].filter((row) => row !== uiContainer && row.children.length >= 4);
-		const faqData = buildData(rows);
+		const faqData = getFaqData();
 
 		if (!faqData.length) {
 			topTabList.textContent = "";

@@ -56,6 +56,12 @@
         },
         {
           "component": "text",
+          "valueType": "string",
+          "name": "iconName",
+          "label": "Icon Name (e.g. edit or :edit:)"
+        },
+        {
+          "component": "text",
           "name": "question",
           "label": "Question",
           "valueType": "string",

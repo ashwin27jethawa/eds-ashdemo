@@ -50,7 +50,7 @@
 
 .faq-tabs .faq-tabs-subtab {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 60px 1fr auto;
   grid-template-rows: auto auto;
   align-items: center;
   width: 100%;
@@ -72,15 +72,49 @@
   background: #fff;
 }
 
-.faq-tabs .faq-tabs-subtab-label {
+.faq-tabs .faq-tabs-subtab-icon {
   grid-column: 1;
+  grid-row: 1 / span 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  color: #4b5563;
+  background: #fff;
+}
+
+.faq-tabs .faq-tabs-subtab-icon img,
+.faq-tabs .faq-tabs-subtab-icon svg,
+.faq-tabs .faq-tabs-subtab-icon picture {
+  max-width: 24px;
+  max-height: 24px;
+}
+
+.faq-tabs .faq-tabs-subtab-icon.is-placeholder::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border: 2px solid #9ca3af;
+  border-radius: 50%;
+}
+
+.faq-tabs .faq-tabs-subtab-text {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+.faq-tabs .faq-tabs-subtab-label {
+  grid-column: 2;
   grid-row: 1;
   font-size: 0.95rem;
   font-weight: 600;
 }
 
 .faq-tabs .faq-tabs-subtab-count {
-  grid-column: 1;
+  grid-column: 2;
   grid-row: 2;
   color: #6b7280;
   font-size: 0.8rem;
