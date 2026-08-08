@@ -1,0 +1,157 @@
+.faq-tabs {
+  margin: 2rem 0;
+}
+
+.faq-tabs .faq-tabs-top-list {
+  display: flex;
+  gap: 1.75rem;
+  border-bottom: 1px solid #ececf1;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.faq-tabs .faq-tabs-top-tab {
+  margin: 0;
+  padding: 0.9rem 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: #6b7280;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.faq-tabs .faq-tabs-top-tab[aria-selected="true"] {
+  color: #111827;
+  border-bottom-color: #ef4444;
+}
+
+.faq-tabs .faq-tabs-top-tab:hover {
+  background: transparent;
+  color: #111827;
+}
+
+.faq-tabs .faq-tabs-content {
+  display: grid;
+  grid-template-columns: minmax(210px, 280px) 1fr;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.faq-tabs .faq-tabs-sub-list {
+  border-right: 1px solid #ececf1;
+  padding-right: 1rem;
+}
+
+.faq-tabs .faq-tabs-subtab {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 0.85rem 0.6rem;
+  border: 0;
+  border-bottom: 1px solid #f1f2f4;
+  border-radius: 0;
+  background: #fff;
+  color: #111827;
+  text-align: left;
+}
+
+.faq-tabs .faq-tabs-subtab:hover {
+  background: #f9fafb;
+}
+
+.faq-tabs .faq-tabs-subtab.is-active {
+  background: #fff;
+}
+
+.faq-tabs .faq-tabs-subtab-label {
+  grid-column: 1;
+  grid-row: 1;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.faq-tabs .faq-tabs-subtab-count {
+  grid-column: 1;
+  grid-row: 2;
+  color: #6b7280;
+  font-size: 0.8rem;
+}
+
+.faq-tabs .faq-tabs-subtab-chevron {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  color: #9ca3af;
+  font-size: 0.95rem;
+}
+
+.faq-tabs .faq-tabs-faq-panel {
+  min-width: 0;
+}
+
+.faq-tabs .faq-tabs-item {
+  border-bottom: 1px solid #ececf1;
+}
+
+.faq-tabs .faq-tabs-question {
+  position: relative;
+  list-style: none;
+  padding: 1.1rem 1.8rem 1.1rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1f2937;
+  cursor: pointer;
+}
+
+.faq-tabs .faq-tabs-question::-webkit-details-marker {
+  display: none;
+}
+
+.faq-tabs .faq-tabs-question::after {
+  content: "+";
+  position: absolute;
+  top: 50%;
+  right: 0.2rem;
+  transform: translateY(-50%);
+  color: #6b7280;
+  font-size: 1.35rem;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.faq-tabs .faq-tabs-item[open] .faq-tabs-question::after {
+  content: "-";
+}
+
+.faq-tabs .faq-tabs-answer {
+  padding: 0 0.1rem 1rem;
+  color: #4b5563;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.faq-tabs .faq-tabs-answer > *:first-child {
+  margin-top: 0;
+}
+
+.faq-tabs .faq-tabs-answer > *:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 899px) {
+  .faq-tabs .faq-tabs-content {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .faq-tabs .faq-tabs-sub-list {
+    border-right: 0;
+    border-bottom: 1px solid #ececf1;
+    padding-right: 0;
+    padding-bottom: 0.35rem;
+  }
+}
