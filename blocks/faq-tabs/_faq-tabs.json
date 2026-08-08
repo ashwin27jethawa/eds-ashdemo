@@ -9,7 +9,23 @@
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
               "name": "faq-tabs",
-              "model": "faq-tabs"
+              "model": "faq-tabs",
+              "filter": "faq-tabs"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "FAQ Tabs Item",
+      "id": "faq-tabs-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "faq-tabs-item",
+              "model": "faq-tabs-item"
             }
           }
         }
@@ -19,41 +35,47 @@
   "models": [
     {
       "id": "faq-tabs",
+      "fields": []
+    },
+    {
+      "id": "faq-tabs-item",
       "fields": [
         {
-          "component": "multifield",
-          "name": "faqItems",
-          "label": "FAQ Items",
-          "valueType": "object",
-          "fields": [
-            {
-              "component": "text",
-              "name": "topTab",
-              "label": "Top Level Tab",
-              "required": true
-            },
-            {
-              "component": "text",
-              "name": "subTab",
-              "label": "Sub Tab",
-              "required": true
-            },
-            {
-              "component": "text",
-              "name": "question",
-              "label": "Question",
-              "required": true
-            },
-            {
-              "component": "richtext",
-              "name": "answer",
-              "label": "Answer",
-              "required": true
-            }
-          ]
+          "component": "text",
+          "name": "topTab",
+          "label": "Top Level Tab",
+          "valueType": "string",
+          "required": true
+        },
+        {
+          "component": "text",
+          "name": "subTab",
+          "label": "Sub Tab",
+          "valueType": "string",
+          "required": true
+        },
+        {
+          "component": "text",
+          "name": "question",
+          "label": "Question",
+          "valueType": "string",
+          "required": true
+        },
+        {
+          "component": "richtext",
+          "name": "answer",
+          "label": "Answer",
+          "valueType": "string"
         }
       ]
     }
   ],
-  "filters": []
+  "filters": [
+    {
+      "id": "faq-tabs",
+      "components": [
+        "faq-tabs-item"
+      ]
+    }
+  ]
 }

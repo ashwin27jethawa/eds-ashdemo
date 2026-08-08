@@ -207,38 +207,37 @@
   },
   {
     "id": "faq-tabs",
+    "fields": []
+  },
+  {
+    "id": "faq-tabs-item",
     "fields": [
       {
-        "component": "multifield",
-        "name": "faqItems",
-        "label": "FAQ Items",
-        "valueType": "object",
-        "fields": [
-          {
-            "component": "text",
-            "name": "topTab",
-            "label": "Top Level Tab",
-            "required": true
-          },
-          {
-            "component": "text",
-            "name": "subTab",
-            "label": "Sub Tab",
-            "required": true
-          },
-          {
-            "component": "text",
-            "name": "question",
-            "label": "Question",
-            "required": true
-          },
-          {
-            "component": "richtext",
-            "name": "answer",
-            "label": "Answer",
-            "required": true
-          }
-        ]
+        "component": "text",
+        "name": "topTab",
+        "label": "Top Level Tab",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "subTab",
+        "label": "Sub Tab",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "question",
+        "label": "Question",
+        "valueType": "string",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "answer",
+        "label": "Answer",
+        "valueType": "string"
       }
     ]
   },

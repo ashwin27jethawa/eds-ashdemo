@@ -65,6 +65,12 @@
     ]
   },
   {
+    "id": "faq-tabs",
+    "components": [
+      "faq-tabs-item"
+    ]
+  },
+  {
     "id": "tables",
     "components": [
       "table"
