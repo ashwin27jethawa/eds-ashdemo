@@ -195,10 +195,7 @@ function autolinkModals(element) {
 }
 
 async function decorateAutoBlock(element) {
-  
-  
   const anchors = element.querySelectorAll("a");
-  console.log("anchors", anchors);
   const promises = Array.from(anchors).map(async (origin) => {
     if (origin && origin.href && origin.href.includes("/fragment/")) {
       const parent = origin.parentElement;
@@ -222,8 +219,7 @@ export default async function decorateFragment(block) {
   const link = block.querySelector("a");
   const path = link ? link.getAttribute("href") : block.textContent.trim();
   const fragment = await loadFragment(path);
-  console.log("fragment", fragment);
-  
+
   if (fragment) {
     const fragmentSection = fragment.querySelector(":scope .section");
     if (fragmentSection) {

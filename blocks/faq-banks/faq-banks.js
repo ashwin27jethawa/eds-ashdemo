@@ -1,4 +1,4 @@
-import { button, div, h3, img, p, span } from '../../../scripts/dom-helper.js';
+import { button, div, h3, img, p, span } from '../../scripts/dom-helpers.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 const MAX_VISIBLE_FAQS = 5;
