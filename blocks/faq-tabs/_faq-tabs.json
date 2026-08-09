@@ -1,31 +1,31 @@
 {
   "definitions": [
     {
-      "title": "FAQ Tabs",
-      "id": "faq-tabs",
+      "title": "FAQ Bank",
+      "id": "faq-bank",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "name": "faq-tabs",
-              "model": "faq-tabs",
-              "filter": "faq-tabs"
+              "name": "faq-bank",
+              "model": "faqs",
+              "filter": "faq-bank"
             }
           }
         }
       }
     },
     {
-      "title": "FAQ Tabs Item",
-      "id": "faq-tabs-item",
+      "title": "FAQs",
+      "id": "faqs",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "name": "faq-tabs-item",
-              "model": "faq-tabs-item"
+              "name": "faqs",
+              "model": "faqs"
             }
           }
         }
@@ -38,7 +38,7 @@
       "fields": []
     },
     {
-      "id": "faq-tabs-item",
+      "id": "faqs",
       "fields": [
         {
           "component": "text",
@@ -49,16 +49,16 @@
         },
         {
           "component": "text",
-          "name": "col1_sub-type",
+          "name": "col1_sub_type",
           "label": "Sub Tab",
           "valueType": "string",
           "required": true
         },
         {
           "component": "text",
-          "valueType": "string",
           "name": "col1_icon",
-          "label": "Icon Name (e.g. edit or :edit:)"
+          "label": "Icon Name (e.g. edit or :edit:)",
+          "valueType": "string"
         },
         {
           "component": "text",
@@ -78,9 +78,9 @@
   ],
   "filters": [
     {
-      "id": "faq-tabs",
+      "id": "faq-bank",
       "components": [
-        "faq-tabs-item"
+        "faqs"
       ]
     }
   ]

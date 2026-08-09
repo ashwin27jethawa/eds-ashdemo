@@ -376,7 +376,7 @@ export default function decorate(block) {
 
   const topTabList = div({ class: "faq-tabs-top-list", role: "tablist" });
 
-  const topTabNavWrap = div({ class: "faq-tabs-top-nav-wrap" });
+  const topTabNavWrap = div({ class: "faq-top-nav-wrap" });
   const prevArrow = button(
     {
       class: "faq-tabs-top-nav-arrow faq-tabs-top-nav-arrow-prev",
@@ -406,17 +406,16 @@ export default function decorate(block) {
   );
   topTabNavWrap.append(prevArrow, topTabList, divider, nextArrow);
 
-  const content = div({ class: "faq-tabs-content" });
+  const content = div({ class: "faq-main-content" });
 
-  const subTabList = domEl("aside", { class: "faq-tabs-sub-list" });
+  const subTabList = div({ class: "faq-sidebar" });
 
-  const faqPanel = domEl("section", { class: "faq-tabs-faq-panel" });
+  const faqPanel = div({ class: "faq-accordions" });
 
   const faqList = div({ class: "faq-tabs-faq-list" });
   faqPanel.append(faqList);
 
-  const uiContainer = div({ class: "faq-tabs-rendered-ui" });
-  uiContainer.append(topTabNavWrap, content);
+  block.append(topTabNavWrap, content);
 
   function updateTopNavArrowState() {
     const atStart = topTabList.scrollLeft <= 2;

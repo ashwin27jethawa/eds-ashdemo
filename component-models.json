@@ -206,44 +206,11 @@
     ]
   },
   {
-    "id": "faq-banks",
-    "fields": []
-  },
-  {
-    "id": "faq-banks-item",
-    "fields": [
-      {
-        "component": "text",
-        "name": "col1_type",
-        "label": "Tab Name (e.g., My Account)",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "col1_sub-type",
-        "label": "Sidebar Menu (e.g., KYC, Bank Accounts)",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "col1_heading",
-        "label": "Question / Accordion Heading",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "col2_body",
-        "label": "Answer / Description",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
     "id": "faq-tabs",
     "fields": []
   },
   {
-    "id": "faq-tabs-item",
+    "id": "faqs",
     "fields": [
       {
         "component": "text",
@@ -254,16 +221,16 @@
       },
       {
         "component": "text",
-        "name": "col1_sub-type",
+        "name": "col1_sub_type",
         "label": "Sub Tab",
         "valueType": "string",
         "required": true
       },
       {
         "component": "text",
-        "valueType": "string",
         "name": "col1_icon",
-        "label": "Icon Name (e.g. edit or :edit:)"
+        "label": "Icon Name (e.g. edit or :edit:)",
+        "valueType": "string"
       },
       {
         "component": "text",
