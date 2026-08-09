@@ -1,4 +1,4 @@
-.faq-banks-wrapper {
+.faq-bank-wrapper {
     --ff-regular: var(--font-family-regular);
     --fs-tabs: var(--fs-body-3); /* 16px */
     --lh-tabs: var(--lh-body-3);
@@ -15,20 +15,20 @@ main .faq-banks.block.is-authoring > div:not(.faq-banks.block) {
 }
 
 
-.faq-banks-wrapper button {
+.faq-bank-wrapper button {
     background: none;
     border-radius: 0;
     margin: 0;
     padding: 0;
 }
 
-.faq-banks-wrapper .faq-top-nav-wrap {
+.faq-bank-wrapper .faq-top-nav-wrap {
     display: flex;
     align-items: start;
     gap: 0.75rem;
     border-bottom: 1px solid #e3e3e3;
 }
-.faq-banks-wrapper .faq-top-nav-wrap .faq-tabs-top-nav-arrow {
+.faq-bank-wrapper .faq-top-nav-wrap .faq-tabs-top-nav-arrow {
     display: inline-flex;
     align-items: start;
     justify-content: center;
@@ -40,14 +40,14 @@ main .faq-banks.block.is-authoring > div:not(.faq-banks.block) {
     color: var(--tabs-inactive-color);
 }
 
-.faq-banks-wrapper .faq-top-nav-wrap .faq-tabs-top-nav-arrow:disabled {
+.faq-bank-wrapper .faq-top-nav-wrap .faq-tabs-top-nav-arrow:disabled {
     opacity: 0.35;
     cursor: default;
 }
-.faq-banks-wrapper .faq-top-nav-wrap .faq-tabs-top-nav-arrow-prev {
+.faq-bank-wrapper .faq-top-nav-wrap .faq-tabs-top-nav-arrow-prev {
     rotate: 180deg;
 }
-.faq-banks-wrapper .faq-top-nav-wrap .faq-tabs-top-nav-divider {
+.faq-bank-wrapper .faq-top-nav-wrap .faq-tabs-top-nav-divider {
     display: block;
     width: 1px;
     height: 1.25rem;
@@ -55,7 +55,7 @@ main .faq-banks.block.is-authoring > div:not(.faq-banks.block) {
     flex-shrink: 0;
 }
 
-.faq-banks-wrapper .faq-top-nav-wrap .faq-tabs-top-list {
+.faq-bank-wrapper .faq-top-nav-wrap .faq-tabs-top-list {
     display: flex;
     gap: 1rem;
     max-width: 100%;
@@ -63,7 +63,7 @@ main .faq-banks.block.is-authoring > div:not(.faq-banks.block) {
     overflow-x: auto;
     scrollbar-width: none;
 }
-.faq-banks-wrapper .faq-top-nav-wrap .faq-tabs-top-tab {
+.faq-bank-wrapper .faq-top-nav-wrap .faq-tabs-top-tab {
     background: transparent;
     border: none;
     border-bottom: 3px solid transparent;
@@ -83,7 +83,7 @@ main .faq-banks.block.is-authoring > div:not(.faq-banks.block) {
     overflow: unset;
     white-space: unset;
 }
-.faq-banks-wrapper .faq-top-nav-wrap .faq-tabs-top-tab.active {
+.faq-bank-wrapper .faq-top-nav-wrap .faq-tabs-top-tab.active {
     border-bottom-color: var(--tabs-active-border);
     color: var(--tabs-active-color);
     font-family: var(--ff-regular);
@@ -92,12 +92,12 @@ main .faq-banks.block.is-authoring > div:not(.faq-banks.block) {
     font-weight: var(--fw-tabs-medium);
 }
 
-.faq-banks-wrapper .faq-main-content {
+.faq-bank-wrapper .faq-main-content {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
-.faq-banks-wrapper .faq-sidebar {
+.faq-bank-wrapper .faq-sidebar {
     flex: 1;
     width: 100%;
     display: flex;
@@ -105,7 +105,7 @@ main .faq-banks.block.is-authoring > div:not(.faq-banks.block) {
     gap: var(--tabs-gap);
     padding: 1.5rem 0;
 }
-.faq-banks-wrapper .faq-sidebar .faq-tabs-subtab {
+.faq-bank-wrapper .faq-sidebar .faq-tabs-subtab {
     background: var(--clr-bg-default);
     width: 100%;
     cursor: pointer;
@@ -124,7 +124,7 @@ main .faq-banks.block.is-authoring > div:not(.faq-banks.block) {
     align-items: center;
     gap: 0.75rem;
 }
-.faq-banks-wrapper .faq-sidebar .faq-tabs-subtab .faq-tabs-subtab-icon {
+.faq-bank-wrapper .faq-sidebar .faq-tabs-subtab .faq-tabs-subtab-icon {
     width: 46.4px;
     height: 46.4px;
     /* width: 3rem;
@@ -135,7 +135,7 @@ main .faq-banks.block.is-authoring > div:not(.faq-banks.block) {
     border: 1px solid var(--clr-border-subtle);
     border-radius: 0.75rem;
 }
-.faq-banks-wrapper .faq-sidebar .faq-tabs-subtab .faq-tabs-subtab-text {
+.faq-bank-wrapper .faq-sidebar .faq-tabs-subtab .faq-tabs-subtab-text {
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -143,7 +143,7 @@ main .faq-banks.block.is-authoring > div:not(.faq-banks.block) {
     margin: 0;
     flex: 1;
 }
-.faq-banks-wrapper .faq-sidebar .faq-tabs-subtab .faq-tabs-subtab-label {
+.faq-bank-wrapper .faq-sidebar .faq-tabs-subtab .faq-tabs-subtab-label {
     color: var(--tabs-inactive-color);
     font-size: var(--fs-tabs);
     line-height: var(--lh-tabs);
@@ -151,33 +151,33 @@ main .faq-banks.block.is-authoring > div:not(.faq-banks.block) {
     font-family: var(--font-family-medium);
     text-transform: capitalize;
 }
-.faq-banks-wrapper .faq-sidebar .faq-tabs-subtab .faq-tabs-subtab-count {
+.faq-bank-wrapper .faq-sidebar .faq-tabs-subtab .faq-tabs-subtab-count {
     color: var(--tabs-inactive-color);
     font-family: var(--ff-regular);
     font-size: var(--fs-tabs);
     line-height: var(--lh-tabs);
     font-weight: var(--fw-tabs-regular);
 }
-.faq-banks-wrapper .faq-sidebar .faq-tabs-subtab .faq-tabs-subtab-chevron {
+.faq-bank-wrapper .faq-sidebar .faq-tabs-subtab .faq-tabs-subtab-chevron {
     width: 14px;
     height: 14px;
     display: block;
 }
 
-.faq-banks-wrapper .faq-sidebar .faq-tabs-subtab.active{
+.faq-bank-wrapper .faq-sidebar .faq-tabs-subtab.active{
         color: var(--clr-text-brand);
 }
-.faq-banks-wrapper .faq-sidebar .faq-tabs-subtab.active .faq-tabs-subtab-label {
+.faq-bank-wrapper .faq-sidebar .faq-tabs-subtab.active .faq-tabs-subtab-label {
         color: var(--clr-text-brand);
 }
 
-.faq-banks-wrapper .faq-accordions {
+.faq-bank-wrapper .faq-accordions {
     flex: 1;
     width: 100%;
     padding: 1.5rem 0;
 }
 
-.faq-banks-wrapper .faq-accordions .faq-tabs-item {
+.faq-bank-wrapper .faq-accordions .faq-tabs-item {
     margin: 0;
     padding: 0;
     margin-bottom: 2rem;
@@ -185,7 +185,7 @@ main .faq-banks.block.is-authoring > div:not(.faq-banks.block) {
     padding-bottom: 2rem;
 }
 
-.faq-banks-wrapper .faq-accordions .faq-tabs-question {
+.faq-bank-wrapper .faq-accordions .faq-tabs-question {
     margin: 0;
     padding: 0;
     font-weight: var(--fw-medium);
@@ -203,17 +203,17 @@ main .faq-banks.block.is-authoring > div:not(.faq-banks.block) {
     transition: background-color 0.2s;
 }
 
-.faq-banks-wrapper
+.faq-bank-wrapper
     .faq-accordions
     .faq-tabs-question::-webkit-details-marker {
     display: none;
 }
 
-.faq-banks-wrapper .faq-accordions .faq-tabs-question::marker {
+.faq-bank-wrapper .faq-accordions .faq-tabs-question::marker {
     content: "";
 }
 
-.faq-banks-wrapper .faq-accordions .faq-tabs-question::after {
+.faq-bank-wrapper .faq-accordions .faq-tabs-question::after {
     content: "";
     transform: none;
     display: flex;
@@ -225,7 +225,7 @@ main .faq-banks.block.is-authoring > div:not(.faq-banks.block) {
     flex-shrink: 0;
 }
 
-.faq-banks-wrapper
+.faq-bank-wrapper
     .faq-accordions
     .faq-tabs-item[open]
     .faq-tabs-question::after {
@@ -233,12 +233,12 @@ main .faq-banks.block.is-authoring > div:not(.faq-banks.block) {
     background: url(/icons/minus-icon.svg) center / contain no-repeat;
 }
 
-.faq-banks-wrapper .faq-accordions .faq-tabs-answer {
+.faq-bank-wrapper .faq-accordions .faq-tabs-answer {
     margin: 0.5rem 0 0;
     padding: 0;
     border: none;
 }
-.faq-banks-wrapper .faq-accordions .faq-tabs-answer p {
+.faq-bank-wrapper .faq-accordions .faq-tabs-answer p {
     margin: 0;
     font-weight: var(--fw-regular);
     font-size: var(--fs-body-4);
@@ -247,7 +247,7 @@ main .faq-banks.block.is-authoring > div:not(.faq-banks.block) {
     max-width: 289px;
 }
 
-.faq-banks-wrapper .faq-accordions .faq-tabs-show-more-btn {
+.faq-bank-wrapper .faq-accordions .faq-tabs-show-more-btn {
     padding: 0;
     background: unset;
     width: unset;
@@ -263,22 +263,22 @@ main .faq-banks.block.is-authoring > div:not(.faq-banks.block) {
 }
 
 @media (width >= 900px) {
-    .faq-banks-wrapper .faq-banks.block{
+    .faq-bank-wrapper .faq-bank.block{
         display: flex;
         flex-direction: column;
         gap:80px;
     }
-    .faq-banks-wrapper .faq-top-nav-wrap .faq-tabs-top-nav-arrow,
-    .faq-banks-wrapper .faq-top-nav-wrap .faq-tabs-top-nav-divider {
+    .faq-bank-wrapper .faq-top-nav-wrap .faq-tabs-top-nav-arrow,
+    .faq-bank-wrapper .faq-top-nav-wrap .faq-tabs-top-nav-divider {
         display: none;
     }
 
-    .faq-banks-wrapper .faq-main-content {
+    .faq-bank-wrapper .faq-main-content {
         flex-direction: row;
         gap: 8.4rem;
     }
 
-    .faq-banks-wrapper .faq-sidebar {
+    .faq-bank-wrapper .faq-sidebar {
         max-width: 302px;
         width: 100%;
         padding: 0;
