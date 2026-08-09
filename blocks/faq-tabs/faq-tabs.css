@@ -10,6 +10,10 @@
     --tabs-active-border: var(--clr-primary-500);
     --tabs-mobile-separator: var(--clr-neutral-100);
 }
+main .faq-tabs.block.is-authoring > div:not(.faq-tabs-rendered-ui) {
+    display: none !important;
+}
+
 
 .faq-tabs-wrapper button {
     background: none;
