@@ -1,30 +1,9 @@
+/* Hide the raw AEM rows in the Universal Editor */
+.faq-banks.is-authoring > div:not(.faq-banks-rendered-ui) {
+    display: none;
+}
+
 .faq-banks {
-    /* Fallback token values when global :root design tokens are missing */
-    --font-family-regular: "Roboto", Arial, sans-serif;
-    --font-family-medium: "Roboto", Arial, sans-serif;
-    --fs-body-3: 16px;
-    --lh-body-3: 24px;
-    --fs-title-2: 32px;
-    --lh-title-2: 40px;
-    --fs-body-4: 18px;
-    --lh-body-4: 28px;
-    --fs-btn-md: 16px;
-    --lh-btn-md: 24px;
-    --fw-regular: 400;
-    --fw-medium: 500;
-    --spacing-lg: 24px;
-    --clr-neutral-100: #f3f4f6;
-    --clr-neutral-700: #4b5563;
-    --clr-neutral-900: #111827;
-    --clr-primary-500: #ef4444;
-    --clr-bg-default: #ffffff;
-    --clr-border-subtle: #e5e7eb;
-    --clr-text-brand: #ef4444;
-    --clr-text-primary: #111827;
-    --faq-text-main: #111827;
-    --faq-text-light: #6b7280;
-    --faq-border: #d1d5db;
-    --faq-bg-hover: #f9fafb;
 
     /* Tabs */
     --ff-regular: var(--font-family-regular);
