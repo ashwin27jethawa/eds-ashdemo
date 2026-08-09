@@ -18,8 +18,8 @@
     --tabs-mobile-separator: var(--clr-neutral-100);
 }
 
-.faq-banks.is-authoring > div:not(.faq-banks-rendered-ui) {
-    display: none;
+main .faq-tabs.is-authoring > div:not(.faq-tabs-rendered-ui) {
+    display: none !important;
 }
 
 .faq-banks .faq-top-nav-wrap {
