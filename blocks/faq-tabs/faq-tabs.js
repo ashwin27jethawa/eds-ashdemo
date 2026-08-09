@@ -415,7 +415,7 @@ export default function decorate(block) {
   const faqList = div({ class: "faq-tabs-faq-list" });
   faqPanel.append(faqList);
 
-  block.append(topTabNavWrap, content);
+  // block.append(topTabNavWrap, content);
 
   function updateTopNavArrowState() {
     const atStart = topTabList.scrollLeft <= 2;
@@ -518,8 +518,8 @@ export default function decorate(block) {
 
   if (isAuthoringMode) {
     block.classList.add("is-authoring");
-    if (!block.contains(uiContainer)) {
-      block.append(uiContainer);
+    if (!block.querySelector(".faq-banks.block")) {
+      block.append(topTabNavWrap, content);
     }
 
     const observer = new MutationObserver((mutations) => {
@@ -537,7 +537,7 @@ export default function decorate(block) {
     observer.observe(block, { childList: true });
   } else {
     block.textContent = "";
-    block.append(uiContainer);
+    block.append(topTabNavWrap, content);
   }
 
   render();
