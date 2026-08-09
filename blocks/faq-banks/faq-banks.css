@@ -1,7 +1,3 @@
-/* Hide the raw AEM rows in the Universal Editor */
-.faq-banks.is-authoring > div:not(.faq-banks-rendered-ui) {
-    display: none;
-}
 
 .faq-banks {
 
@@ -18,7 +14,7 @@
     --tabs-mobile-separator: var(--clr-neutral-100);
 }
 
-main .faq-tabs.is-authoring > div:not(.faq-tabs-rendered-ui) {
+main .faq-tabs.block.is-authoring > div:not(.faq-tabs-rendered-ui) {
     display: none !important;
 }
 
