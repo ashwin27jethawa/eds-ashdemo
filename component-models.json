@@ -281,6 +281,37 @@
     ]
   },
   {
+    "id": "form",
+    "fields": [
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "label": "form Style",
+        "options": [
+          {
+            "name": "Contact Us Form",
+            "value": "contact-us-form"
+          }
+        ]
+      },
+      {
+        "component": "aem-content",
+        "name": "form_url",
+        "label": "Form URL"
+      },
+      {
+        "component": "text",
+        "name": "form_api",
+        "label": "Form API"
+      },
+      {
+        "component": "text",
+        "name": "form_id",
+        "label": "Form ID"
+      }
+    ]
+  },
+  {
     "id": "fragment",
     "fields": [
       {
