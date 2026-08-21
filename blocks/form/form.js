@@ -30,19 +30,6 @@ function addClasses(element, classNames) {
 }
 
 /**
- * Parses a comma-separated row value into normalized row names.
- * @param {string} rowValue - Raw row value from sheet
- * @returns {Array<string>} Row names
- */
-function parseRowNames(rowValue) {
-  if (!rowValue) return [];
-  return String(rowValue)
-    .split(",")
-    .map((name) => name.trim())
-    .filter(Boolean);
-}
-
-/**
  * Returns true when a sheet value is the string "true".
  * @param {string|boolean|undefined|null} value - Raw sheet value
  * @returns {boolean} Whether the value is true
@@ -761,110 +748,10 @@ function buildButton(field) {
   const button = createElement("button");
   button.className = "button";
   addClasses(button, classes);
-  const isOtpTrigger =
-    button.classList.contains("mobile-otp") ||
-    button.classList.contains("email-otp");
-  button.type = isOtpTrigger ? "button" : type;
-  if (isOtpTrigger) button.dataset.otpTrigger = "true";
+  button.type = type;
   button.textContent = label;
   if (type === "reset") button.classList.add("secondary");
   return button;
-}
-
-/**
- * Returns whether the OTP trigger can be shown/enabled for the given input.
- * @param {HTMLInputElement|HTMLTextAreaElement} input - Source input field
- * @param {HTMLButtonElement} button - OTP action button
- * @returns {boolean} Whether OTP action should be enabled
- */
-function isOtpInputReady(input, button) {
-  const value = input.value.trim();
-  if (!value) return false;
-
-  if (button.classList.contains("mobile-otp")) {
-    const digits = value.replace(/\D/g, "");
-    return digits.length === 10;
-  }
-
-  if (button.classList.contains("email-otp")) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-  }
-
-  return input.checkValidity();
-}
-
-/**
- * Enables OTP UX for mobile/email rows in modify KYC form.
- * Hides OTP triggers until inputs are valid, hides edit icon when ready,
- * and shows OTP input + status message after click.
- * @param {HTMLFormElement} form - Form element
- */
-function enableOtpActions(form) {
-  const otpRows = [
-    ...form.querySelectorAll(".form-row.mobile-otp, .form-row.email-opt"),
-  ];
-
-  otpRows.forEach((row) => {
-    const button = row.querySelector(".button.mobile-otp, .button.email-otp");
-    const sourceInput = row.querySelector(
-      ".form-field input, .form-field textarea",
-    );
-
-    if (!button || !sourceInput) return;
-
-    const sourceIcon = row.querySelector(".form-field .input-wrapper .icon");
-
-    // const otpField = createElement("div", "form-field otp-verify-field");
-    // const otpInputId = `${sourceInput.id || sourceInput.name || "otp"}-verify`;
-    // const otpLabel = buildLabel("OTP", "label", otpInputId, true);
-    // const otpInputWrap = createElement("div", "input-wrapper");
-    // const otpInput = createElement("input");
-    // otpInput.type = "text";
-    // otpInput.id = otpInputId;
-    // otpInput.name = otpInputId;
-    // otpInput.placeholder = "Enter OTP";
-    // otpInput.inputMode = "numeric";
-    // otpInput.maxLength = 6;
-    // otpInput.required = true;
-    // otpInputWrap.append(otpInput);
-    // otpField.append(otpLabel, otpInputWrap);
-    // otpField.hidden = true;
-
-    // row.append(status, otpField);
-
-    const updateOtpState = () => {
-      const ready = isOtpInputReady(sourceInput, button);
-      button.style.display = ready ? "block" : "none";
-      button.disabled = !ready;
-
-      if (sourceIcon) {
-        sourceIcon.style.display = ready ? "none" : "inline-flex";
-      }
-
-      if (!ready) {
-        // otpField.hidden = true;
-        // status.hidden = true;
-        // otpInput.value = "";
-      }
-    };
-
-    sourceInput.addEventListener("input", updateOtpState);
-    sourceInput.addEventListener("blur", updateOtpState);
-    sourceInput.addEventListener("change", updateOtpState);
-
-    button.addEventListener("click", (e) => {
-      e.preventDefault();
-
-      if (button.disabled) return;
-
-      // status.textContent = button.classList.contains("mobile-otp")
-      //   ? "OTP sent to your mobile number."
-      //   : "OTP sent to your email address.";
-      // status.hidden = false;
-    });
-
-    updateOtpState();
-  });
 }
 
 /**
@@ -1213,87 +1100,27 @@ export function buildForm(fields, submit) {
   form.setAttribute("novalidate", "");
 
   const rowWrappers = new Map();
-  const rowPrimaryByAlias = new Map();
-  const rowOrder = [];
-  const rowParents = new Map();
-  const rowChildren = new Map();
 
   fields.forEach((field) => {
     if (field.type === "row" && field.name) {
-      const rowNames = parseRowNames(field.name);
-      if (!rowNames.length) return;
-
-      const primaryRowName = rowNames[0];
-
-      const rowClassNames = rowNames.map((name) => toClassName(name)).join(" ");
-      const rowWrapper = createElement("div", `form-row ${rowClassNames}`);
+      const rowWrapper = createElement(
+        "div",
+        `form-row ${toClassName(field.name)}`,
+      );
       addClasses(rowWrapper, field.classes);
-
-      if (!rowOrder.includes(primaryRowName)) {
-        rowOrder.push(primaryRowName);
-      }
-
-      rowNames.forEach((rowName) => {
-        rowPrimaryByAlias.set(rowName, primaryRowName);
-        rowWrappers.set(rowName, rowWrapper);
-      });
+      rowWrappers.set(field.name, rowWrapper);
     }
   });
-
-  const getPrimaryRowName = (rowName) =>
-    rowPrimaryByAlias.get(rowName) || rowName;
-
-  const addChildRow = (parentRowName, childRowName) => {
-    if (!rowChildren.has(parentRowName)) {
-      rowChildren.set(parentRowName, []);
-    }
-
-    const existingChildren = rowChildren.get(parentRowName);
-    if (!existingChildren.includes(childRowName)) {
-      existingChildren.push(childRowName);
-    }
-
-    rowParents.set(childRowName, parentRowName);
-  };
-
-  fields.forEach((field) => {
-    if (field.type === "row" || field.type === "confirmation") return;
-
-    const rowNames = parseRowNames(field.row);
-    const matchingNames = rowNames
-      .filter((name) => rowWrappers.has(name))
-      .map((name) => getPrimaryRowName(name));
-
-    if (matchingNames.length > 1) {
-      const parentRowName = matchingNames[0];
-      const childRowName = matchingNames[matchingNames.length - 1];
-
-      if (parentRowName !== childRowName) {
-        addChildRow(parentRowName, childRowName);
-      }
-    }
-  });
-
-  const getRowWrapper = (rowValue, preferLastMatch = false) => {
-    const rowNames = parseRowNames(rowValue);
-    const matchingNames = rowNames.filter((name) => rowWrappers.has(name));
-    if (!matchingNames.length) return null;
-
-    const matchedName = preferLastMatch
-      ? matchingNames[matchingNames.length - 1]
-      : matchingNames[0];
-
-    return rowWrappers.get(matchedName);
-  };
 
   // group buttons at the end
   const buttons = [];
 
   fields.forEach((field) => {
     if (field.type === "row") {
-      return;
+      const rowWrapper = rowWrappers.get(field.name);
+      if (rowWrapper) form.append(rowWrapper);
     } else if (field.type === "submit" || field.type === "reset") {
-      const rowWrapper = getRowWrapper(field.row, true);
+      const rowWrapper = rowWrappers.get(field.row);
       if (rowWrapper) {
         rowWrapper.append(buildField(field));
       } else {
@@ -1301,50 +1128,13 @@ export function buildForm(fields, submit) {
       }
     } else if (field.type !== "confirmation") {
       const fieldElement = buildField(field);
-      const rowWrapper = getRowWrapper(field.row, true);
+      const rowWrapper = rowWrappers.get(field.row);
       if (rowWrapper) {
         rowWrapper.append(fieldElement);
       } else {
         form.append(fieldElement);
       }
     }
-  });
-
-  const appendedRows = new Set();
-
-  const appendRowRecursively = (rowName, parentWrapper = null) => {
-    const rowWrapper = rowWrappers.get(rowName);
-    if (!rowWrapper || appendedRows.has(rowName)) return;
-
-    if (parentWrapper) {
-      // Keep nested rows before the parent's direct fields.
-      const firstContent = parentWrapper.firstChild;
-      if (firstContent) {
-        parentWrapper.insertBefore(rowWrapper, firstContent);
-      } else {
-        parentWrapper.append(rowWrapper);
-      }
-    } else {
-      form.append(rowWrapper);
-    }
-
-    appendedRows.add(rowName);
-
-    const children = rowChildren.get(rowName) || [];
-    children.forEach((childRowName) => {
-      appendRowRecursively(childRowName, rowWrapper);
-    });
-  };
-
-  rowOrder.forEach((rowName) => {
-    if (!rowParents.has(rowName)) {
-      appendRowRecursively(rowName);
-    }
-  });
-
-  // Fallback for any rows not attached because of unexpected config order.
-  rowOrder.forEach((rowName) => {
-    appendRowRecursively(rowName);
   });
 
   // add buttons in a wrapper (if any)
@@ -1355,7 +1145,6 @@ export function buildForm(fields, submit) {
   }
 
   enableConditionals(form);
-  enableOtpActions(form);
 
   if (submit) enableSubmission(form, submit, fields);
 

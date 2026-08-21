@@ -243,7 +243,7 @@ label {
 }
 
 .form .form-row > * {
-    flex: 1 1 10rem;
+    flex: 1 1 16rem;
     min-width: 0;
 }
 
@@ -1741,27 +1741,6 @@ label {
 .form.modify-kyc-form.block .additional-details-style {
     margin-top: 0.5rem;
 }
-.form.modify-kyc-form.block .form-row.mobile-otp .otp-status,
-.form.modify-kyc-form.block .form-row.email-opt .otp-status {
-    width: 100%;
-    margin: 0.2rem 0 0;
-    color: #0b7a3f;
-    font-size: 0.82rem;
-    line-height: 1.35;
-}
-
-.form.modify-kyc-form.block .form-row.mobile-otp .otp-verify-field,
-.form.modify-kyc-form.block .form-row.email-opt .otp-verify-field {
-    flex: 1 1 100%;
-}
-
-.form.modify-kyc-form.block .form-row.mobile-otp .button[hidden],
-.form.modify-kyc-form.block .form-row.email-opt .button[hidden],
-.form.modify-kyc-form.block .form-row.mobile-otp .icon[hidden],
-.form.modify-kyc-form.block .form-row.email-opt .icon[hidden] {
-    display: none;
-}
-
 .form.modify-kyc-form.block .additional-details-style {
     padding-bottom: 2px;
 }
