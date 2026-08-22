@@ -1,8 +1,6 @@
-
 body.modal-open {
     overflow: hidden;
 }
-
 
 .modal dialog::backdrop {
     background-color: rgb(19 19 19 / 75%);
@@ -12,8 +10,8 @@ body.modal-open {
     width: calc(100vw - 48px);
     max-width: 900px;
 
-    height: 90vh;
-    max-height: 90vh;
+    /* height: 90vh; */
+    /* max-height: 90vh; */
 
     padding: 0;
     border: 1px solid var(--dark-color);
@@ -25,7 +23,7 @@ body.modal-open {
 .modal dialog .modal-content {
     box-sizing: border-box;
 
-    height: 100%;
+    /* height: 100%; */
     overflow-y: auto;
     width: 100%;
     padding: 24px;
@@ -96,4 +94,225 @@ body.modal-open {
 
 .modal dialog .section {
     padding: 0;
+}
+
+/* opt modal verfication */
+@keyframes otp-modal-slide-up {
+    from {
+        transform: translateY(100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+/* OTP modal specific styling */
+.modal.opt-verfication-modal dialog {
+    width: min(420px, calc(100vw - 32px));
+    max-width: 420px;
+    /* height: auto;
+    max-height: min(92vh, 640px); */
+    border: none;
+    border-radius: 16px;
+}
+
+.modal.opt-verfication-modal dialog .modal-content {
+    padding: 22px 20px 20px;
+    height: auto;
+    overflow-y: visible;
+}
+
+.modal.opt-verfication-modal .close-button {
+    top: 12px;
+    right: 12px;
+    width: 28px;
+    height: 28px;
+    background: transparent;
+}
+
+.modal.opt-verfication-modal .close-button .icon.icon-close::before,
+.modal.opt-verfication-modal .close-button .icon.icon-close::after {
+    width: 16px;
+}
+
+.modal.opt-verfication-modal .otp-modal .form {
+    font-family: var(--body-font-family);
+}
+
+.modal.opt-verfication-modal .otp-modal .otp-title {
+    margin: 0;
+    color: #1d1d1f;
+    font-size: 40px;
+    line-height: 1.15;
+    font-weight: 500;
+}
+
+.modal.opt-verfication-modal .otp-modal .otp-description {
+    margin: 12px 0 22px;
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.5;
+    font-weight: 500;
+}
+
+.modal.opt-verfication-modal .otp-modal .plain-text-field {
+    margin: 0;
+}
+
+.modal.opt-verfication-modal
+    .otp-modal
+    .plain-text-field:not(.otp-title):not(.otp-description):not(.resend-timer) {
+    margin-bottom: 14px;
+    color: #8d8d8d;
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.modal.opt-verfication-modal .otp-modal .form-row.opt-row.opt-rows {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 0;
+}
+
+.modal.opt-verfication-modal
+    .otp-modal
+    .form-row.opt-row.opt-rows
+    > .form-field {
+    margin-top: 0;
+}
+
+.modal.opt-verfication-modal
+    .otp-modal
+    .form-row.opt-row.opt-rows
+    .input-wrapper {
+    width: 100%;
+}
+
+.modal.opt-verfication-modal
+    .otp-modal
+    .form-row.opt-row.opt-rows
+    .input-wrapper
+    input {
+    height: 52px;
+    min-height: 52px;
+    padding: 0;
+    border: 1px solid #d7d7d7;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 20px;
+    line-height: 1;
+    font-weight: 600;
+}
+
+.modal.opt-verfication-modal .otp-modal .form-row.opt-row.opt-rows .clear-btn {
+    display: none;
+}
+
+.modal.opt-verfication-modal .otp-modal .form-row.resend-row.resend-btn-row {
+    display: flex;
+    flex-wrap: nowrap;
+    margin-top: 14px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.modal.opt-verfication-modal
+    .otp-modal
+    .form-row.resend-row.resend-btn-row
+    > * {
+    flex: 0 0 auto;
+    min-width: 0;
+}
+
+.modal.opt-verfication-modal .otp-modal .resend-btn {
+    width: auto;
+    min-width: 0;
+    border: 0;
+    background: transparent;
+    color: #ef2b2d;
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.25;
+    font-weight: 600;
+    text-transform: none;
+}
+
+.modal.opt-verfication-modal .otp-modal .resend-timer {
+    margin: 0;
+    color: #525a68;
+    font-size: 28px;
+    line-height: 1;
+    font-weight: 500;
+}
+
+.modal.opt-verfication-modal .otp-modal .button-wrapper {
+    margin-top: 16px;
+}
+
+.modal.opt-verfication-modal .otp-modal .submit-otp {
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    background: #f9bcbc;
+    color: #fff;
+    padding: 14px 16px;
+    font-size: 16px;
+    line-height: 1.2;
+    font-weight: 600;
+    text-transform: none;
+}
+
+@media (width < 900px) {
+    .modal.opt-verfication-modal dialog {
+        position: fixed;
+        inset: auto 0 0 0;
+        margin: 0;
+        width: 100vw;
+        max-width: 100vw;
+        max-height: min(90vh, 760px);
+        border-radius: 20px 20px 0 0;
+        animation: otp-modal-slide-up 0.3s ease-out;
+        height: auto;
+    }
+
+    .modal.opt-verfication-modal dialog .modal-content {
+        padding: 20px 16px 18px;
+    }
+
+    .modal.opt-verfication-modal .otp-modal .otp-title {
+        font-size: 42px;
+        line-height: 1.08;
+    }
+
+    .modal.opt-verfication-modal .otp-modal .otp-description {
+        margin-top: 10px;
+    }
+
+    .modal.opt-verfication-modal .otp-modal .form-row.opt-row.opt-rows {
+        gap: 8px;
+    }
+
+    .modal.opt-verfication-modal
+        .otp-modal
+        .form-row.opt-row.opt-rows
+        .input-wrapper
+        input {
+        height: 50px;
+        min-height: 50px;
+    }
+
+    .modal.opt-verfication-modal .otp-modal .resend-btn {
+        font-size: 15px;
+    }
+
+    .modal.opt-verfication-modal .otp-modal .resend-timer {
+        font-size: 24px;
+    }
 }

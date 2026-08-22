@@ -1015,6 +1015,204 @@ function enableSubmission(form, submit, fields) {
 }
 
 /**
+ * Enables OTP behavior for rows marked as .opt-row.opt-rows.
+ * Rules: one numeric digit per field, normal delete/backspace support,
+ * and no skipping ahead when earlier fields are empty.
+ * @param {HTMLFormElement} form - Form element
+ */
+function enableOtpInputs(form) {
+  const otpRow = form.querySelector(".form-row.opt-row.opt-rows");
+  if (!otpRow) return;
+
+  const inputs = [...otpRow.querySelectorAll("input")];
+  if (!inputs.length) return;
+  const submitOtpBtn =
+    form.querySelector(".submit-otp") ||
+    form.querySelector(".button-wrapper button[type='submit']");
+  const resendBtn = form.querySelector(".resend-btn");
+  const timerEl = form.querySelector(".resend-timer");
+
+  if (resendBtn) {
+    resendBtn.type = "button";
+  }
+
+  inputs.forEach((input) => {
+    input.setAttribute("inputmode", "numeric");
+    input.setAttribute("pattern", "[0-9]*");
+    input.setAttribute("maxlength", "1");
+    input.autocomplete = "one-time-code";
+  });
+
+  const isOtpComplete = () => inputs.every((i) => /^\d$/.test(i.value));
+
+  const updateSubmitState = () => {
+    if (!submitOtpBtn) return;
+    const canSubmit = isOtpComplete();
+    submitOtpBtn.disabled = !canSubmit;
+    submitOtpBtn.setAttribute("aria-disabled", String(!canSubmit));
+  };
+
+  const parseTimer = (text) => {
+    const match = (text || "").trim().match(/^(\d{1,2}):(\d{2})$/);
+    if (!match) return 0;
+    const mins = Number.parseInt(match[1], 10);
+    const secs = Number.parseInt(match[2], 10);
+    if (Number.isNaN(mins) || Number.isNaN(secs)) return 0;
+    return mins * 60 + secs;
+  };
+
+  const formatTimer = (totalSeconds) => {
+    const mins = Math.floor(totalSeconds / 60);
+    const secs = totalSeconds % 60;
+    return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+  };
+
+  let countdownId;
+  const initialSeconds = parseTimer(timerEl?.textContent) || 152;
+  const restartSeconds = initialSeconds;
+
+  const stopTimer = () => {
+    if (countdownId) {
+      clearInterval(countdownId);
+      countdownId = null;
+    }
+  };
+
+  const setResendEnabled = (enabled) => {
+    if (!resendBtn) return;
+    resendBtn.disabled = !enabled;
+    resendBtn.setAttribute("aria-disabled", String(!enabled));
+  };
+
+  const startTimer = (seconds = initialSeconds) => {
+    if (!timerEl) return;
+    let remaining = Math.max(0, seconds);
+    stopTimer();
+    setResendEnabled(false);
+    timerEl.textContent = formatTimer(remaining);
+
+    countdownId = setInterval(() => {
+      remaining -= 1;
+      if (remaining <= 0) {
+        timerEl.textContent = "00:00";
+        stopTimer();
+        setResendEnabled(true);
+        return;
+      }
+      timerEl.textContent = formatTimer(remaining);
+    }, 1000);
+  };
+
+  if (resendBtn) {
+    resendBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      inputs.forEach((i) => {
+        i.value = "";
+      });
+      inputs[0]?.focus();
+      updateSubmitState();
+      startTimer(restartSeconds);
+    });
+  }
+
+  if (timerEl) {
+    startTimer(parseTimer(timerEl.textContent) || initialSeconds);
+  }
+
+  updateSubmitState();
+
+  const firstEmptyIndex = () => inputs.findIndex((i) => !i.value.trim());
+
+  const focusFirstEmptyBefore = (currentIndex) => {
+    const emptyIndex = firstEmptyIndex();
+    if (emptyIndex !== -1 && currentIndex > emptyIndex) {
+      inputs[emptyIndex].focus();
+      return true;
+    }
+    return false;
+  };
+
+  const fillFromIndex = (startIndex, digits) => {
+    let writeIndex = startIndex;
+    [...digits].forEach((digit) => {
+      if (writeIndex < inputs.length) {
+        inputs[writeIndex].value = digit;
+        writeIndex += 1;
+      }
+    });
+
+    const next = inputs[Math.min(writeIndex, inputs.length - 1)];
+    next?.focus();
+    updateSubmitState();
+  };
+
+  inputs.forEach((input, index) => {
+    input.addEventListener("mousedown", (e) => {
+      if (focusFirstEmptyBefore(index)) {
+        e.preventDefault();
+      }
+    });
+
+    input.addEventListener("keydown", (e) => {
+      const allowedKeys = [
+        "Backspace",
+        "Delete",
+        "Tab",
+        "ArrowLeft",
+        "ArrowRight",
+        "Home",
+        "End",
+      ];
+
+      if (allowedKeys.includes(e.key)) {
+        if (e.key === "Backspace" && !input.value && index > 0) {
+          e.preventDefault();
+          inputs[index - 1].value = "";
+          inputs[index - 1].focus();
+          updateSubmitState();
+        }
+        return;
+      }
+
+      // Block non-digits while allowing control/meta shortcuts.
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      if (!/^\d$/.test(e.key)) {
+        e.preventDefault();
+      }
+    });
+
+    input.addEventListener("input", () => {
+      const digits = input.value.replace(/\D/g, "");
+
+      if (!digits) {
+        input.value = "";
+        updateSubmitState();
+        return;
+      }
+
+      if (digits.length > 1) {
+        fillFromIndex(index, digits);
+        return;
+      }
+
+      input.value = digits[0];
+      if (index < inputs.length - 1) {
+        inputs[index + 1].focus();
+      }
+      updateSubmitState();
+    });
+
+    input.addEventListener("paste", (e) => {
+      e.preventDefault();
+      const pasted = e.clipboardData?.getData("text") || "";
+      const digits = pasted.replace(/\D/g, "");
+      if (!digits) return;
+      fillFromIndex(index, digits);
+    });
+  });
+}
+
+/**
  * Creates a plain text paragraph field.
  * @param {Object} field - Field configuration object
  * @returns {HTMLParagraphElement} Paragraph element
@@ -1171,6 +1369,7 @@ export function buildForm(fields, submit) {
   }
 
   enableConditionals(form);
+  enableOtpInputs(form);
 
   if (submit) enableSubmission(form, submit, fields);
 
