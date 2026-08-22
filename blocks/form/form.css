@@ -543,6 +543,30 @@ label {
     pointer-events: none;
 }
 
+/* OTP row layout override for contact-us-form */
+.form.contact-us-form .form-row.opt-row.opt-rows {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.75rem;
+    align-items: stretch;
+}
+
+.form.contact-us-form .form-row.opt-row.opt-rows > .form-field {
+    min-width: 0;
+    margin-top: 0;
+}
+
+.form.contact-us-form .form-row.opt-row.opt-rows .input-wrapper input {
+    text-align: center;
+    padding-inline: 0.75rem;
+}
+
+@media (width < 900px) {
+    .form.contact-us-form .form-row.opt-row.opt-rows {
+        grid-template-columns: repeat(5, minmax(2.5rem, 1fr));
+    }
+}
+
 /* Thumb */
 .form .form-field.toggle-field label span::after {
     content: "";

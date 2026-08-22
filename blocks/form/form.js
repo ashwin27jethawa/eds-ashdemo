@@ -1015,6 +1015,28 @@ function enableSubmission(form, submit, fields) {
 }
 
 /**
+ * Creates a plain text paragraph field.
+ * @param {Object} field - Field configuration object
+ * @returns {HTMLParagraphElement} Paragraph element
+ */
+function buildPlainText(field) {
+  const { label, field: fieldName, classes } = field;
+  const value = getFieldValue(field);
+
+  const p = createElement("p", "plain-text-field");
+  addClasses(p, classes);
+
+  // Prefer value, fallback to label
+  p.textContent = value || label || "";
+
+  if (fieldName) {
+    p.dataset.field = generateId(fieldName);
+  }
+
+  return p;
+}
+
+/**
  * Creates a form field based on field configuration
  * @param {Object} field - Field configuration object
  * @returns {HTMLElement} Form field element (fieldset, div, or button)
@@ -1022,6 +1044,10 @@ function enableSubmission(form, submit, fields) {
 function buildField(field) {
   const { type, label, help, field: fieldName, conditional, classes } = field;
   const controlled = conditional || null;
+
+  if (type === "plain-text") {
+    return buildPlainText(field);
+  }
 
   // submit/reset buttons stand alone
   if (type === "submit" || type === "reset") {
