@@ -10,9 +10,7 @@
  * https://www.hlx.live/developer/block-collection/embed
  */
 
-import { getRespectiveDomain } from "../../scripts/dom-helper.js";
-
-const domainUrl = await getRespectiveDomain();
+const domainUrl = window.location.origin;
 
 const loadScript = (url, callback, type) => {
   const head = document.querySelector("head");

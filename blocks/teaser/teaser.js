@@ -1,9 +1,9 @@
 import { loadCSS } from "../../scripts/aem.js";
-import { div } from "../../../scripts/dom-helper.js";
-import embedV1 from "../../embed-v1/mf/embed-v1.js";
+import { div } from "../../scripts/dom-helpers.js";
+import embedV1 from "../embed-v1/embed-v1.js";
 
 export default function decorate(block) {
-  loadCSS(`${window.hlx.codeBasePath}/blocks/embed-v1/mf/embed-v1.css`);
+  loadCSS(`${window.hlx.codeBasePath}/blocks/embed-v1/embed-v1.css`);
 
   const isEmbeddedVideo = block.classList.contains("embedded-video");
   const [content, image, embedLink] = [...block.children];

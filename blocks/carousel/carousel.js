@@ -1,6 +1,7 @@
 import { moveInstrumentation } from "../../scripts/scripts.js";
 import { loadCSS } from "../../scripts/aem.js";
-import embedV1 from "../../embed-v1/embed-v1.js";
+// import embedV1 from "../../embed-v1/embed-v1.js";
+import embedV1 from "../embed-v1/embed-v1.js";
 
 const DEFAULT_AUTO_ROTATE_SECONDS = 5;
 const MIN_AUTO_ROTATE_SECONDS = 1;
