@@ -170,6 +170,169 @@
     ]
   },
   {
+    "id": "carousel",
+    "fields": [
+      {
+        "component": "multiselect",
+        "name": "classes",
+        "label": "Style",
+        "options": [
+          {
+            "name": "Item Image Background",
+            "value": "item-image-background"
+          },
+          {
+            "name": "Image End",
+            "value": "img-end"
+          },
+          {
+            "name": "Embedded Video",
+            "value": "embedded-video"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "carousel-item",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "col1_image",
+        "label": "Carousel Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_imageAlt",
+        "label": "Carousel Image Alt",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "col1_title",
+        "value": "",
+        "label": "Card Title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "col1_text",
+        "value": "",
+        "label": "Card Description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "carousel-about-item",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "col1_mobImage",
+        "label": "Carousel Mob Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_mobImageAlt",
+        "label": "Carousel Mob Image Alt",
+        "value": ""
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "col1_deskImage",
+        "label": "Carousel Desk Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_deskImageAlt",
+        "label": "Carousel Desk Image Alt",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "col2_title",
+        "value": "",
+        "label": "Card Title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "col2_text",
+        "value": "",
+        "label": "Card Description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "carousel-item-3",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "col1_image",
+        "label": "Carousel Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col1_imageAlt",
+        "label": "Carousel Image Alt",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "col2_title",
+        "value": "",
+        "label": "Card Title",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "col2_text",
+        "value": "",
+        "label": "Card Description",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "carousel-hero-item",
+    "fields": [
+      {
+        "component": "richtext",
+        "valueType": "string",
+        "name": "col1_content",
+        "label": "Content",
+        "raw": true
+      },
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "col2_image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "col2_imageAlt",
+        "label": "Image Alt",
+        "value": ""
+      }
+    ]
+  },
+  {
     "id": "columns",
     "fields": [
       {
@@ -185,6 +348,28 @@
         "name": "rows",
         "value": "",
         "label": "Rows"
+      }
+    ]
+  },
+  {
+    "id": "embed-v1",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Thumbnail Image",
+        "valueType": "string",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Image Alt Text"
+      },
+      {
+        "component": "aem-content",
+        "name": "youtube-url",
+        "label": "YouTube URL"
       }
     ]
   },

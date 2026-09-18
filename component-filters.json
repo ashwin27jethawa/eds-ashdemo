@@ -50,6 +50,15 @@
     ]
   },
   {
+    "id": "carousel",
+    "components": [
+      "carousel-item",
+      "carousel-about-item",
+      "carousel-hero-item",
+      "carousel-item-3"
+    ]
+  },
+  {
     "id": "columns",
     "components": [
       "column"

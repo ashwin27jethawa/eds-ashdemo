@@ -1,0 +1,404 @@
+.section .carousel-wrapper {
+    /* max-width: 1320px; */
+    max-width: unset;
+    padding: 0;
+}
+
+/* ==================================================
+   BASE CAROUSEL — MOBILE FIRST
+================================================== */
+
+.carousel {
+    --carousel-active-color: #ff7028;
+
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* ---- Slides container ---- */
+.carousel .carousel-slides-container {
+    position: relative;
+}
+
+/* ---- Slides list ---- */
+.carousel .carousel-slides {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    overflow: auto hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.carousel .carousel-slides::-webkit-scrollbar {
+    display: none;
+}
+
+/* ---- Individual slide (mobile: single column) ---- */
+.carousel .carousel-slide {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: flex-start;
+    min-height: auto;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ---- Slide content (mobile: full width) ---- */
+.carousel .carousel-slide-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    color: var(--clr-neutral-700);
+    position: relative;
+    z-index: 1;
+    padding: 30px 20px 35px;
+}
+
+.hero-large .carousel .carousel-slide-content {
+    padding: 40px 20px 54px;
+}
+
+.carousel .carousel-slide-content p {
+    margin: 0;
+
+    /* max-width: 64ch; */
+    font-size: var(--fs-body-2);
+    line-height: var(--lh-body-2);
+    color: var(--clr-neutral-700);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.carousel .carousel-slide-content p:nth-child(3) {
+    margin-top: 12px;
+}
+
+.carousel .carousel-slide-content h1,
+.carousel .carousel-slide-content h2 {
+    margin: 0;
+    max-width: 100%;
+    color: var(--clr-primary-800);
+    font-weight: 400;
+    font-size: var(--fs-heading-1);
+    line-height: 1.16;
+    letter-spacing: -0.02em;
+}
+
+.carousel .carousel-slide-content .heading {
+    margin: 0;
+    color: var(--clr-primary-800);
+    font-weight: var(--fw-regular);
+    font-size: var(--fs-display-1);
+    line-height: var(--lh-display-1);
+}
+
+.carousel .carousel-slide-content .heading em {
+    color: var(--clr-text-brand);
+    font-style: normal;
+}
+
+/* CTA buttons — reuses a.button.primary / a.button.secondary from styles.css */
+.carousel .carousel-slide-content .button-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 4px;
+}
+
+/* ---- Slide image (mobile: centered below content) ---- */
+.carousel .carousel-slide-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 14px 72px;
+    position: relative;
+    z-index: 1;
+}
+
+.img-end li .carousel-slide-image {
+    padding: unset;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.hero-short .carousel .carousel-slide-image {
+    padding: 50px 0 0;
+}
+
+/* Repositions the image wrapper as an absolute background layer */
+.carousel.item-image-background .carousel-slide-image {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    padding: 0;
+    z-index: 0;
+}
+
+.content-center .img-end li .carousel-slide-image {
+    height: 100%;
+}
+
+.carousel .carousel-slide-image picture,
+.carousel .carousel-slide-image img {
+    display: block;
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+}
+
+.hero-short .carousel .carousel-slide-image picture,
+.hero-short .carousel .carousel-slide-image img {
+    max-width: unset;
+}
+
+/* ---- Controls (mobile: centered bottom) ---- */
+.carousel .carousel-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hero-short .carousel .carousel-controls {
+    bottom: 50%;
+    left: 52px;
+}
+
+.carousel .carousel-slide-indicators {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.carousel .carousel-slide-indicator button {
+    width: 8px;
+    height: 8px;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 99px;
+    background: var(--clr-primary-200);
+    cursor: pointer;
+    transition:
+        width 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.carousel .carousel-slide-indicator button[disabled],
+.carousel .carousel-slide-indicator button[aria-current] {
+    width: 22px;
+    background: var(--clr-primary-500);
+    cursor: default;
+}
+
+/* ==================================================
+   VARIATION: item-image-background (mobile first)
+================================================== */
+
+/* Dark overlay on top of the image */
+.carousel.item-image-background .carousel-slide-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgb(0 0 0 / 55%);
+    z-index: 1;
+}
+
+/* Image fills the full slide */
+.carousel.item-image-background .carousel-slide-image picture,
+.carousel.item-image-background .carousel-slide-image img {
+    max-width: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Content sits above the overlay */
+.carousel.item-image-background .carousel-slide-content {
+    position: relative;
+    z-index: 2;
+    max-width: none;
+    padding: 30px 20px 90px;
+    color: var(--clr-white);
+}
+
+.carousel.item-image-background .carousel-slide-content h1,
+.carousel.item-image-background .carousel-slide-content h2,
+.carousel.item-image-background .carousel-slide-content h3,
+.carousel.item-image-background .carousel-slide-content h4,
+.carousel.item-image-background .carousel-slide-content h5,
+.carousel.item-image-background .carousel-slide-content h6 {
+    color: var(--clr-white);
+}
+
+.carousel.item-image-background .carousel-slide-content p {
+    color: rgb(255 255 255 / 80%);
+}
+
+.carousel-slide-indicators .carousel-slide-indicator button {
+    all: unset; /* kill any framework default fighting this */
+    box-sizing: border-box;
+    display: block;
+    width: 12px;
+    height: 8px;
+    min-width: 12px;
+    border-radius: 20px;
+    flex-shrink: 0;
+    cursor: pointer;
+    background: color-mix(in srgb, var(--clr-black-000) 10%, transparent);
+}
+
+/* Active dot: pale red track + gradient progress fill */
+.carousel-slide-indicators
+    .carousel-slide-indicator
+    button[aria-current='true'] {
+    position: relative;
+    width: 28px;
+    min-width: 28px;
+    background: color-mix(in srgb, var(--clr-primary-500) 10%, transparent);
+    overflow: hidden;
+}
+
+.carousel-slide-indicators
+    .carousel-slide-indicator
+    button[aria-current='true']::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 11px;
+    height: 8px;
+    border-radius: 20px;
+    background: linear-gradient(
+        126deg,
+        var(--clr-primary-500) 0%,
+        var(--carousel-active-color) 100%
+    );
+}
+
+/* Indicator dots adapt to dark background */
+.carousel.item-image-background .carousel-slide-indicator button {
+    background: rgb(255 255 255 / 40%);
+}
+
+.carousel.item-image-background .carousel-slide-indicator button[disabled],
+.carousel.item-image-background .carousel-slide-indicator button[aria-current] {
+    background: var(--clr-white);
+}
+
+/* ==================================================
+   DESKTOP — width >= 900px
+================================================== */
+
+@media (width >= 900px) {
+    /* ---- Individual slide (desktop: two columns) ---- */
+    .carousel .carousel-slide {
+        grid-template-columns: minmax(0, 58%) minmax(280px, 42%);
+        align-items: end;
+        min-height: 560px;
+    }
+
+    .hero-large .carousel .carousel-slide {
+        min-height: 580px;
+    }
+
+    .hero-short .carousel .carousel-slide {
+        min-height: 505px;
+    }
+
+    /* ---- Slide content (desktop: left column with larger padding) ---- */
+    .carousel .carousel-slide-content {
+        gap: 12px;
+        padding: 117px 80px 157px;
+        padding-left: 90px;
+
+        /* padding-left: 20px; */
+    }
+
+    .hero-large .carousel .carousel-slide-content {
+        gap: 12px;
+        margin: 147px 80px 174px;
+        padding: 0;
+        max-width: 512px;
+    }
+
+    .carousel .carousel-slide-content h1,
+    .carousel .carousel-slide-content h2 {
+        /* max-width: 624px; */
+        font-size: var(--fs-heading-1);
+        line-height: 1.1;
+    }
+
+    /* ---- Slide image (desktop: right column) ---- */
+    .carousel .carousel-slide-image {
+        align-items: flex-end;
+        padding-right: 40px;
+        padding-bottom: 0;
+    }
+
+    .content-center .carousel .carousel-slide-image {
+        align-items: center;
+    }
+
+    .hero-short .carousel .carousel-slide-image {
+        height: 520px;
+        max-width: 670px;
+        min-width: 670px;
+        position: absolute;
+        right: 30px;
+    }
+
+    .carousel .carousel-slide-image picture,
+    .carousel .carousel-slide-image img {
+        max-width: 503px;
+    }
+
+    .hero-short .carousel .carousel-slide-image picture,
+    .hero-short .carousel .carousel-slide-image img {
+        max-width: unset;
+    }
+
+    /* ---- Controls (desktop: bottom-left) ---- */
+    .carousel .carousel-controls {
+        bottom: 34px;
+        left: 100px;
+        transform: none;
+        gap: 10px;
+    }
+
+    .hero-short .carousel .carousel-controls {
+        bottom: 21%;
+        left: 90px;
+    }
+
+    /* Item image background variation (desktop) */
+    .carousel.item-image-background .carousel-slide-content {
+        max-width: 760px;
+        padding: 86px 80px 130px;
+    }
+
+    .carousel .carousel-slide-content p {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+    }
+
+    .carousel .carousel-slide-content p:nth-child(3) {
+        margin-top: 28px;
+    }
+}
