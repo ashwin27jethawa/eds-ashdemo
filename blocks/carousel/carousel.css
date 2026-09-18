@@ -3,6 +3,11 @@
     max-width: unset;
     padding: 0;
 }
+.section.etf-carousel .carousel-wrapper {
+    max-width: 1320px;
+    padding: 0 20px;
+    position: relative;
+}
 
 /* ==================================================
    BASE CAROUSEL — MOBILE FIRST
@@ -20,6 +25,10 @@
 .carousel .carousel-slides-container {
     position: relative;
 }
+.etf-carousel .carousel,
+.etf-carousel .carousel .carousel-slides-container {
+    position: unset;
+}
 
 /* ---- Slides list ---- */
 .carousel .carousel-slides {
@@ -32,6 +41,9 @@
     overflow: auto hidden;
     scrollbar-width: none;
     -ms-overflow-style: none;
+}
+.etf-carousel .carousel .carousel-slides {
+    gap: 20px;
 }
 
 .carousel .carousel-slides::-webkit-scrollbar {
@@ -49,6 +61,13 @@
     position: relative;
     overflow: hidden;
 }
+.etf-carousel .carousel .carousel-slide {
+    padding: 20px 10px;
+    gap: 20px;
+    background: red;
+    max-width: 298px;
+    border-radius: 15px;
+}
 
 /* ---- Slide content (mobile: full width) ---- */
 .carousel .carousel-slide-content {
@@ -59,6 +78,11 @@
     position: relative;
     z-index: 1;
     padding: 30px 20px 35px;
+}
+.etf-carousel .carousel .carousel-slide-content {
+    gap: 15px;
+    padding: 0;
+    order: 1;
 }
 
 .hero-large .carousel .carousel-slide-content {
@@ -122,6 +146,13 @@
     position: relative;
     z-index: 1;
 }
+.etf-carousel .carousel .carousel-slide-image {
+    padding: 0;
+    order: 0;
+    align-items: unset;
+    justify-content: unset;
+    z-index: unset;
+}
 
 .img-end li .carousel-slide-image {
     padding: unset;
@@ -152,6 +183,13 @@
     width: 100%;
     max-width: 340px;
     height: auto;
+}
+.etf-carousel .carousel .carousel-slide-image picture,
+.etf-carousel .carousel .carousel-slide-image img {
+    max-width: unset;
+    width: 100%;
+    height: 100%;
+    margin: 0;
 }
 
 .hero-short .carousel .carousel-slide-image picture,
@@ -212,7 +250,7 @@
 
 /* Dark overlay on top of the image */
 .carousel.item-image-background .carousel-slide-image::after {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     background: rgb(0 0 0 / 55%);
@@ -266,7 +304,7 @@
 /* Active dot: pale red track + gradient progress fill */
 .carousel-slide-indicators
     .carousel-slide-indicator
-    button[aria-current='true'] {
+    button[aria-current="true"] {
     position: relative;
     width: 28px;
     min-width: 28px;
@@ -276,8 +314,8 @@
 
 .carousel-slide-indicators
     .carousel-slide-indicator
-    button[aria-current='true']::before {
-    content: '';
+    button[aria-current="true"]::before {
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -312,6 +350,17 @@
         align-items: end;
         min-height: 560px;
     }
+    .etf-carousel .carousel .carousel-slides {
+        gap: 40px;
+    }
+    .etf-carousel .carousel .carousel-slide {
+        grid-template-columns: minmax(0, 461px) minmax(0, 422px);
+        min-height: unset;
+        max-width: 953px;
+        padding: 60px;
+        gap: 70px;
+        align-items: unset;
+    }
 
     .hero-large .carousel .carousel-slide {
         min-height: 580px;
@@ -328,6 +377,11 @@
         padding-left: 90px;
 
         /* padding-left: 20px; */
+    }
+    .etf-carousel .carousel .carousel-slide-content {
+        gap: 16px;
+        order: 0;
+        max-width: 461px;
     }
 
     .hero-large .carousel .carousel-slide-content {
@@ -367,6 +421,13 @@
     .carousel .carousel-slide-image img {
         max-width: 503px;
     }
+    .etf-carousel .carousel .carousel-slide-image picture,
+    .etf-carousel .carousel .carousel-slide-image img {
+        max-width: unset;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+    }
 
     .hero-short .carousel .carousel-slide-image picture,
     .hero-short .carousel .carousel-slide-image img {
@@ -378,6 +439,12 @@
         bottom: 34px;
         left: 100px;
         transform: none;
+        gap: 10px;
+    }
+    .etf-carousel .carousel .carousel-controls {
+        bottom: -7%;
+        left: 50%;
+        transform: translate(-50%);
         gap: 10px;
     }
 

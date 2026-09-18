@@ -13,14 +13,23 @@
     margin-left: auto;
     margin-right: auto;
 }
-
+.embed-placeholder,
 .embed-v1 .embed-placeholder {
     width: 100%;
     height: unset;
     aspect-ratio: 11 / 9;
     position: relative;
 }
+.etf-carousel .embed-placeholder,
+.etf-carousel .embed-v1 .embed-placeholder {
+    width: 100%;
+    height: 190px;
+    max-width: 297px;
+    aspect-ratio: unset;
+    position: relative;
+}
 
+.embed-placeholder > *,
 .embed-v1 .embed-placeholder > * {
     display: flex;
     align-items: center;
@@ -29,14 +38,15 @@
     inset: 0;
 }
 
+.embed-placeholder picture img,
 .embed-v1 .embed-placeholder picture img {
     width: 100%;
-    height: 277px !important;
-    object-fit: cover !important;
+    height: 277px;
+    object-fit: cover;
     margin: 10px 0;
     border-radius: 20px;
 }
-
+.embed-placeholder-play button,
 .embed-v1 .embed-placeholder-play button {
     box-sizing: border-box;
     position: relative;
@@ -55,12 +65,18 @@
     padding: 0;
 }
 
+.embed-placeholder-play button:hover,
 .embed-v1 .embed-placeholder-play button:hover {
     transform: scale(1.08);
     filter: brightness(1.2);
 }
-
-.embed-v1 .embed-placeholder-play button .play-icon {
+.embed-placeholder-play
+    button
+    .play-icon
+    .embed-v1
+    .embed-placeholder-play
+    button
+    .play-icon {
     width: 100%;
     height: 100%;
     display: block;
@@ -133,6 +149,13 @@
         border-radius: 20px;
         overflow: hidden;
     }
+    .etf-carousel .embed-placeholder,
+    .etf-carousel .embed-v1 .embed-placeholder {
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        min-height: 405px;
+    }
 
     .embed-v1-wrapper .embed div {
         width: 100%;
@@ -145,7 +168,7 @@
         height: 340px !important;
         border-radius: 20px;
     }
-
+    .embed-placeholder-play button,
     .embed-v1 .embed-placeholder-play button {
         box-sizing: border-box;
         position: relative;
