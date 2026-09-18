@@ -140,12 +140,14 @@ function createSlide(row, slideIndex, totalSlides, isEmbeddedVideo) {
   const imageWrapper = document.createElement("div");
   imageWrapper.classList.add("carousel-slide-image");
 
-  // when embedded-video is set, col2_image holds a video link instead of an image
-  const videoLinkEl = isEmbeddedVideo && imageCell?.querySelector("a[href]");
-
-  if (videoLinkEl) {
-    imageWrapper.append(videoLinkEl);
-    embedV1(imageWrapper);
+  // only use the thumbnail + video link combo when embedded-video style is active,
+  // otherwise fall back to the default image rendering
+  if (isEmbeddedVideo) {
+    const picture = imageCell?.querySelector("picture");
+    const videoLinkEl = imageCell?.querySelector("a[href]");
+    if (picture) imageWrapper.append(picture);
+    if (videoLinkEl) imageWrapper.append(videoLinkEl);
+    if (picture || videoLinkEl) embedV1(imageWrapper);
   } else if (imageCell) {
     imageWrapper.innerHTML = imageCell.innerHTML;
   }

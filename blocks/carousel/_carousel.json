@@ -226,18 +226,24 @@
           "raw": true
         },
         {
-          "component": "aem-content",
+          "component": "reference",
           "valueType": "string",
           "name": "col2_image",
-          "label": "Image",
+          "label": "Image/ Thumbnail Image for Video",
           "multi": false
         },
         {
           "component": "text",
           "valueType": "string",
           "name": "col2_imageAlt",
-          "label": "Image Alt",
+          "label": "Image Alt / Thumbnail Image Alt",
           "value": ""
+        },
+        {
+          "component": "aem-content",
+          "valueType": "string",
+          "name": "col2_videoLink",
+          "label": "Video Link"
         }
       ]
     }
