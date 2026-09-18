@@ -116,6 +116,10 @@
           {
             "name": "Otp Modal",
             "value": "otp-modal"
+          },
+          {
+            "name": "ETF Carousel",
+            "value": "etf-carousel"
           }
         ]
       }
