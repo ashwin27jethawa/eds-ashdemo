@@ -1,0 +1,50 @@
+[
+  {
+    "id": "fund-1",
+    "title": "Nippon India Large Cap Fund",
+    "category": "Equity - Large Cap",
+    "returns": "18.4% (3Y CAGR)"
+  },
+  {
+    "id": "fund-2",
+    "title": "Nippon India Small Cap Fund",
+    "category": "Equity - Small Cap",
+    "returns": "28.1% (3Y CAGR)"
+  },
+  {
+    "id": "fund-3",
+    "title": "Nippon India Flexi Cap Fund",
+    "category": "Equity - Flexi Cap",
+    "returns": "16.7% (3Y CAGR)"
+  },
+  {
+    "id": "fund-4",
+    "title": "Nippon India Liquid Fund",
+    "category": "Debt - Liquid",
+    "returns": "6.8% (1Y)"
+  },
+  {
+    "id": "fund-5",
+    "title": "Nippon India ETF Nifty 50 BeES",
+    "category": "Other - ETF",
+    "returns": "14.2% (3Y CAGR)"
+  },
+  {
+    "id": "fund-6",
+    "title": "Nippon India Arbitrage Fund",
+    "category": "Hybrid - Arbitrage",
+    "returns": "7.2% (1Y)"
+  },
+  {
+    "id": "fund-7",
+    "title": "Nippon India Multi Cap Fund",
+    "category": "Equity - Multi Cap",
+    "returns": "21.5% (3Y CAGR)"
+  },
+  {
+    "id": "fund-8",
+    "title": "Nippon India Banking & Financial Services Fund",
+    "category": "Equity - Sectoral",
+    "returns": "15.9% (3Y CAGR)"
+  }
+]

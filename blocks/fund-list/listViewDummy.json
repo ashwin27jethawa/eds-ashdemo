@@ -1,0 +1,79 @@
+[
+  {
+    "nseSymbol": "NIFTYETF",
+    "bseCode": "352131",
+    "schemeName": "ETF Nifty Next 50 Junior BeES",
+    "category": "International | Equity",
+    "currentiNAV": "802.8076",
+    "previousNAV": "802.8076",
+    "changePercent": "10.45%",
+    "changeDirection": "up",
+    "investUrl": "https://www.nipponindiamf.com"
+  },
+  {
+    "nseSymbol": "MAFANG",
+    "bseCode": "353291",
+    "schemeName": "ETF Nifty Midcap 150",
+    "category": "International | Equity",
+    "currentiNAV": "225.7365",
+    "previousNAV": "225.7365",
+    "changePercent": "88.93%",
+    "changeDirection": "up",
+    "investUrl": "https://www.nipponindiamf.com"
+  },
+  {
+    "nseSymbol": "GOLDETF",
+    "bseCode": "353781",
+    "schemeName": "ETF Nifty 50 BeES",
+    "category": "Thematic | Equity",
+    "currentiNAV": "283.9181",
+    "previousNAV": "283.9181",
+    "changePercent": "15.30%",
+    "changeDirection": "up",
+    "investUrl": "https://www.nipponindiamf.com"
+  },
+  {
+    "nseSymbol": "NEXT50",
+    "bseCode": "352922",
+    "schemeName": "ETF Nifty 100",
+    "category": "Thematic | Equity",
+    "currentiNAV": "272.4445",
+    "previousNAV": "272.4445",
+    "changePercent": "8.25%",
+    "changeDirection": "up",
+    "investUrl": "https://www.nipponindiamf.com"
+  },
+  {
+    "nseSymbol": "MIDCAPETF",
+    "bseCode": "353483",
+    "schemeName": "ETF BSE Sensex",
+    "category": "International | Equity",
+    "currentiNAV": "941.0241",
+    "previousNAV": "941.0241",
+    "changePercent": "12.77%",
+    "changeDirection": "up",
+    "investUrl": "https://www.nipponindiamf.com"
+  },
+  {
+    "nseSymbol": "MASPTOP50",
+    "bseCode": "352922",
+    "schemeName": "ETF BSE Sensex Next 30",
+    "category": "Smart Beta | Equity",
+    "currentiNAV": "38.7874",
+    "previousNAV": "38.7874",
+    "changePercent": "18.40%",
+    "changeDirection": "up",
+    "investUrl": "https://www.nipponindiamf.com"
+  },
+  {
+    "nseSymbol": "SILVERAG",
+    "bseCode": "352922",
+    "schemeName": "ETF BSE Sensex Next 50",
+    "category": "Smart Beta | Equity",
+    "currentiNAV": "88.6925",
+    "previousNAV": "88.6925",
+    "changePercent": "20.60%",
+    "changeDirection": "up",
+    "investUrl": "https://www.nipponindiamf.com"
+  }
+]

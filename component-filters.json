@@ -81,6 +81,10 @@
     ]
   },
   {
+    "id": "fund-list",
+    "components": []
+  },
+  {
     "id": "tables",
     "components": [
       "table"
